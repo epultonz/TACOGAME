@@ -42,7 +42,7 @@ TacoDemo.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kKelvin);
     gEngine.Textures.loadTexture(this.kBG);
     gEngine.Textures.loadTexture(this.kUIButton);
-    //document.getElementById("particle").style.display="block"; I dont know what this does
+    //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
 TacoDemo.prototype.unloadScene = function () {
