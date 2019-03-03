@@ -15,9 +15,10 @@
 function TacoDemo() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
-    this.kKelvin = "assets/Taco/KelvinSpriteRun.png";
+    this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
     this.kBG = "assets/Taco/scene_example.png";
     this.kUIButton = "assets/UI/button.png";
+    this.kSprites = "assets/Taco/SpriteSheet.png";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -29,6 +30,7 @@ function TacoDemo() {
     this.mMsg = null;
     
     this.mKelvin = null;
+    this.mCannons = null;
     this.mSceneBG = null;
     
     this.backButton = null;
@@ -42,6 +44,7 @@ TacoDemo.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kKelvin);
     gEngine.Textures.loadTexture(this.kBG);
     gEngine.Textures.loadTexture(this.kUIButton);
+    gEngine.Textures.loadTexture(this.kSprites);
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
@@ -50,6 +53,7 @@ TacoDemo.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kKelvin);
     gEngine.Textures.unloadTexture(this.kBG);
     gEngine.Textures.unloadTexture(this.kUIButton);
+    gEngine.Textures.unloadTexture(this.kSprites);
     //document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back")
         gEngine.Core.startScene(new MyGame());
@@ -78,6 +82,10 @@ TacoDemo.prototype.initialize = function () {
     // kelvin with set animation
     this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
     this.mAllObjs.addToSet(this.mKelvin);
+    
+    // init cannon
+    this.mCannons = new Cannon(this.kSprites,60, 25);
+    this.mAllObjs.addToSet(this.mCannons);
     
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);

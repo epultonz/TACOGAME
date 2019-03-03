@@ -12,7 +12,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Hero(spriteTexture, atX, atY, lgtSet) {
-    this.kDelta = 0.1;
+    this.kDelta = 0.2;
     this.kWidth = 6;
     this.kHeight = 6;
     
@@ -79,8 +79,13 @@ Hero.prototype.update = function () {
             //this.mHeroState = Hero.eHeroState.eRunLeft;
             this.mIsMoving = true;
         }
-
-        xform.incXPosBy(-this.kDelta);
+        //make less movement in air
+        if(!this.mCanJump){
+            xform.incXPosBy(-this.kDelta*0.5);
+        } else {
+            xform.incXPosBy(-this.kDelta);
+        }
+        
         this.mKelvin.updateAnimation();
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
@@ -89,8 +94,12 @@ Hero.prototype.update = function () {
             //this.mHeroState = Hero.eHeroState.eRunRight;
             this.mIsMoving = true;
         }
-
-        xform.incXPosBy(this.kDelta);
+        //make less movement in air
+        if(!this.mCanJump){
+            xform.incXPosBy(this.kDelta*0.5);
+        } else {
+            xform.incXPosBy(this.kDelta);
+        }
         this.mKelvin.updateAnimation();
     }
 
@@ -122,6 +131,8 @@ Hero.prototype.update = function () {
     }
 
     //this.changeAnimation();
+    // attempt to make kelvin upright
+    this.setCurrentFrontDir(vec2.fromValues(0, xform.getYPos()+1));
     
     this.mIsMoving = false;
     this.mCanJump = false;
