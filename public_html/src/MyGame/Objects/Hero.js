@@ -24,12 +24,13 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mKelvin.getXform().setZPos(1);
     this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
 
-    //this.mHeroState = Hero.eHeroState.eRunRight;
-    //this.mPreviousHeroState = Hero.eHeroState.eRunLeft;
+    this.mHeroState = Hero.eHeroState.eRunRight;
+    this.mPreviousHeroState = Hero.eHeroState.eRunLeft;
+    
     this.mIsMoving = false;
     this.mCanJump = false;
 
-    this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
+    this.mKelvin.setSpriteSequence(512,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
     this.mKelvin.setAnimationSpeed(8);         // show each element for mAnimSpeed updates
 
@@ -64,7 +65,6 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
-/*
 Hero.eHeroState = Object.freeze({
     eFaceRight: 0,
     eFaceLeft: 1,
@@ -73,7 +73,6 @@ Hero.eHeroState = Object.freeze({
     eJumpRight: 4,
     eJumpLeft: 5
 });
-*/
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
@@ -85,8 +84,8 @@ Hero.prototype.update = function () {
 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
         if (this.mCanJump === true) {
-            //this.mPreviousHeroState = this.mHeroState;
-            //this.mHeroState = Hero.eHeroState.eRunLeft;
+            this.mPreviousHeroState = this.mHeroState;
+            this.mHeroState = Hero.eHeroState.eRunLeft;
             this.mIsMoving = true;
         }
         //make less movement in air
@@ -100,8 +99,8 @@ Hero.prototype.update = function () {
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
         if (this.mCanJump === true) {
-            //this.mPreviousHeroState = this.mHeroState;
-            //this.mHeroState = Hero.eHeroState.eRunRight;
+            this.mPreviousHeroState = this.mHeroState;
+            this.mHeroState = Hero.eHeroState.eRunRight;
             this.mIsMoving = true;
         }
         //make less movement in air
@@ -160,7 +159,7 @@ Hero.prototype.update = function () {
         }
     }
 
-    //this.changeAnimation();
+    this.changeAnimation();
     this.UIHealth.update();
 
     //stop kevin from rotating
@@ -170,10 +169,11 @@ Hero.prototype.update = function () {
 
 };
 
-/*
+
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {
         switch (this.mHeroState) {
+            /*
             case Hero.eHeroState.eFaceLeft:
                 this.mKelvin.setSpriteSequence(1508, 0, 140, 180, 3, 0);
                 this.mKelvin.getXform().setSize(-this.kWidth, this.kHeight);
@@ -184,16 +184,18 @@ Hero.prototype.changeAnimation = function () {
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(20);
                 break;
+            */
             case Hero.eHeroState.eRunLeft:
-                this.mKelvin.setSpriteSequence(1688, 0, 140, 180, 6, 0);
-                this.mKelvin.getXform().setSize(-this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(5);
+                this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
+                this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
+                this.mKelvin.setAnimationSpeed(8);
                 break;
             case Hero.eHeroState.eRunRight:
-                this.mKelvin.setSpriteSequence(1688, 0, 140, 180, 6, 0);
+                this.mKelvin.setSpriteSequence(512,0,128,256,8,0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(5);
+                this.mKelvin.setAnimationSpeed(8);
                 break;
+            /*    
             case Hero.eHeroState.eJumpLeft:
                 this.mKelvin.setSpriteSequence(2048, 0, 140, 180, 10, 0);
                 this.mKelvin.getXform().setSize(-this.kWidth, this.kHeight);
@@ -204,11 +206,11 @@ Hero.prototype.changeAnimation = function () {
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(4);
                 break;
+            */
         }
     }
 };
 
-*/
 
 Hero.prototype.draw = function (aCamera) {
     this.UIHealth.draw(aCamera);
