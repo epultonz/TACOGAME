@@ -13,9 +13,10 @@
 
 function Hero(spriteTexture, atX, atY, lgtSet) {
     this.kDelta = 0.1;
-    this.kWidth = 20;
-    this.kHeight = 20;
+    this.kWidth = 6;
+    this.kHeight = 6;
     
+    // light renderable 
     this.mKelvin = new LightRenderable(spriteTexture);
     
     this.mKelvin.setColor([1, 1, 1, 0]);
@@ -27,24 +28,25 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.mPreviousHeroState = Hero.eHeroState.eRunLeft;
     this.mIsMoving = false;
     this.mCanJump = false;
+    this.mInAir = false;
 
-    this.mKelvin.setSpriteSequence(128,0,128,128,8,0);
+    this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
     this.mKelvin.setAnimationSpeed(12);         // show each element for mAnimSpeed updates                               
     
     //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
     //this.mKelvin.addLight(lgtSet.getLightAt(3));
-    //this.mKelvin.addLight(lgtSet.getLightAt(2));
-
-    GameObject.call(this, this.mKelvin);
-
-    var r = new RigidRectangle(this.getXform(), this.kWidth / 2, this.kHeight / 2);
-    this.setRigidBody(r);
-    r.setMass(10);
-    r.setRestitution(0.1);
-    r.setFriction(0.7);
+    //this.mKelvin.addLight(lgtSet.getLightAt(2);
     
-    this.rBox = r;
+    GameObject.call(this, this.mKelvin);
+    
+    var r = new RigidRectangle(this.getXform(), this.kWidth/1.2 , this.kHeight/1.1 );
+    this.setRigidBody(r);
+    r.setMass(10);     // high mass so wont get affected by other object much
+    r.setRestitution(-0.1); // higher means more bouncy
+    r.setFriction(1);   //how much it slides with other object
+    
+    this.mRbox = r;
     
     //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
@@ -65,7 +67,7 @@ Hero.eHeroState = Object.freeze({
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
-
+    
     // control by WASD
     var xform = this.getXform();
     this.mIsMoving = false;
@@ -93,7 +95,7 @@ Hero.prototype.update = function () {
     }
 
     
-    if (this.mCanJump === true) {
+    if (this.mCanJump === true && this.mInAir === false) {
         if (this.mIsMoving === false) {
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -103,12 +105,8 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eFaceLeft;
             */
         }
-        
-        var prevY = xform.getYPos();
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            
-            v[1] = 15; // Jump velocity
-            //xform.incYPosBy(this.kDelta);
+        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {          
+            v[1] = 25; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -119,6 +117,7 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eJumpLeft;
             */
             this.mIsMoving = true;
+            this.mInAir = true;
         }
     }
 
@@ -126,6 +125,7 @@ Hero.prototype.update = function () {
     
     this.mIsMoving = false;
     this.mCanJump = false;
+    this.mInAir = false;
     
 };
 
@@ -178,6 +178,6 @@ Hero.prototype.canJump = function (b) {
 };
 
 Hero.prototype.getRbox = function() {
-    return this.rBox;
+    return this.mRbox;
 };
 

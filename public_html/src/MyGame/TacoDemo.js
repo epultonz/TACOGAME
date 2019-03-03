@@ -2,8 +2,6 @@
  * File: TacoDemo.js 
  * Main file that we will use to test our Taco game DEMO
  * 
- * 
- * 
  */
 
 /*jslint node: true, vars: true */
@@ -17,7 +15,7 @@
 function TacoDemo() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
-    this.kKelvin = "assets/Taco/kelvin_run.png";
+    this.kKelvin = "assets/Taco/KelvinSpriteRun.png";
     this.kBG = "assets/Taco/scene_example.png";
     this.kUIButton = "assets/UI/button.png";
     
@@ -27,6 +25,8 @@ function TacoDemo() {
     this.mAllObjs = null;
     this.mAllPlatform = null;
     this.LevelSelect = null;
+    
+    this.mMsg = null;
     
     this.mKelvin = null;
     this.mSceneBG = null;
@@ -66,20 +66,31 @@ TacoDemo.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
             // sets the background to gray
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
-    this.mAllObjs = new GameObjectSet();
-    this.mAllPlatform = new GameObjectSet();
+    gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
+    gEngine.Physics.incRelaxationCount(25); //time to rest after a physics event
     
+    this.mAllObjs = new GameObjectSet();    // store all physics object
+    this.mAllPlatform = new GameObjectSet(); //store all platform
+    
+    // make the bounds.. platform etc
     this.createBounds();
     
     // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 35, null);
+    this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
     this.mAllObjs.addToSet(this.mKelvin);
+    
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
     this.mSceneBG.getXform().setPosition(50,30);
     
+    // For debug
+    this.mMsg = new FontRenderable("Status Message");
+    this.mMsg.setColor([0, 0, 0, 1]);
+    this.mMsg.getXform().setPosition(5, 70);
+    this.mMsg.setTextHeight(2);
+    
+    //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,580],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,580],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
 };
@@ -98,33 +109,17 @@ TacoDemo.prototype.draw = function () {
     
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
+    
+    this.mMsg.draw(this.mCamera);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 TacoDemo.prototype.update = function () {
     var delta = 0.3;
+    var msg = "";
     
-    /*
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
-        this.mKelvin.getXform().incYPosBy(delta);
-        this.mKelvin.updateAnimation();
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-        this.mKelvin.getXform().incXPosBy(-delta);
-        this.mKelvin.updateAnimation();
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-        this.mKelvin.getXform().incYPosBy(-delta);
-        this.mKelvin.updateAnimation();
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-        this.mKelvin.getXform().incXPosBy(delta);
-        this.mKelvin.updateAnimation();
-    }
-    */
-   
-    //this.mKelvin.getRigidBody().userSetsState();
+    // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
     var collided = false;
     for (var i = 0; i < this.mAllPlatform.size(); i++) {
@@ -138,17 +133,29 @@ TacoDemo.prototype.update = function () {
     
     this.mAllObjs.update();
     
+    // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
+    
+    
     this.MainMenuButton.update();
     this.backButton.update();
+    
+    // nice for debugging
+    msg += " Relaxation count: " + gEngine.Physics.getRelaxationCount() + " ";
+    this.mMsg.setText(msg); 
+    
 };
 
 TacoDemo.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 5;
+    var x = 15, w = 30, y = 4;
     for (x = 15; x < 120; x+=30) 
         this.platformAt(x, y, w, 0);
+    
+    var x = 60, w = 20, y = 20;
+    this.platformAt(x,y,w,0);
 };
 
+// Make the platforms
 TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     var h = w / 8;
     var p = new TextureRenderable(this.kPlatformTexture);
@@ -169,11 +176,13 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     this.mAllPlatform.addToSet(g);
 };
 
+// back button UI
 TacoDemo.prototype.backSelect = function(){
     this.LevelSelect="Back";
     gEngine.GameLoop.stop();
 };
 
+// menu button UI
 TacoDemo.prototype.mainSelect = function(){
     this.LevelSelect="Main";
     gEngine.GameLoop.stop();
