@@ -24,12 +24,11 @@ function TacoDemo() {
     // The camera to view the scene
     this.mCamera = null;
 
-    
+    this.mAllObjs = null;
     this.LevelSelect = null;
     
     this.mKelvin = null;
     this.mSceneBG = null;
-    this.mPlatforms = null;
     
     this.backButton = null;
     this.MainMenuButton = null;
@@ -67,19 +66,13 @@ TacoDemo.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    this.mAllObjs = new GameObjectSet();
     
-    this.mPlatforms = new GameObjectSet();
     this.createBounds();
     
     // kelvin with set animation
-    this.mKelvin = new SpriteAnimateRenderable(this.kKelvin);
-    this.mKelvin.getXform().setPosition(10,35);
-    this.mKelvin.setColor([1,1,1,0]);
-    this.mKelvin.getXform().setSize(20,20);
-    this.mKelvin.setSpriteSequence(128,0,128,128,8,0);
-    this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
-    this.mKelvin.setAnimationSpeed(12);
-    
+    this.mKelvin = new Hero(this.kKelvin, 10, 35, null);
+    this.mAllObjs.addToSet(this.mKelvin);
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
@@ -98,9 +91,9 @@ TacoDemo.prototype.draw = function () {
     this.mCamera.setupViewProjection();
     
     this.mSceneBG.draw(this.mCamera);
-    this.mKelvin.draw(this.mCamera);
     
-    this.mPlatforms.draw(this.mCamera);
+    this.mAllObjs.draw(this.mCamera);
+    
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
 };
@@ -110,6 +103,7 @@ TacoDemo.prototype.draw = function () {
 TacoDemo.prototype.update = function () {
     var delta = 0.3;
     
+    /*
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
         this.mKelvin.getXform().incYPosBy(delta);
         this.mKelvin.updateAnimation();
@@ -126,13 +120,19 @@ TacoDemo.prototype.update = function () {
         this.mKelvin.getXform().incXPosBy(delta);
         this.mKelvin.updateAnimation();
     }
+    */
+   
+    this.mKelvin.getRigidBody().userSetsState();
     
+    this.mAllObjs.update();
+    
+    gEngine.Physics.processCollision(this.mAllObjs,[]);
     this.MainMenuButton.update();
     this.backButton.update();
 };
 
 TacoDemo.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 4;
+    var x = 15, w = 30, y = 5;
     for (x = 15; x < 120; x+=30) 
         this.platformAt(x, y, w, 0);
 };
@@ -145,12 +145,15 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     var g = new GameObject(p);
     var r = new RigidRectangle(xf, w, h);
     g.setRigidBody(r);
+    g.toggleDrawRenderable();
+    g.toggleDrawRigidShape();
     
     r.setMass(0);
     xf.setSize(w, h);
     xf.setPosition(x, y);
     xf.setRotationInDegree(rot);
-    this.mPlatforms.addToSet(g);
+    
+    this.mAllObjs.addToSet(g);
 };
 
 TacoDemo.prototype.backSelect = function(){
