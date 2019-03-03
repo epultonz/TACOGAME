@@ -155,16 +155,9 @@ Hero.prototype.update = function () {
 
     //this.changeAnimation();
     this.UIHealth.update();
-    // attempt to make kelvin upright
-<<<<<<< HEAD
-    this.setCurrentFrontDir(vec2.fromValues(xform.getXPos(), xform.getYPos()+10));
 
-=======
-    this.setCurrentFrontDir(vec2.fromValues(0, xform.getYPos()+1));
-    
     //stop kevin from rotating
     this.getRbox().setAngularVelocity(0);
->>>>>>> 0dffc1e4403c6d2eb128a6f8087d42a51eef1721
     this.mIsMoving = false;
     this.mCanJump = false;
 
