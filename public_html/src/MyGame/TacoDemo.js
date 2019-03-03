@@ -74,7 +74,7 @@ TacoDemo.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
-    gEngine.Physics.incRelaxationCount(25); //time to rest after a physics event
+    gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     this.mAllObjs = new GameObjectSet();    // store all physics object
     this.mAllPlatform = new GameObjectSet(); //store all platform
@@ -87,7 +87,7 @@ TacoDemo.prototype.initialize = function () {
     this.mAllObjs.addToSet(this.mKelvin);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites,60, 25);
+    this.mCannons = new Cannon(this.kSprites,85, 23);
     this.mAllObjs.addToSet(this.mCannons);
 
     // scene background
@@ -167,8 +167,9 @@ TacoDemo.prototype.createBounds = function() {
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
-    var x = 60, w = 20, y = 20;
+    var x = 30, w = 30, y = 18;
     this.platformAt(x,y,w,0);
+    this.platformAt(80,y,w,0);
 };
 
 // Make the platforms

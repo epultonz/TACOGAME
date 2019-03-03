@@ -12,7 +12,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Hero(spriteTexture, atX, atY, lgtSet) {
-    this.kDelta = 0.2;
+    this.kDelta = 0.25;
     this.kWidth = 6;
     this.kHeight = 6;
     
@@ -28,7 +28,6 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.mPreviousHeroState = Hero.eHeroState.eRunLeft;
     this.mIsMoving = false;
     this.mCanJump = false;
-    this.mInAir = false;
 
     this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
@@ -40,9 +39,9 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     GameObject.call(this, this.mKelvin);
 
-    var r = new RigidRectangle(this.getXform(), this.kWidth/1.2 , this.kHeight/1.1 );
+    var r = new RigidRectangle(this.getXform(), this.kWidth/1.1 , this.kHeight/1.1 );
     this.setRigidBody(r);
-    r.setMass(10);     // high mass so wont get affected by other object much
+    r.setMass(40);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
     r.setFriction(1);   //how much it slides with other object
 
@@ -92,7 +91,7 @@ Hero.prototype.update = function () {
         }
         //make less movement in air
         if(!this.mCanJump){
-            xform.incXPosBy(-this.kDelta*0.5);
+            xform.incXPosBy(-this.kDelta*0.5); // i dont think it works :'(
         } else {
             xform.incXPosBy(-this.kDelta);
         }
@@ -115,7 +114,7 @@ Hero.prototype.update = function () {
     }
 
 
-    if (this.mCanJump === true && this.mInAir === false) {
+    if (this.mCanJump === true) {
         if (this.mIsMoving === false) {
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -126,7 +125,7 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 25; // Jump velocity
+            v[1] = 30; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -137,7 +136,6 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eJumpLeft;
             */
             this.mIsMoving = true;
-            this.mInAir = true;
         }
     }
 
@@ -158,11 +156,10 @@ Hero.prototype.update = function () {
     //this.changeAnimation();
     this.UIHealth.update();
     // attempt to make kelvin upright
-    this.setCurrentFrontDir(vec2.fromValues(0, xform.getYPos()+1));
+    this.setCurrentFrontDir(vec2.fromValues(xform.getXPos(), xform.getYPos()+10));
 
     this.mIsMoving = false;
     this.mCanJump = false;
-    this.mInAir = false;
 
 };
 
