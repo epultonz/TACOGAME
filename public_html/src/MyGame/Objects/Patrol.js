@@ -13,12 +13,14 @@ function Patrol(spriteTexture, atX, atY, heroRef) {
     this.kWidth = 6;
     this.kHeight = 6;
     this.mHeroRef = heroRef;
+    this.mRigdRect = null;
     
     // Vars for patrolling
     this.mPatrolDelta = 0.2;
     this.mPatrolLeftPoint = atX - 15;
     this.mPatrolRightPoint = atX + 6;
     this.mMoveLeft = true;
+    this.mVelocity = 20;
     
     // sprite renderable 
     this.mPatrol = new SpriteRenderable(spriteTexture);
@@ -29,10 +31,21 @@ function Patrol(spriteTexture, atX, atY, heroRef) {
     
     GameObject.call(this, this.mPatrol); // Finish construction via GameObject constructor
     
-    var r = new RigidRectangle(this.mPatrol.getXform(), this.kWidth , this.kHeight);
-    this.setRigidBody(r);
-    r.setMass(0);
+    this.mRigdRect = new RigidRectangle(this.mPatrol.getXform(), this.kWidth , this.kHeight);
+    this.mRigdRect.setMass(0);
+    this.mRigdRect.setVelocity(-this.mVelocity, 0);
+    this.setRigidBody(this.mRigdRect);
     this.toggleDrawRigidShape();
+    
+    /*
+    var vx = (Math.random() - 0.5);
+    var vy = (Math.random() - 0.5);
+    var speed = 20 + Math.random() * 10;
+    r.setVelocity(vx * speed, vy * speed);
+    this.setRigidBody(r);
+    this.toggleDrawRenderable();
+    this.toggleDrawRigidShape();
+    */
     
 }
 gEngine.Core.inheritPrototype(Patrol, GameObject);
@@ -49,6 +62,7 @@ Patrol.prototype.update = function () {
         xForm.setPosition(currPos[0] - this.mPatrolDelta, currPos[1]);
         if(currPos[0] <= this.mPatrolLeftPoint)
         {
+            this.mRigdRect.setVelocity(this.mVelocity, 0);
             this.mMoveLeft = false;
         }
     }
@@ -57,6 +71,7 @@ Patrol.prototype.update = function () {
         xForm.setPosition(currPos[0] + this.mPatrolDelta, currPos[1]);
         if(currPos[0] >= this.mPatrolRightPoint)
         {
+            this.mRigdRect.setVelocity(-this.mVelocity, 0);
             this.mMoveLeft = true;
         }
     }
@@ -96,7 +111,7 @@ Patrol.prototype.update = function () {
         // Check top hit first
         if(heroBox.minY() > (thisBox.maxY() - (this.kHeight / 10)))
         {
-            alert("topsquish");
+            return false; // as the object should be deleted
         }
         
         // Check side hits- else is there to break ties between top and left+right
@@ -107,6 +122,8 @@ Patrol.prototype.update = function () {
         }
     }
 
+    // return true if the object isn't defeated
+    return true;
 };
 
 Patrol.prototype.draw = function (aCamera) {

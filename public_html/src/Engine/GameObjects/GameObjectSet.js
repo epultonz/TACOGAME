@@ -77,7 +77,12 @@ GameObjectSet.prototype.moveToLast = function (obj) {
 GameObjectSet.prototype.update = function () {
     var i;
     for (i = 0; i < this.mSet.length; i++) {
-        this.mSet[i].update();
+        var deleteFlag = this.mSet[i].update();
+        if((typeof deleteFlag !== "undefined") && !deleteFlag) // Delete an object if it returns false
+        {
+            this.mSet.splice(i, 1);
+            i--; // Move back an obj to iterate the newly-moved objects too
+        }
     }
 };
 
