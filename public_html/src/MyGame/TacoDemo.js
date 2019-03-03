@@ -31,6 +31,7 @@ function TacoDemo() {
     this.mMsg = null;
 
     this.mKelvin = null;
+    this.mPatrol = null;
     this.mCannons = null;
     this.mSceneBG = null;
 
@@ -86,8 +87,12 @@ TacoDemo.prototype.initialize = function () {
     this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
     this.mAllObjs.addToSet(this.mKelvin);
 
+    // init Patrol
+    this.mPatrol = new Patrol(this.kSprites, 35, 23, this.mKelvin);
+    this.mAllObjs.addToSet(this.mPatrol);
+
     // init cannon
-    this.mCannons = new Cannon(this.kSprites,85, 23);
+    this.mCannons = new Cannon(this.kSprites, 85, 23);
     this.mAllObjs.addToSet(this.mCannons);
 
     // scene background

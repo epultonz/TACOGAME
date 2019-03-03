@@ -18,7 +18,7 @@ function Cannon(spriteTexture,atX,atY) {
     this.mCannon.setColor([1, 1, 1, 0]);
     this.mCannon.getXform().setPosition(atX, atY);
     this.mCannon.getXform().setSize(this.kWidth, this.kHeight);
-    this.mCannon.setElementPixelPositions(315,315+180,0,0+180);
+    this.mCannon.setElementPixelPositions(318,318+172,8,8+158);
     
     GameObject.call(this, this.mCannon);
     

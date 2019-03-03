@@ -218,12 +218,15 @@ Hero.prototype.getRbox = function() {
 
 //decrement UIhealth bar and shake mKelvin
 Hero.prototype.tookDamage = function () {
-    this.UIHealth.incCurrentHP(-10);
-    var pos = this.getXform().getPosition();
+    if(this.mShakeStarted === false) // Only get hit if he hasn't been recently
+    {
+        this.UIHealth.incCurrentHP(-10);
+        var pos = this.getXform().getPosition();
 
-    this.mShake = new ObjectShake(pos,this.xDelta,
-            this.yDelta,this.freq,this.duration);
+        this.mShake = new ObjectShake(pos,this.xDelta,
+                this.yDelta,this.freq,this.duration);
 
-    this.mShakeStarted = true;
+        this.mShakeStarted = true;
+    }  
 
 };
