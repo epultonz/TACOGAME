@@ -1,4 +1,4 @@
-/* File: Hero.js 
+/* File: Hero.js
  *
  * Creates and initializes the Hero
  * overrides the update funciton of GameObject to define
@@ -16,9 +16,9 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.kWidth = 6;
     this.kHeight = 6;
     
-    // light renderable 
+    // light renderable
     this.mKelvin = new LightRenderable(spriteTexture);
-    
+
     this.mKelvin.setColor([1, 1, 1, 0]);
     this.mKelvin.getXform().setPosition(atX, atY);
     this.mKelvin.getXform().setZPos(1);
@@ -32,25 +32,36 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
-    this.mKelvin.setAnimationSpeed(12);         // show each element for mAnimSpeed updates                               
-    
+    this.mKelvin.setAnimationSpeed(12);         // show each element for mAnimSpeed updates
+
     //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
     //this.mKelvin.addLight(lgtSet.getLightAt(3));
     //this.mKelvin.addLight(lgtSet.getLightAt(2);
-    
+
     GameObject.call(this, this.mKelvin);
-    
+
     var r = new RigidRectangle(this.getXform(), this.kWidth/1.2 , this.kHeight/1.1 );
     this.setRigidBody(r);
     r.setMass(10);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
     r.setFriction(1);   //how much it slides with other object
-    
+
     this.mRbox = r;
-    
+
     //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
-    
+
+    this.kHealthBar = "assets/UI/healthbar.png";
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,400],[200,25],0);
+
+    //shake paramaters
+    this.xDelta = .5;
+    this.yDelta = 0;
+    this.freq = 4;
+    this.duration = 60;
+    this.mShakeStarted = false;
+    this.mShake = null;
+
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -67,7 +78,7 @@ Hero.eHeroState = Object.freeze({
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
-    
+
     // control by WASD
     var xform = this.getXform();
     this.mIsMoving = false;
@@ -85,7 +96,7 @@ Hero.prototype.update = function () {
         } else {
             xform.incXPosBy(-this.kDelta);
         }
-        
+
         this.mKelvin.updateAnimation();
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
@@ -103,7 +114,7 @@ Hero.prototype.update = function () {
         this.mKelvin.updateAnimation();
     }
 
-    
+
     if (this.mCanJump === true && this.mInAir === false) {
         if (this.mIsMoving === false) {
             /*
@@ -114,7 +125,7 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eFaceLeft;
             */
         }
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {          
+        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
             v[1] = 25; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -130,14 +141,29 @@ Hero.prototype.update = function () {
         }
     }
 
+    if(this.mShakeStarted) {
+        if(this.mShake.shakeDone()){
+                this.mShake = null;
+                this.mShakeStarted = false;
+        } else {
+                var pos = this.getXform().getPosition();
+
+                this.mShake.setRefCenter(pos);
+                this.mShake.updateShakeState();
+                var newPos = this.mShake.getCenter();
+                this.getXform().setPosition(newPos[0],newPos[1]);
+        }
+    }
+
     //this.changeAnimation();
+    this.UIHealth.update();
     // attempt to make kelvin upright
     this.setCurrentFrontDir(vec2.fromValues(0, xform.getYPos()+1));
-    
+
     this.mIsMoving = false;
     this.mCanJump = false;
     this.mInAir = false;
-    
+
 };
 
 /*
@@ -181,6 +207,7 @@ Hero.prototype.changeAnimation = function () {
 */
 
 Hero.prototype.draw = function (aCamera) {
+    this.UIHealth.draw(aCamera);
     GameObject.prototype.draw.call(this, aCamera);
 };
 
@@ -192,3 +219,14 @@ Hero.prototype.getRbox = function() {
     return this.mRbox;
 };
 
+//decrement UIhealth bar and shake mKelvin
+Hero.prototype.tookDamage = function () {
+    this.UIHealth.incCurrentHP(-10);
+    var pos = this.getXform().getPosition();
+
+    this.mShake = new ObjectShake(pos,this.xDelta,
+            this.yDelta,this.freq,this.duration);
+
+    this.mShakeStarted = true;
+
+};
