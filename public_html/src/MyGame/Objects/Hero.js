@@ -31,7 +31,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     this.mKelvin.setSpriteSequence(256,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
-    this.mKelvin.setAnimationSpeed(12);         // show each element for mAnimSpeed updates
+    this.mKelvin.setAnimationSpeed(8);         // show each element for mAnimSpeed updates
 
     //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
     //this.mKelvin.addLight(lgtSet.getLightAt(3));
@@ -41,7 +41,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     var r = new RigidRectangle(this.getXform(), this.kWidth/1.1 , this.kHeight/1.1 );
     this.setRigidBody(r);
-    r.setMass(40);     // high mass so wont get affected by other object much
+    r.setMass(60);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
     r.setFriction(1);   //how much it slides with other object
 
@@ -112,8 +112,7 @@ Hero.prototype.update = function () {
         }
         this.mKelvin.updateAnimation();
     }
-
-
+    
     if (this.mCanJump === true) {
         if (this.mIsMoving === false) {
             /*
@@ -125,7 +124,8 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 30; // Jump velocity
+            v[1] = 20; // Jump velocity
+            xform.incYPosBy(this.kDelta+1);
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -137,19 +137,26 @@ Hero.prototype.update = function () {
             */
             this.mIsMoving = true;
         }
+    } else {
+        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
+            v[1] = -20;
+            xform.incYPosBy(-(this.kDelta+1));
+            this.mIsMoving = true;
+        }
+        
     }
 
     if(this.mShakeStarted) {
         if(this.mShake.shakeDone()){
-                this.mShake = null;
-                this.mShakeStarted = false;
+            this.mShake = null;
+            this.mShakeStarted = false;
         } else {
-                var pos = this.getXform().getPosition();
+            var pos = this.getXform().getPosition();
 
-                this.mShake.setRefCenter(pos);
-                this.mShake.updateShakeState();
-                var newPos = this.mShake.getCenter();
-                this.getXform().setPosition(newPos[0],newPos[1]);
+            this.mShake.setRefCenter(pos);
+            this.mShake.updateShakeState();
+            var newPos = this.mShake.getCenter();
+            this.getXform().setPosition(newPos[0],newPos[1]);
         }
     }
 
