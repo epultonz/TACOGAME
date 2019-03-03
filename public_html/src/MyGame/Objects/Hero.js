@@ -147,7 +147,7 @@ Hero.prototype.update = function () {
     }
 
     //this.changeAnimation();
-    
+    this.UIHealth.update();
     this.mIsMoving = false;
     this.mCanJump = false;
     this.mInAir = false;
