@@ -51,6 +51,17 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
     
+    this.kHealthBar = "assets/UI/healthbar.png";
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,400],[200,25],0);
+
+    //shake paramaters
+    this.xDelta = .5;
+    this.yDelta = 0;
+    this.freq = 4;
+    this.duration = 60;
+    this.mShakeStarted = false;
+    this.mShake = null;
+    
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -120,6 +131,20 @@ Hero.prototype.update = function () {
             this.mInAir = true;
         }
     }
+    
+    if(this.mShakeStarted) {
+        if(this.mShake.shakeDone()){
+                this.mShake = null;
+                this.mShakeStarted = false;
+        } else {
+                var pos = this.getXform().getPosition();
+
+                this.mShake.setRefCenter(pos);
+                this.mShake.updateShakeState();
+                var newPos = this.mShake.getCenter();
+                this.getXform().setPosition(newPos[0],newPos[1]);
+        }
+    }
 
     //this.changeAnimation();
     
@@ -170,6 +195,7 @@ Hero.prototype.changeAnimation = function () {
 */
 
 Hero.prototype.draw = function (aCamera) {
+    this.UIHealth.draw(aCamera);
     GameObject.prototype.draw.call(this, aCamera);
 };
 
@@ -181,3 +207,14 @@ Hero.prototype.getRbox = function() {
     return this.mRbox;
 };
 
+//decrement UIhealth bar and shake mKelvin
+Hero.prototype.tookDamage = function () {
+    this.UIHealth.incCurrentHP(-10);
+    var pos = this.getXform().getPosition();
+
+    this.mShake = new ObjectShake(pos,this.xDelta,
+            this.yDelta,this.freq,this.duration);
+
+    this.mShakeStarted = true;
+    
+};

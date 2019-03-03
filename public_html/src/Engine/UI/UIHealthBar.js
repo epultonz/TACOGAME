@@ -102,7 +102,7 @@ UIHealthBar.prototype.incCurrentHP = function(hp) {
     if(this.mCurHP + hp > this.mMaxHP)
         this.mCurHP = this.mMaxHP; 
     else if(this.mCurHP + hp < 0)
-        this.mCurHP = 0;
+        this.mCurHP = this.mMaxHP; //demo purposes
     else
         this.mCurHP = this.mCurHP + hp;
 };
