@@ -62,14 +62,14 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     GameObject.call(this, this.mKelvin);
 
-    var r = new RigidRectangle(this.getXform(), this.kWidth / 1.9, this.kHeight / 1.1);
+    var r = new RigidRectangle(this.getXform(), this.kWidth / 2, this.kHeight / 2);
     this.setRigidBody(r);
     r.setMass(0.1);
     r.setRestitution(0.3);
     r.setInertia(0);
     r.setFriction(0.7);
     
-    this.toggleDrawRenderable();
+    //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
 
 }
@@ -103,6 +103,7 @@ Hero.prototype.update = function () {
         }
 
         xform.incXPosBy(-this.kDelta);
+        this.mKelvin.updateAnimation();
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
         if (this.mCanJump === true) {
@@ -112,6 +113,7 @@ Hero.prototype.update = function () {
         }
 
         xform.incXPosBy(this.kDelta);
+        this.mKelvin.updateAnimation();
     }
 
 
@@ -142,7 +144,7 @@ Hero.prototype.update = function () {
     }
 
     //this.changeAnimation();
-    this.mKelvin.updateAnimation();
+    
     this.mIsMoving = false;
     this.mCanJump = false;
     

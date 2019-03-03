@@ -145,7 +145,7 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     var g = new GameObject(p);
     var r = new RigidRectangle(xf, w, h);
     g.setRigidBody(r);
-    g.toggleDrawRenderable();
+    //g.toggleDrawRenderable();
     g.toggleDrawRigidShape();
     
     r.setMass(0);
