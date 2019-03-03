@@ -25,6 +25,7 @@ function TacoDemo() {
     this.mCamera = null;
 
     this.mAllObjs = null;
+    this.mAllPlatform = null;
     this.LevelSelect = null;
     
     this.mKelvin = null;
@@ -67,6 +68,7 @@ TacoDemo.prototype.initialize = function () {
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
     this.mAllObjs = new GameObjectSet();
+    this.mAllPlatform = new GameObjectSet();
     
     this.createBounds();
     
@@ -122,7 +124,17 @@ TacoDemo.prototype.update = function () {
     }
     */
    
-    this.mKelvin.getRigidBody().userSetsState();
+    //this.mKelvin.getRigidBody().userSetsState();
+    var collInfo = new CollisionInfo();
+    var collided = false;
+    for (var i = 0; i < this.mAllPlatform.size(); i++) {
+        var platBox = this.mAllPlatform.getObjectAt(i).getRigidBody();
+        collided = this.mKelvin.getRbox().collisionTest(platBox,collInfo);
+        if (collided) {
+            this.mKelvin.canJump(true);
+            break;
+        }
+    }
     
     this.mAllObjs.update();
     
@@ -154,6 +166,7 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     xf.setRotationInDegree(rot);
     
     this.mAllObjs.addToSet(g);
+    this.mAllPlatform.addToSet(g);
 };
 
 TacoDemo.prototype.backSelect = function(){

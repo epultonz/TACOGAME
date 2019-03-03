@@ -6,34 +6,10 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
-
-/*
-function Hero(spriteTexture) {
-    this.kDelta = 0.3;
-
-    this.mKelvin = new SpriteAnimateRenderable(spriteTexture);
-    this.mKelvin.setSpriteSequence(128,0,128,128,8,0);
-    GameObject.call(this, this.mKelvin);
-    
-    var r = new RigidRectangle(this.getXform(), 5, 7);
-    this.setRigidBody(r);
-    r.setVelocity(5,5);
-    //this.toggleDrawRenderable();
-    this.toggleDrawRigidShape();
-}
-gEngine.Core.inheritPrototype(Hero, WASDObj);
-
-Hero.prototype.update = function () {
-    
-    
-    GameObject.prototype.update.call(this);
-    this.mKelvin.updateAnimation();
-};
-*/
 
 function Hero(spriteTexture, atX, atY, lgtSet) {
     this.kDelta = 0.1;
@@ -64,14 +40,15 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     var r = new RigidRectangle(this.getXform(), this.kWidth / 2, this.kHeight / 2);
     this.setRigidBody(r);
-    r.setMass(0.1);
-    r.setRestitution(0.3);
-    r.setInertia(0);
+    r.setMass(10);
+    r.setRestitution(0.1);
     r.setFriction(0.7);
+    
+    this.rBox = r;
     
     //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
-
+    
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -88,7 +65,6 @@ Hero.eHeroState = Object.freeze({
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
-
 
     // control by WASD
     var xform = this.getXform();
@@ -116,7 +92,7 @@ Hero.prototype.update = function () {
         this.mKelvin.updateAnimation();
     }
 
-
+    
     if (this.mCanJump === true) {
         if (this.mIsMoving === false) {
             /*
@@ -127,9 +103,12 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eFaceLeft;
             */
         }
-
+        
+        var prevY = xform.getYPos();
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 35; // Jump velocity
+            
+            v[1] = 15; // Jump velocity
+            //xform.incYPosBy(this.kDelta);
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -196,5 +175,9 @@ Hero.prototype.draw = function (aCamera) {
 
 Hero.prototype.canJump = function (b) {
     this.mCanJump = b;
+};
+
+Hero.prototype.getRbox = function() {
+    return this.rBox;
 };
 
