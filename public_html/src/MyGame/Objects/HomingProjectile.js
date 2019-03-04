@@ -6,7 +6,7 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2 */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
@@ -34,13 +34,11 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     
     GameObject.call(this, this.mHomingProjectile);
     this.setCurrentFrontDir(vec2.fromValues(0, -1)); // set "forward" to be down
-    /*
     this.mRigdRect = new RigidRectangle(this.mHomingProjectile.getXform(), this.mWidth , this.mHeight);
     this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(0, 0);
     this.setRigidBody(this.mRigdRect);
-    this.toggleDrawRigidShape();
-    */
+    //this.toggleDrawRigidShape();
 }
 gEngine.Core.inheritPrototype(HomingProjectile, GameObject);
 
@@ -51,18 +49,16 @@ HomingProjectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        //var currPos = this.getXform().getPosition();
-        //this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
+        this.mTargetPosition = this.mHeroRef.getXform().getPosition();        
         
-        // simple default behavior
-        var pos = this.getXform().getPosition();
-        vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.mDelta);
-    
-        // Give chase!
-        this.mTargetPosition = this.mHeroRef.getXform().getPosition();
+        //set frontdir
         this.rotateObjPointTo(this.mTargetPosition, 0.05); 
-        
-        
+        //use front dir to find velocity 
+        //change constant to increase velocity
+        this.mRigdRect.setVelocity(20*this.getCurrentFrontDir()[0], 20* this.getCurrentFrontDir()[1]);
+        //i have no idea but i think its working
+        this.mRigdRect.travel();
+     
         GameObject.prototype.update.call(this);
 
         // Check for pixel-perfect collisions with hero            
