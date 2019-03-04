@@ -87,7 +87,7 @@ TacoDemo.prototype.unloadScene = function () {
 TacoDemo.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mCamera = new Camera(
-        vec2.fromValues(50, 40), // position of the camera
+        vec2.fromValues(50, 36), // position of the camera
         100,                     // width of camera
         [0, 0, 800, 600]         // viewport (orgX, orgY, width, height)
     );
@@ -96,7 +96,7 @@ TacoDemo.prototype.initialize = function () {
     
     // Step A: set up the cameras
     this.mMinimapCam = new Camera(
-        vec2.fromValues(50, 30), // position of the camera
+        vec2.fromValues(50, 26), // position of the camera
         100,                     // width of camera
         [600, 420, 200, 100]         // viewport (orgX, orgY, width, height)
     );
@@ -115,41 +115,41 @@ TacoDemo.prototype.initialize = function () {
     this.mPipe = this.createPipe();
     
     // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
+    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
     this.mAllObjs.addToSet(this.mKelvin);
 
     // init Patrol
-    this.mPatrol = new Patrol(this.kSprites, 35, 23, this.mKelvin);
+    this.mPatrol = new Patrol(this.kSprites, 35, 19, this.mKelvin);
     this.mAllObjs.addToSet(this.mPatrol);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites, 85, 23.5, this.mKelvin, this.mAllNonPhysObj);
+    this.mCannons = new Cannon(this.kSprites, 85, 19.5, this.mKelvin, this.mAllNonPhysObj);
     this.mAllObjs.addToSet(this.mCannons);
     
-    this.mFlier = new Flier(this.kSprites, 70, 40, this.mKelvin, this.mAllNonPhysObj);
+    this.mFlier = new Flier(this.kSprites, 70, 36, this.mKelvin, this.mAllNonPhysObj);
     this.mAllNonPhysObj.addToSet(this.mFlier);
     
-    this.mPowerup = new Powerup(this.kSprites, 55, 10, this.mKelvin);
+    this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
     this.mAllNonPhysObj.addToSet(this.mPowerup);
 
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
-    this.mSceneBG.getXform().setPosition(50,30);
+    this.mSceneBG.getXform().setPosition(50,26);
     
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
-    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
+    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,12,70,
         "Story Element Panel Demo",15,7);
     
     // For debug
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([0, 0, 0, 1]);
-    this.mMsg.getXform().setPosition(5, 70);
+    this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
 
     //UI button
-    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,580],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
-    this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,580],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
+    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
+    this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -227,12 +227,12 @@ TacoDemo.prototype.update = function () {
 };
 
 TacoDemo.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 4;
+    var x = 15, w = 30, y = 0, y2 = 14;// Was 18
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
-    this.platformAt(30,18,30,0);
-    this.platformAt(80,18,30,0);
+    this.platformAt(30,y2,30,0);
+    this.platformAt(80,y2,30,0);
 };
 
 // Make the platforms
@@ -272,7 +272,7 @@ TacoDemo.prototype.createPipe = function(){
     var g = new TextureRenderable(this.kGreenPipe);
     var xf = g.getXform();
     xf.setSize(10,20);
-    xf.setPosition(95,0);
+    xf.setPosition(95,-4);
     
     var o = new GameObject(g);
     var r = new RigidRectangle(xf,10,20);
