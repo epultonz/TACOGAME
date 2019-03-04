@@ -30,14 +30,22 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mHomingProjectile.getXform().setPosition(atX, atY);
     this.mHomingProjectile.getXform().setSize(this.mWidth, this.mHeight);
     this.mHomingProjectile.setElementPixelPositions(510, 595, 23, 153);
-    this.mHomingProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
+    //this.mHomingProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
+    
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.8, .8, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    this.mMinimapObj.getXform().incRotationByDegree(90);
     
     GameObject.call(this, this.mHomingProjectile);
-    this.setCurrentFrontDir(vec2.fromValues(0, -1)); // set "forward" to be down
+    this.setCurrentFrontDir(vec2.fromValues(0, 1)); // set "forward" to be up
+    
     this.mRigdRect = new RigidRectangle(this.mHomingProjectile.getXform(), this.mWidth , this.mHeight);
     this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(0, 0);
     this.setRigidBody(this.mRigdRect);
+    
     //this.toggleDrawRigidShape();
 }
 gEngine.Core.inheritPrototype(HomingProjectile, GameObject);
@@ -52,10 +60,10 @@ HomingProjectile.prototype.update = function () {
         this.mTargetPosition = this.mHeroRef.getXform().getPosition();        
         
         //set frontdir
-        this.rotateObjPointTo(this.mTargetPosition, 0.05); 
+        this.rotateObjPointTo(this.mTargetPosition, 0.1); 
         //use front dir to find velocity 
         //change constant to increase velocity
-        this.mRigdRect.setVelocity(20*this.getCurrentFrontDir()[0], 20* this.getCurrentFrontDir()[1]);
+        this.mRigdRect.setVelocity(20 * this.getCurrentFrontDir()[0], 20 * this.getCurrentFrontDir()[1]);
         //i have no idea but i think its working
         this.mRigdRect.travel();
      
@@ -65,7 +73,7 @@ HomingProjectile.prototype.update = function () {
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
-            this.mHeroRef.tookDamage();
+            this.mHeroRef.tookDamage(5);
             this.mHitHero = true;
         }
 
@@ -89,11 +97,19 @@ HomingProjectile.prototype.update = function () {
         if(this.mDeadTimer <= 0)
             return false;
     }
-     
+    
+    // Move the minimap object to the patrol's position
+    var projPos = this.getXform().getPosition();
+    this.mMinimapObj.getXform().setPosition(projPos[0], projPos[1]);
+    
     // Return true if the Homingprojectile is still valid
     return true;
 };
 
 HomingProjectile.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+HomingProjectile.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };

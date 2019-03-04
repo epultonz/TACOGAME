@@ -32,6 +32,12 @@ function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mProjectile.setElementPixelPositions(510, 595, 23, 153);
     this.mProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.8, .8, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    this.mMinimapObj.getXform().incRotationByDegree(90);
+    
     GameObject.call(this, this.mProjectile);
     
     /*
@@ -59,7 +65,7 @@ Projectile.prototype.update = function () {
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
-            this.mHeroRef.tookDamage();
+            this.mHeroRef.tookDamage(10);
             this.mHitHero = true;
         }
 
@@ -84,10 +90,18 @@ Projectile.prototype.update = function () {
             return false;
     }
     
+    // Move the minimap object to the patrol's position
+    var projPos = this.getXform().getPosition();
+    this.mMinimapObj.getXform().setPosition(projPos[0], projPos[1]);
+    
     // Return true if the projectile is still valid
     return true;
 };
 
 Projectile.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+Projectile.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };

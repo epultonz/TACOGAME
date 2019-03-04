@@ -37,6 +37,11 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
     //this.mKelvin.addLight(lgtSet.getLightAt(3));
     //this.mKelvin.addLight(lgtSet.getLightAt(2);
+    
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.2, 1, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
 
     GameObject.call(this, this.mKelvin);
 
@@ -53,7 +58,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
     this.kHealthBar = "assets/UI/healthbar.png";
-    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,450],[200,25],0);
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,446],[200,25],0);
     
     //Light settings
     this.mLight = new Light();
@@ -133,7 +138,7 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 25; // Jump velocity
+            v[1] = 27.5; // Jump velocity
             xform.incYPosBy(this.kDelta+1);
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -148,8 +153,8 @@ Hero.prototype.update = function () {
         }
     } else {
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-            v[1] = -20;
-            xform.incYPosBy(-(this.kDelta+1));
+            v[1] = -15;
+            xform.incYPosBy(-(this.kDelta+.75));
             this.mIsMoving = true;
         }
         
@@ -205,6 +210,9 @@ Hero.prototype.update = function () {
     this.mIsMoving = false;
     this.mCanJump = false;
 
+    // Move the minimap object to the hero's position
+    var kelvPos = xform.getPosition();
+    this.mMinimapObj.getXform().setPosition(kelvPos[0], kelvPos[1]);
 };
 
 
@@ -255,6 +263,10 @@ Hero.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
 };
 
+Hero.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
+};
+
 Hero.prototype.canJump = function (b) {
     this.mCanJump = b;
 };
@@ -268,11 +280,11 @@ Hero.prototype.isHurt = function() {
 };
 
 //decrement UIhealth bar and shake mKelvin
-Hero.prototype.tookDamage = function () {
+Hero.prototype.tookDamage = function (damage) {
     // Only get hit if he hasn't been recently and not in Super mode
     if(this.mShakeStarted === false && !this.mIsSuper) 
     {
-        this.UIHealth.incCurrentHP(-10);
+        this.UIHealth.incCurrentHP(-damage);
         var size = this.getXform().getSize();
 
         this.mShake = new ObjectShake(size,this.xDelta,
@@ -282,8 +294,20 @@ Hero.prototype.tookDamage = function () {
     }  
 };
 
+// increment the hero's HP by some amount. Sets to max if it would go over it
+Hero.prototype.incHP = function (hpAmt) {
+    if((this.UIHealth.getCurrentHP() + hpAmt) >= this.UIHealth.getMaxHP())
+        this.UIHealth.setCurrentHP(this.UIHealth.getMaxHP());
+    else
+        this.UIHealth.incCurrentHP(hpAmt); 
+};
+
 Hero.prototype.getHP = function () {
     return this.UIHealth.getCurrentHP();
+};
+
+Hero.prototype.isAtFullHP = function () {
+    return (this.UIHealth.getCurrentHP() === this.UIHealth.getMaxHP());
 };
 
 Hero.prototype.goSuper = function(){

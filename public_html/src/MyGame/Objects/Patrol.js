@@ -31,6 +31,11 @@ function Patrol(spriteTexture, atX, atY, heroRef) {
     this.mPatrol.getXform().setSize(this.kWidth, this.kHeight);
     this.mPatrol.setElementPixelPositions(130,130+180,0,0+180);
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    
     GameObject.call(this, this.mPatrol); // Finish construction via GameObject constructor
     
     this.mRigdRect = new RigidRectangle(this.mPatrol.getXform(), this.kWidth , this.kHeight);
@@ -121,9 +126,13 @@ Patrol.prototype.update = function () {
         else if ( (heroBox.maxX() < (thisBox.minX() + (this.kWidth / 10))) || 
                   (heroBox.minX() > (thisBox.maxX() - (this.kWidth / 10)))   )
         {
-            this.mHeroRef.tookDamage();
+            this.mHeroRef.tookDamage(20);
         }
     }
+
+    // Move the minimap object to the patrol's position
+    var patrolPos = this.getXform().getPosition();
+    this.mMinimapObj.getXform().setPosition(patrolPos[0], patrolPos[1]);
 
     // return true if the object isn't defeated
     return true;
@@ -131,4 +140,8 @@ Patrol.prototype.update = function () {
 
 Patrol.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+Patrol.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };

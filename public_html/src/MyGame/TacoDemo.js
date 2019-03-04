@@ -25,6 +25,8 @@ function TacoDemo() {
 
     // The camera to view the scene
     this.mCamera = null;
+    this.mMinimapCam = null;
+    this.mCamAry = [];
 
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
@@ -38,11 +40,12 @@ function TacoDemo() {
     this.mPatrol = null;
     this.mCannons = null;
     this.mFlier = null;
+    this.mPowerup = null;
     this.mSceneBG = null;
-    
+
     this.mTutoPanel = null;
     this.mCodeBox = null;
-    
+
     this.backButton = null;
     this.MainMenuButton = null;
 
@@ -84,12 +87,22 @@ TacoDemo.prototype.unloadScene = function () {
 TacoDemo.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mCamera = new Camera(
-        vec2.fromValues(50, 40), // position of the camera
+        vec2.fromValues(50, 36), // position of the camera
         100,                     // width of camera
         [0, 0, 800, 600]         // viewport (orgX, orgY, width, height)
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-            // sets the background to gray
+    this.mCamAry.push(this.mCamera);
+
+    // Step A: set up the cameras
+    this.mMinimapCam = new Camera(
+        vec2.fromValues(50, 26), // position of the camera
+        100,                     // width of camera
+        [600, 420, 200, 100]         // viewport (orgX, orgY, width, height)
+    );
+    this.mMinimapCam.setBackgroundColor([0.2, 0.8, 0.4, 1]);
+    this.mCamAry.push(this.mMinimapCam);
+
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
@@ -100,44 +113,47 @@ TacoDemo.prototype.initialize = function () {
     // make the bounds.. platform etc
     this.createBounds();
     this.mPipe = this.createPipe();
-    
+
     // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
+    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
     this.mAllObjs.addToSet(this.mKelvin);
 
     // init Patrol
-    this.mPatrol = new Patrol(this.kSprites, 35, 23, this.mKelvin);
+    this.mPatrol = new Patrol(this.kSprites, 35, 19, this.mKelvin);
     this.mAllObjs.addToSet(this.mPatrol);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites, 85, 23.5, this.mKelvin, this.mAllNonPhysObj);
+    this.mCannons = new Cannon(this.kSprites, 85, 19.5, this.mKelvin, this.mAllNonPhysObj);
     this.mAllObjs.addToSet(this.mCannons);
-    
-    this.mFlier = new Flier(this.kSprites, 70, 40, this.mKelvin, this.mAllNonPhysObj);
+
+    this.mFlier = new Flier(this.kSprites, 70, 36, this.mKelvin, this.mAllNonPhysObj);
     this.mAllNonPhysObj.addToSet(this.mFlier);
+
+    this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
+    this.mAllNonPhysObj.addToSet(this.mPowerup);
 
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
-    this.mSceneBG.getXform().setPosition(50,30);
-    
+    this.mSceneBG.getXform().setPosition(50,26);
+
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
-    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
+    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,12,70,
         "Story Element Panel Demo",15,7);
-    
+
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
     this.mCodeBox = new CodeMechanism(280,220,30,85,7,"0000");
-    
+
     // For debug
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([0, 0, 0, 1]);
-    this.mMsg.getXform().setPosition(5, 70);
+    this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
 
     //UI button
-    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,580],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
-    this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,580],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
+    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
+    this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -146,40 +162,47 @@ TacoDemo.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 
-    this.mCamera.setupViewProjection();
+    // Iterate through every camera to draw all objs on them
+    for(var i = 0; i < this.mCamAry.length; i++)
+    {
+        var currCam = this.mCamAry[i];
+        currCam.setupViewProjection();
 
-    this.mSceneBG.draw(this.mCamera);
+        this.mSceneBG.draw(currCam);
 
-    this.mAllObjs.draw(this.mCamera);
-    this.mAllNonPhysObj.draw(this.mCamera);
+        this.mAllObjs.draw(currCam);
+        this.mAllNonPhysObj.draw(currCam);
 
-    this.MainMenuButton.draw(this.mCamera);
-    this.backButton.draw(this.mCamera);
-    
-    this.mTutoPanel.draw(this.mCamera);
-    this.mCodeBox.draw(this.mCamera);
-    
-    this.mMsg.draw(this.mCamera);
+        this.MainMenuButton.draw(currCam);
+        this.backButton.draw(currCam);
+
+        this.mTutoPanel.draw(currCam);
+        this.mCodeBox.draw(currCam);
+
+        this.mMsg.draw(currCam);
+    }
+
+    //this.mAllObjs.drawMini(this.mMinimapCam);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 TacoDemo.prototype.update = function () {
     var msg = "";
-    
+
     // tutorial panel bounding box collision
     var tBB = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
     if(tBB){
         this.mTutoPanel.actFlag(true);
     } else { this.mTutoPanel.actFlag(false); }
-    
+
     // code box stub outside bbox collision
     var cBB = this.mCodeBox.getStubBBox().boundCollideStatus(this.mKelvin.getBBox());
     if(cBB){
         this.mCodeBox.actFlag(true);
     } else { this.mCodeBox.actFlag(false); }
     this.mCodeBox.update(this.mCamera);
-    
+
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
     var collided = false;
@@ -194,7 +217,7 @@ TacoDemo.prototype.update = function () {
 
     //press q to simulate attack
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
-        this.mKelvin.tookDamage();
+        this.mKelvin.tookDamage(15);
     }
     this.checkWinLose();
 
@@ -203,7 +226,7 @@ TacoDemo.prototype.update = function () {
 
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
-    
+
     this.MainMenuButton.update();
     this.backButton.update();
 
@@ -216,12 +239,12 @@ TacoDemo.prototype.update = function () {
 };
 
 TacoDemo.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 4;
+    var x = 15, w = 30, y = 0, y2 = 14;// Was 18
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
-    this.platformAt(30,18,30,0);
-    this.platformAt(80,18,30,0);
+    this.platformAt(30,y2,30,0);
+    this.platformAt(80,y2,30,0);
 };
 
 // Make the platforms
@@ -261,24 +284,24 @@ TacoDemo.prototype.createPipe = function(){
     var g = new TextureRenderable(this.kGreenPipe);
     var xf = g.getXform();
     xf.setSize(10,20);
-    xf.setPosition(95,0);
-    
+    xf.setPosition(95,-4);
+
     var o = new GameObject(g);
     var r = new RigidRectangle(xf,10,20);
     o.setRigidBody(r);
-    
+
     r.setMass(0);
-    
+
     this.mAllObjs.addToSet(o);
     this.mAllPlatform.addToSet(o);
-    
+
     return o;
 };
 
 TacoDemo.prototype.checkWinLose = function(){
     // Win conditions
     var canWarp = false;
-    if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97 && 
+    if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97 &&
             this.mCodeBox.getSolve()){
         canWarp = true;
     }
