@@ -33,7 +33,7 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mHomingProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
     GameObject.call(this, this.mHomingProjectile);
-    
+    this.setCurrentFrontDir(vec2.fromValues(0, -1)); // set "forward" to be down
     /*
     this.mRigdRect = new RigidRectangle(this.mHomingProjectile.getXform(), this.mWidth , this.mHeight);
     this.mRigdRect.setMass(0);
@@ -60,7 +60,7 @@ HomingProjectile.prototype.update = function () {
     
         // Give chase!
         this.mTargetPosition = this.mHeroRef.getXform().getPosition();
-        this.rotateObjPointTo(this.mTargetPosition, 0.05); // rotate rather quickly
+        this.rotateObjPointTo(this.mTargetPosition, 0.05); 
         
         
         GameObject.prototype.update.call(this);
