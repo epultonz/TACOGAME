@@ -243,5 +243,8 @@ Hero.prototype.tookDamage = function () {
 
         this.mShakeStarted = true;
     }  
+};
 
+Hero.prototype.getHP = function () {
+    return this.UIHealth.getCurrentHP();
 };
