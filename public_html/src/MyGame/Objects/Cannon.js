@@ -9,10 +9,13 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-function Cannon(spriteTexture, atX, atY, heroRef) {
+function Cannon(spriteTexture, atX, atY, heroRef, setRef) {
     this.kWidth = 6;
     this.kHeight = 6;
     this.mHeroRef = heroRef;
+    this.mSetRef = setRef;
+    this.mShootTimer = 300;
+    this.mSpriteText = spriteTexture;
     
     // sprite renderable 
     this.mCannon = new SpriteRenderable(spriteTexture);
@@ -33,6 +36,15 @@ gEngine.Core.inheritPrototype(Cannon, GameObject);
 
 Cannon.prototype.update = function () {
     GameObject.prototype.update.call(this);
+    
+    this.mShootTimer--;
+    if(this.mShootTimer <= 0)
+    {
+        this.mShootTimer = 300;
+        var currPos = this.getXform().getPosition();
+        var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, true);
+        this.mSetRef.addToSet(bullet);
+    }
 };
 
 Cannon.prototype.draw = function (aCamera) {

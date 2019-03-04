@@ -10,18 +10,18 @@
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
-    this.mWidth = 1.5;
-    this.mHeight = 1;
+    this.mWidth = 2;
+    this.mHeight = 1.25;
     this.mHeroRef = heroRef;
     this.mDelta = 0;
     if(leftFacing)
-        this.mDelta = 0.4;
-    else
         this.mDelta = -0.4;
+    else
+        this.mDelta = 0.4;
     
     // pack variables
     this.mTimer = 300;
-    this.mDeadTimer = 60;
+    this.mDeadTimer = 30;
     this.mHitHero = false;
     
     // sprite renderable 
@@ -30,12 +30,11 @@ function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mProjectile.getXform().setPosition(atX, atY);
     this.mProjectile.getXform().setSize(this.mWidth, this.mHeight);
     this.mProjectile.setElementPixelPositions(510, 595, 23, 153);
-    this.mProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
     GameObject.call(this, this.mProjectile);
     
     this.mRigdRect = new RigidRectangle(this.mProjectile.getXform(), this.mWidth , this.mHeight);
-    this.mRigdRect.setMass(5);
+    this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(this.mDelta, 0);
     this.setRigidBody(this.mRigdRect);
     this.toggleDrawRigidShape();
@@ -53,11 +52,7 @@ Projectile.prototype.update = function () {
         this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
         GameObject.prototype.update.call(this);
 
-        // Check for pixel-perfect collisions with patrols
-
-        //reset dyepack bounding box
-        this.mBoundBox.setBounds(this.mPack.getXform().getPosition(),2,3.5);
-                
+        // Check for pixel-perfect collisions with hero            
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
