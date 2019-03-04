@@ -21,7 +21,7 @@ function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     
     // pack variables
     this.mTimer = 300;
-    this.mDeadTimer = 30;
+    this.mDeadTimer = 20;
     this.mHitHero = false;
     
     // sprite renderable 
@@ -78,7 +78,7 @@ Projectile.prototype.update = function () {
         // Increase the projectile's size for now
         var xf = this.getXform();
         var currSize = xf.getSize();
-        xf.setSize(currSize[0] * 1.05, currSize[1] * 1.05);
+        xf.setSize(currSize[0] * 1.04, currSize[1] * 1.04);
         
         if(this.mDeadTimer <= 0)
             return false;
