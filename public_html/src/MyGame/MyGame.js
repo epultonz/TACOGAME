@@ -60,13 +60,13 @@ MyGame.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
     
     
-    this.ParticleButton = new UIButton(this.kUIButton,this.particleSelect,this,[400,400],[600,100],"Particle Demos",8,[1,1,1,1],[0,0,0,1]);
-    this.PhysicsButton = new UIButton(this.kUIButton,this.physicsSelect,this,[400,300],[500,100],"Physics Demo",8,[1,1,1,1],[0,0,0,1]);
-    this.UIButton =  new UIButton(this.kUIButton,this.uiSelect,this,[400,200],[320,100],"UI Demo",8,[1,1,1,1],[0,0,0,1]);
+    //this.ParticleButton = new UIButton(this.kUIButton,this.particleSelect,this,[400,400],[600,100],"Particle Demos",8,[1,1,1,1],[0,0,0,1]);
+    //this.PhysicsButton = new UIButton(this.kUIButton,this.physicsSelect,this,[400,300],[500,100],"Physics Demo",8,[1,1,1,1],[0,0,0,1]);
+    //this.UIButton =  new UIButton(this.kUIButton,this.uiSelect,this,[400,200],[320,100],"UI Demo",8,[1,1,1,1],[0,0,0,1]);
     this.UIText = new UIText("Game Engine TACO Demo",[400,600],8,1,0,[0,0,0,1]);
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
-    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoSelect,this,[400,100],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoSelect,this,[400,400],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -77,17 +77,17 @@ MyGame.prototype.draw = function () {
     
     
     this.mCamera.setupViewProjection();
-    this.ParticleButton.draw(this.mCamera);
-    this.PhysicsButton.draw(this.mCamera);
-    this.UIButton.draw(this.mCamera);
+    //this.ParticleButton.draw(this.mCamera);
+    //this.PhysicsButton.draw(this.mCamera);
+    //this.UIButton.draw(this.mCamera);
     this.UIText.draw(this.mCamera);
     this.tacoDemoButton.draw(this.mCamera);
 };
 
 MyGame.prototype.update = function () {
-    this.ParticleButton.update();
-    this.PhysicsButton.update();
-    this.UIButton.update();
+    //this.ParticleButton.update();
+    //this.PhysicsButton.update();
+    //this.UIButton.update();
     this.tacoDemoButton.update();
 };
 
