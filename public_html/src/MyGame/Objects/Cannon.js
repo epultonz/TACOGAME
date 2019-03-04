@@ -34,7 +34,7 @@ function Cannon(spriteTexture, atX, atY, heroRef, setRef) {
     var r = new RigidRectangle(this.getXform(), this.kWidth , this.kHeight );
     this.setRigidBody(r);
     r.setMass(0);
-    this.toggleDrawRigidShape();
+    //this.toggleDrawRigidShape();
     
 }
 gEngine.Core.inheritPrototype(Cannon, GameObject);

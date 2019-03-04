@@ -17,9 +17,21 @@ function StoryPanel(texture,atX,atY,w,text,stubX,stubY){
     this.mPanel.getXform().setSize(w,w);
     
     //the text
-    this.mText = new FontRenderable(text);
-    this.mText.getXform().setPosition(atX-21,atY+17);
-    this.mText.setTextHeight(2);
+    this.mText1 = new FontRenderable(text);
+    this.mText1.getXform().setPosition(atX-21,atY+17);
+    this.mText1.setTextHeight(2);
+    
+    this.mText2 = new FontRenderable(" ");
+    this.mText2.getXform().setPosition(atX-21,atY+14);
+    this.mText2.setTextHeight(2);
+    
+    this.mText3 = new FontRenderable(" ");
+    this.mText3.getXform().setPosition(atX-21,atY+11);
+    this.mText3.setTextHeight(2);
+    
+    this.mText4 = new FontRenderable(" ");
+    this.mText4.getXform().setPosition(atX-21,atY+8);
+    this.mText4.setTextHeight(2);
     
     //stub in game
     this.mStub = new Renderable();
@@ -46,7 +58,10 @@ StoryPanel.prototype.update = function(){
 StoryPanel.prototype.draw = function(aCam){
     if(this.mActive){
         GameObject.prototype.draw.call(this,aCam);
-        this.mText.draw(aCam);
+        this.mText1.draw(aCam);
+        this.mText2.draw(aCam);
+        this.mText3.draw(aCam);
+        this.mText4.draw(aCam);
     };
     this.mStub.draw(aCam);
 };
@@ -57,4 +72,20 @@ StoryPanel.prototype.actFlag = function(a){
 
 StoryPanel.prototype.getPanelBBox = function(){
     return this.mPanelBBox;
+};
+
+StoryPanel.prototype.setText1 = function(s){
+    this.mText1.setText(s);
+};
+
+StoryPanel.prototype.setText2 = function(s){
+    this.mText2.setText(s);
+};
+
+StoryPanel.prototype.setText3 = function(s){
+    this.mText3.setText(s);
+};
+
+StoryPanel.prototype.setText4 = function(s){
+    this.mText4.setText(s);
 };

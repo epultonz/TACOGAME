@@ -55,7 +55,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mRbox = r;
 
     //this.toggleDrawRenderable();
-    this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
+    //this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
     this.kHealthBar = "assets/UI/healthbar.png";
     this.UIHealth = new UIHealthBar(this.kHealthBar,[110,446],[200,25],0);
@@ -98,11 +98,11 @@ Hero.prototype.update = function () {
     var v = this.getRigidBody().getVelocity();
 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-        if (this.mCanJump === true) {
+        //if (this.mCanJump === true) {
             this.mPreviousHeroState = this.mHeroState;
             this.mHeroState = Hero.eHeroState.eRunLeft;
             this.mIsMoving = true;
-        }
+        //}
         //make less movement in air
         if(!this.mCanJump){
             xform.incXPosBy(-this.kDelta*0.5); // i dont think it works :'(
@@ -113,11 +113,11 @@ Hero.prototype.update = function () {
         this.mKelvin.updateAnimation();
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-        if (this.mCanJump === true) {
+        //if (this.mCanJump === true) {
             this.mPreviousHeroState = this.mHeroState;
             this.mHeroState = Hero.eHeroState.eRunRight;
             this.mIsMoving = true;
-        }
+        //}
         //make less movement in air
         if(!this.mCanJump){
             xform.incXPosBy(this.kDelta*0.5);

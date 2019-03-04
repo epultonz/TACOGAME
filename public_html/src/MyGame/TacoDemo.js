@@ -125,10 +125,7 @@ TacoDemo.prototype.initialize = function () {
     this.mFlier = new Flier(this.kSprites, 70, 36, this.mKelvin, this.mAllNonPhysObj);
     this.mAllNonPhysObj.addToSet(this.mFlier);
 
-    this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
-    this.mAllNonPhysObj.addToSet(this.mPowerup);
-
-    this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
+    this.mPowerup = new Powerup(this.kSprites, 20, 30, this.mKelvin);
     this.mAllNonPhysObj.addToSet(this.mPowerup);
 
     // scene background
@@ -139,10 +136,13 @@ TacoDemo.prototype.initialize = function () {
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
     this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
         "Story Element Panel Demo",15,3);
+    this.mTutoPanel.setText2("Space to jump. S to stomp. E to super.");
+    this.mTutoPanel.setText3("Take the health pack above.");
+    this.mTutoPanel.setText4("Solve the code and warp down to win.");
 
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
-    this.mCodeBox = new CodeMechanism(280,240,40,85,3,"0000");
+    this.mCodeBox = new CodeMechanism(280,240,40,85,3,"1234");
 
     // For debug
     this.mMsg = new FontRenderable("Status Message");
@@ -237,7 +237,7 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     var r = new RigidRectangle(xf, w, h);
     g.setRigidBody(r);
     //g.toggleDrawRenderable();
-    g.toggleDrawRigidShape();
+    //g.toggleDrawRigidShape();
 
     r.setMass(0);
     xf.setSize(w, h);
@@ -247,7 +247,6 @@ TacoDemo.prototype.platformAt = function (x, y, w, rot) {
     this.mAllObjs.addToSet(g);
     this.mAllPlatform.addToSet(g);
 };
-
 // back button UI
 TacoDemo.prototype.backSelect = function(){
     this.LevelSelect="Back";

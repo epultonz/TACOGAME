@@ -42,7 +42,7 @@ function Patrol(spriteTexture, atX, atY, heroRef) {
     this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(-this.mVelocity, 0);
     this.setRigidBody(this.mRigdRect);
-    this.toggleDrawRigidShape();
+    //this.toggleDrawRigidShape();
     
     /*
     var vx = (Math.random() - 0.5);

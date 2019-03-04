@@ -13,7 +13,7 @@
 function CodeMechanism(atX,atY,w,stubX,stubY,code){
     
     //the text
-    this.mText = new FontRenderable("Key in Code");
+    this.mText = new FontRenderable("Key in passcode:");
     this.mText.getXform().setPosition(38,30);
     this.mText.setTextHeight(2);
     
