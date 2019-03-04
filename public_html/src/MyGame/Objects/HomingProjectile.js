@@ -20,7 +20,7 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
         this.mDelta = 0.2;
     
     // pack variables
-    this.mTimer = 300;
+    this.mTimer = 175;
     this.mDeadTimer = 20;
     this.mHitHero = false;
     
@@ -60,7 +60,7 @@ HomingProjectile.prototype.update = function () {
         this.mTargetPosition = this.mHeroRef.getXform().getPosition();        
         
         //set frontdir
-        this.rotateObjPointTo(this.mTargetPosition, 0.1); 
+        this.rotateObjPointTo(this.mTargetPosition, 0.07); 
         //use front dir to find velocity 
         //change constant to increase velocity
         this.mRigdRect.setVelocity(20 * this.getCurrentFrontDir()[0], 20 * this.getCurrentFrontDir()[1]);
