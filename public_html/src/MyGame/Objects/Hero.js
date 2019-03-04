@@ -6,7 +6,7 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2 */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
@@ -76,6 +76,16 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.duration = 30;
     this.mShakeStarted = false;
     this.mShake = null;
+    
+    //interpolation pet follower
+    this.kPet = "assets/UI/healthbar.png"; //using this as pet for now
+    this.mPet = new SpriteRenderable(this.kPet);
+    this.mPet.setColor([1, 1, 1, 0]);
+    this.mPet.getXform().setPosition(atX, atY);
+    this.mPet.getXform().setSize(1, 1);
+    this.mPet.setElementPixelPositions(0, 32, 0, 32); //left right top bottom
+    this.mInterpolatePet = new InterpolateVec2(
+            this.mPet.getXform().getPosition(), 120, 0.05);
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
@@ -213,7 +223,25 @@ Hero.prototype.update = function () {
     // Move the minimap object to the hero's position
     var kelvPos = xform.getPosition();
     this.mMinimapObj.getXform().setPosition(kelvPos[0], kelvPos[1]);
+    
+    this._updateInterp();
+    this.mPet.update();
 };
+
+Hero.prototype._updateInterp = function(){
+    var heroPos = this.getXform().getPosition();
+
+    
+    var xComp1 = (heroPos[0] - 2); //distance from hero
+    var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
+
+    var heroFollowVector = vec2.fromValues(xComp1, yComp1);
+    
+   
+    this.mInterpolatePet.setFinalValue(heroFollowVector);
+    this.mInterpolatePet.updateInterpolation();
+};
+
 
 
 Hero.prototype.changeAnimation = function () {
@@ -259,6 +287,7 @@ Hero.prototype.changeAnimation = function () {
 
 
 Hero.prototype.draw = function (aCamera) {
+    this.mPet.draw(aCamera);
     this.UIHealth.draw(aCamera);
     GameObject.prototype.draw.call(this, aCamera);
 };
