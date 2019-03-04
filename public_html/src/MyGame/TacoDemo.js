@@ -36,7 +36,9 @@ function TacoDemo() {
     this.mPatrol = null;
     this.mCannons = null;
     this.mSceneBG = null;
-    this.mWBpanel = null;
+    
+    this.mTutoPanel = null;
+    this.mTutoStub = null;
 
     this.backButton = null;
     this.MainMenuButton = null;
@@ -105,7 +107,11 @@ TacoDemo.prototype.initialize = function () {
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
     this.mSceneBG.getXform().setPosition(50,30);
-
+    
+    // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
+    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
+        "Testing... i actually like ice cream",15,7);
+    
     // For debug
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([0, 0, 0, 1]);
@@ -132,7 +138,9 @@ TacoDemo.prototype.draw = function () {
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
-
+    
+    this.mTutoPanel.draw(this.mCamera);
+    
     this.mMsg.draw(this.mCamera);
 };
 
@@ -164,7 +172,11 @@ TacoDemo.prototype.update = function () {
 
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
-
+    
+    var bb = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
+    if(bb){
+        this.mTutoPanel.actFlag(true);
+    } else { this.mTutoPanel.actFlag(false); }
 
     this.MainMenuButton.update();
     this.backButton.update();
