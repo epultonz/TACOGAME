@@ -75,6 +75,10 @@ TacoDemo.prototype.unloadScene = function () {
         gEngine.Core.startScene(new MyGame());
     else if(this.LevelSelect==="Main")
         gEngine.Core.startScene(new MyGame());
+    else if(this.LevelSelect==="Win")
+        gEngine.Core.startScene(new WinScene());
+    else if(this.LevelSelect==="Lose")
+        gEngine.Core.startScene(new LoseScene());
 };
 
 TacoDemo.prototype.initialize = function () {
@@ -175,6 +179,16 @@ TacoDemo.prototype.update = function () {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
         this.mKelvin.tookDamage();
     }
+    // still need to implement the warp
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O) ) {
+        this.LevelSelect = "Win";
+        gEngine.GameLoop.stop();
+    }
+    var hp = this.mKelvin.getHP();
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L ) || hp <= 0 ) {
+        this.LevelSelect = "Lose";
+        gEngine.GameLoop.stop();
+    }
 
     this.mAllObjs.update();
     this.mAllNonPhysObj.update();
@@ -192,8 +206,9 @@ TacoDemo.prototype.update = function () {
     this.backButton.update();
 
     // nice for debugging
-    msg += " Relaxation count: " + gEngine.Physics.getRelaxationCount() + " |";
-    msg += " CanJump status: " + collided;
+    msg += " Health: " + hp + " |";
+    msg += " CanJump status: " + collided + " |";
+    msg += " Q (damage), O (Win), L (Lose)";
     this.mMsg.setText(msg);
 
 };
