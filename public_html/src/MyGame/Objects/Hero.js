@@ -147,10 +147,14 @@ Hero.prototype.update = function () {
     }
 
     if(this.mShakeStarted) {
+        var c = this.mKelvin.getColor();
+        
         if(this.mShake.shakeDone()){
             this.mShake = null;
             this.mShakeStarted = false;
             this.getXform().setSize(this.kWidth,this.kHeight);
+            
+            c[3] = 0; //restore color back to normal
         } else {
             var size = this.getXform().getSize();
 
@@ -158,6 +162,13 @@ Hero.prototype.update = function () {
             this.mShake.updateShakeState();
             var newPos = this.mShake.getCenter();
             this.getXform().setSize(newPos[0],newPos[1]);
+            
+            // continuosly change color tint for effect
+            var ca = c[3] + 0.05;
+            if (ca > 1) {
+                ca = 0;
+            }
+            c[3] = ca;
         }
     }
 
