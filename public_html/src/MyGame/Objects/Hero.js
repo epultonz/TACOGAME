@@ -54,7 +54,16 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     this.kHealthBar = "assets/UI/healthbar.png";
     this.UIHealth = new UIHealthBar(this.kHealthBar,[110,450],[200,25],0);
-
+    
+    //Light settings
+    this.mLight = new Light();
+    this.mKelvin.addLight(this.mLight);
+    this.mLight.set2DPosition(this.mKelvin.getXform().getPosition());
+    this.mLight.setLightTo(false);
+    
+    //super saiyan settings
+    this.mIsSuper = false;
+    
     //shake paramaters
     this.xDelta = .7;
     this.yDelta = .25;
@@ -145,6 +154,18 @@ Hero.prototype.update = function () {
         }
         
     }
+    
+    // toggle super saiyan mode!!!!!! UWOOOOHHHHHHHHHHHHH
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+        if(!this.mIsSuper){
+            this.mLight.setLightTo(true);
+            this.mIsSuper = true;
+        }else{
+            this.mLight.setLightTo(false);
+            this.mIsSuper = false;
+        }
+    }
+    if(this.mIsSuper){this.goSuper();}
 
     if(this.mShakeStarted) {
         var c = this.mKelvin.getColor();
@@ -155,6 +176,7 @@ Hero.prototype.update = function () {
             this.getXform().setSize(this.kWidth,this.kHeight);
             
             c[3] = 0; //restore color back to normal
+            this.mKelvin.setColor([1,1,1,0]);
         } else {
             var size = this.getXform().getSize();
 
@@ -164,6 +186,8 @@ Hero.prototype.update = function () {
             this.getXform().setSize(newPos[0],newPos[1]);
             
             // continuosly change color tint for effect
+            //c = [1,0,0,0.2];
+            this.mKelvin.setColor([1,0,0,0.4]);
             var ca = c[3] + 0.05;
             if (ca > 1) {
                 ca = 0;
@@ -171,7 +195,8 @@ Hero.prototype.update = function () {
             c[3] = ca;
         }
     }
-
+    
+    this.mLight.set2DPosition(xform.getPosition());
     this.changeAnimation();
     this.UIHealth.update();
 
@@ -244,7 +269,8 @@ Hero.prototype.isHurt = function() {
 
 //decrement UIhealth bar and shake mKelvin
 Hero.prototype.tookDamage = function () {
-    if(this.mShakeStarted === false) // Only get hit if he hasn't been recently
+    // Only get hit if he hasn't been recently and not in Super mode
+    if(this.mShakeStarted === false && !this.mIsSuper) 
     {
         this.UIHealth.incCurrentHP(-10);
         var size = this.getXform().getSize();
@@ -258,4 +284,13 @@ Hero.prototype.tookDamage = function () {
 
 Hero.prototype.getHP = function () {
     return this.UIHealth.getCurrentHP();
+};
+
+Hero.prototype.goSuper = function(){
+    var s = this.mLight.getIntensity();
+    var a = 0.1;
+    if (s >= 5) {
+        s = 0;
+    }
+    this.mLight.setIntensity(s+a);
 };
