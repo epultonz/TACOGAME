@@ -56,10 +56,10 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.UIHealth = new UIHealthBar(this.kHealthBar,[110,450],[200,25],0);
 
     //shake paramaters
-    this.xDelta = .5;
-    this.yDelta = 0;
-    this.freq = 4;
-    this.duration = 60;
+    this.xDelta = .7;
+    this.yDelta = .25;
+    this.freq = 1;
+    this.duration = 30;
     this.mShakeStarted = false;
     this.mShake = null;
 
@@ -150,13 +150,14 @@ Hero.prototype.update = function () {
         if(this.mShake.shakeDone()){
             this.mShake = null;
             this.mShakeStarted = false;
+            this.getXform().setSize(this.kWidth,this.kHeight);
         } else {
-            var pos = this.getXform().getPosition();
+            var size = this.getXform().getSize();
 
-            this.mShake.setRefCenter(pos);
+            this.mShake.setRefCenter(size);
             this.mShake.updateShakeState();
             var newPos = this.mShake.getCenter();
-            this.getXform().setPosition(newPos[0],newPos[1]);
+            this.getXform().setSize(newPos[0],newPos[1]);
         }
     }
 
@@ -235,9 +236,9 @@ Hero.prototype.tookDamage = function () {
     if(this.mShakeStarted === false) // Only get hit if he hasn't been recently
     {
         this.UIHealth.incCurrentHP(-10);
-        var pos = this.getXform().getPosition();
+        var size = this.getXform().getSize();
 
-        this.mShake = new ObjectShake(pos,this.xDelta,
+        this.mShake = new ObjectShake(size,this.xDelta,
                 this.yDelta,this.freq,this.duration);
 
         this.mShakeStarted = true;
