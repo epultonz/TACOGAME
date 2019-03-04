@@ -123,7 +123,7 @@ TacoDemo.prototype.initialize = function () {
     
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
     this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
-        "Testing... i actually like ice cream",15,7);
+        "Story Element Panel Demo",15,7);
     
     // For debug
     this.mMsg = new FontRenderable("Status Message");
