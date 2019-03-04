@@ -21,7 +21,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     this.mKelvin.setColor([1, 1, 1, 0]);
     this.mKelvin.getXform().setPosition(atX, atY);
-    this.mKelvin.getXform().setZPos(1);
+    //this.mKelvin.getXform().setZPos(1);
     this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
 
     this.mHeroState = Hero.eHeroState.eRunRight;
@@ -223,6 +223,10 @@ Hero.prototype.canJump = function (b) {
 
 Hero.prototype.getRbox = function() {
     return this.mRbox;
+};
+
+Hero.prototype.isHurt = function() {
+    return this.mShakeStarted;
 };
 
 //decrement UIhealth bar and shake mKelvin

@@ -26,6 +26,7 @@ function TacoDemo() {
     this.mCamera = null;
 
     this.mAllObjs = null;
+    this.mAllBullets = null;
     this.mAllPlatform = null;
     this.LevelSelect = null;
 
@@ -81,6 +82,7 @@ TacoDemo.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
+    this.mAllBullets = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
     this.mAllPlatform = new GameObjectSet(); //store all platform
 
@@ -96,7 +98,7 @@ TacoDemo.prototype.initialize = function () {
     this.mAllObjs.addToSet(this.mPatrol);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites, 85, 23);
+    this.mCannons = new Cannon(this.kSprites, 85, 23, this.mKelvin, this.mAllBullets);
     this.mAllObjs.addToSet(this.mCannons);
 
     // scene background
@@ -126,6 +128,7 @@ TacoDemo.prototype.draw = function () {
     this.mSceneBG.draw(this.mCamera);
 
     this.mAllObjs.draw(this.mCamera);
+    this.mAllBullets.draw(this.mCamera);
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
@@ -157,6 +160,7 @@ TacoDemo.prototype.update = function () {
     }
 
     this.mAllObjs.update();
+    this.mAllBullets.update();
 
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
