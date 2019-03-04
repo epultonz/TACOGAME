@@ -10,8 +10,8 @@
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 function Cannon(spriteTexture, atX, atY, heroRef, setRef) {
-    this.kWidth = 6;
-    this.kHeight = 6;
+    this.kWidth = 7;
+    this.kHeight = 7;
     this.mHeroRef = heroRef;
     this.mSetRef = setRef;
     this.mShootTimer = 300;

@@ -49,7 +49,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mRbox = r;
 
     //this.toggleDrawRenderable();
-    this.toggleDrawRigidShape();
+    this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
     this.kHealthBar = "assets/UI/healthbar.png";
     this.UIHealth = new UIHealthBar(this.kHealthBar,[110,400],[200,25],0);
@@ -123,7 +123,7 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 20; // Jump velocity
+            v[1] = 25; // Jump velocity
             xform.incYPosBy(this.kDelta+1);
             /*
             this.mPreviousHeroState = this.mHeroState;
