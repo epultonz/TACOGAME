@@ -33,7 +33,7 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     //this.mHomingProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.setColor([.8, .8, .2, 0]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     this.mMinimapObj.getXform().incRotationByDegree(90);
@@ -73,7 +73,7 @@ HomingProjectile.prototype.update = function () {
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
-            this.mHeroRef.tookDamage();
+            this.mHeroRef.tookDamage(5);
             this.mHitHero = true;
         }
 

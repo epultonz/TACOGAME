@@ -280,11 +280,11 @@ Hero.prototype.isHurt = function() {
 };
 
 //decrement UIhealth bar and shake mKelvin
-Hero.prototype.tookDamage = function () {
+Hero.prototype.tookDamage = function (damage) {
     // Only get hit if he hasn't been recently and not in Super mode
     if(this.mShakeStarted === false && !this.mIsSuper) 
     {
-        this.UIHealth.incCurrentHP(-10);
+        this.UIHealth.incCurrentHP(-damage);
         var size = this.getXform().getSize();
 
         this.mShake = new ObjectShake(size,this.xDelta,
@@ -294,8 +294,20 @@ Hero.prototype.tookDamage = function () {
     }  
 };
 
+// increment the hero's HP by some amount. Sets to max if it would go over it
+Hero.prototype.incHP = function (hpAmt) {
+    if((this.UIHealth.getCurrentHP() + hpAmt) >= this.UIHealth.getMaxHP())
+        this.UIHealth.setCurrentHP(this.UIHealth.getMaxHP());
+    else
+        this.UIHealth.incCurrentHP(hpAmt); 
+};
+
 Hero.prototype.getHP = function () {
     return this.UIHealth.getCurrentHP();
+};
+
+Hero.prototype.isAtFullHP = function () {
+    return (this.UIHealth.getCurrentHP() === this.UIHealth.getMaxHP());
 };
 
 Hero.prototype.goSuper = function(){

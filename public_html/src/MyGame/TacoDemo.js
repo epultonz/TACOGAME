@@ -40,6 +40,7 @@ function TacoDemo() {
     this.mPatrol = null;
     this.mCannons = null;
     this.mFlier = null;
+    this.mPowerup = null;
     this.mSceneBG = null;
     
     this.mTutoPanel = null;
@@ -127,6 +128,9 @@ TacoDemo.prototype.initialize = function () {
     
     this.mFlier = new Flier(this.kSprites, 70, 40, this.mKelvin, this.mAllNonPhysObj);
     this.mAllNonPhysObj.addToSet(this.mFlier);
+    
+    this.mPowerup = new Powerup(this.kSprites, 55, 10, this.mKelvin);
+    this.mAllNonPhysObj.addToSet(this.mPowerup);
 
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
@@ -195,7 +199,7 @@ TacoDemo.prototype.update = function () {
 
     //press q to simulate attack
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
-        this.mKelvin.tookDamage();
+        this.mKelvin.tookDamage(15);
     }
     this.checkWinLose();
 
