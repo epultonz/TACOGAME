@@ -17,6 +17,9 @@ function Flier(spriteTexture, atX, atY, heroRef, setRef) {
     this.mShootTimer = 500;
     this.mSpriteText = spriteTexture;
     
+    this.yPos = atY;
+    this.touchUp = false;
+    
     // sprite renderable 
     this.mFlier = new SpriteRenderable(spriteTexture);
     this.mFlier.setColor([1, 1, 1, 0]);
@@ -44,6 +47,19 @@ Flier.prototype.update = function () {
         var bullet = new HomingProjectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, true);
         this.mSetRef.addToSet(bullet);
     }
+    
+    //bobbing up/down 
+    var fPos = this.mFlier.getXform().getYPos();
+    var fDownTarget = this.yPos-7;
+    var delta = 0.05;
+    if(this.touchUp){
+        this.mFlier.getXform().incYPosBy(-delta);
+    }else if(!this.touchUp){
+        this.mFlier.getXform().incYPosBy(delta);
+    }
+    if(fPos >= this.yPos){
+        this.touchUp = true;
+    } else if(fPos <= fDownTarget){this.touchUp = false;}
 };
 
 Flier.prototype.draw = function (aCamera) {
