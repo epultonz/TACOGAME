@@ -132,6 +132,9 @@ TacoDemo.prototype.initialize = function () {
     this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
     this.mAllNonPhysObj.addToSet(this.mPowerup);
 
+    this.mPowerup = new Powerup(this.kSprites, 55, 6, this.mKelvin);
+    this.mAllNonPhysObj.addToSet(this.mPowerup);
+
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(100,50);
