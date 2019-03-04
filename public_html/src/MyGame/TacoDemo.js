@@ -41,8 +41,8 @@ function TacoDemo() {
     this.mSceneBG = null;
     
     this.mTutoPanel = null;
-    this.mTutoStub = null;
-
+    this.mCodeBox = null;
+    
     this.backButton = null;
     this.MainMenuButton = null;
 
@@ -125,6 +125,10 @@ TacoDemo.prototype.initialize = function () {
     this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
         "Story Element Panel Demo",15,7);
     
+    // the code box to unlock green pipe
+    //@param [atX,atY,w,stubX,stubY,code]
+    this.mCodeBox = new CodeMechanism(280,220,30,85,7,"0000");
+    
     // For debug
     this.mMsg = new FontRenderable("Status Message");
     this.mMsg.setColor([0, 0, 0, 1]);
@@ -153,6 +157,7 @@ TacoDemo.prototype.draw = function () {
     this.backButton.draw(this.mCamera);
     
     this.mTutoPanel.draw(this.mCamera);
+    this.mCodeBox.draw(this.mCamera);
     
     this.mMsg.draw(this.mCamera);
 };
@@ -161,7 +166,20 @@ TacoDemo.prototype.draw = function () {
 // anything from this function!
 TacoDemo.prototype.update = function () {
     var msg = "";
-
+    
+    // tutorial panel bounding box collision
+    var tBB = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
+    if(tBB){
+        this.mTutoPanel.actFlag(true);
+    } else { this.mTutoPanel.actFlag(false); }
+    
+    // code box stub outside bbox collision
+    var cBB = this.mCodeBox.getStubBBox().boundCollideStatus(this.mKelvin.getBBox());
+    if(cBB){
+        this.mCodeBox.actFlag(true);
+    } else { this.mCodeBox.actFlag(false); }
+    this.mCodeBox.update(this.mCamera);
+    
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
     var collided = false;
@@ -186,12 +204,6 @@ TacoDemo.prototype.update = function () {
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
     
-    // tutorial panel bounding box collision
-    var bb = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
-    if(bb){
-        this.mTutoPanel.actFlag(true);
-    } else { this.mTutoPanel.actFlag(false); }
-
     this.MainMenuButton.update();
     this.backButton.update();
 
@@ -266,7 +278,8 @@ TacoDemo.prototype.createPipe = function(){
 TacoDemo.prototype.checkWinLose = function(){
     // Win conditions
     var canWarp = false;
-    if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97){
+    if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97 && 
+            this.mCodeBox.getSolve()){
         canWarp = true;
     }
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.S) && canWarp) {

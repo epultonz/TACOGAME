@@ -23,7 +23,7 @@ function StoryPanel(texture,atX,atY,w,text,stubX,stubY){
     
     //stub in game
     this.mStub = new Renderable();
-    this.mStub.setColor([0,1,0,1]);
+    this.mStub.setColor([0.5,0,0.5,1]);
     this.mStub.getXform().setPosition(stubX,stubY);
     this.mStub.getXform().setSize(2,2);
     

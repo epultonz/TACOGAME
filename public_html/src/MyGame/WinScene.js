@@ -40,7 +40,7 @@ WinScene.prototype.initialize = function () {
         [0, 0, 800, 600],         // viewport (orgX, orgY, width, height)
         2
     );
-    this.mCamera.setBackgroundColor([0.5, 0.5, 0.9, 1]);
+    this.mCamera.setBackgroundColor([0.5, 0.9, 0.5, 1]);
 
     this.mMsg = new FontRenderable("This is win screen");
     this.mMsg.setColor([1, 0, 0, 1]);
