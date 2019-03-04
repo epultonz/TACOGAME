@@ -36,7 +36,7 @@ Flier.prototype.update = function () {
     {
         this.mShootTimer = 500;
         var currPos = this.getXform().getPosition();
-        var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, true);
+        var bullet = new HomingProjectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, true);
         this.mSetRef.addToSet(bullet);
     }
 };

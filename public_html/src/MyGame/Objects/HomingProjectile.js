@@ -15,9 +15,9 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mHeroRef = heroRef;
     this.mDelta = 0;
     if(leftFacing)
-        this.mDelta = -0.4;
+        this.mDelta = -0.2;
     else
-        this.mDelta = 0.4;
+        this.mDelta = 0.2;
     
     // pack variables
     this.mTimer = 300;
@@ -51,8 +51,18 @@ HomingProjectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        var currPos = this.getXform().getPosition();
-        this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
+        //var currPos = this.getXform().getPosition();
+        //this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
+        
+        // simple default behavior
+        var pos = this.getXform().getPosition();
+        vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.mDelta);
+    
+        // Give chase!
+        this.mTargetPosition = this.mHeroRef.getXform().getPosition();
+        this.rotateObjPointTo(this.mTargetPosition, 0.05); // rotate rather quickly
+        
+        
         GameObject.prototype.update.call(this);
 
         // Check for pixel-perfect collisions with hero            
@@ -83,7 +93,7 @@ HomingProjectile.prototype.update = function () {
         if(this.mDeadTimer <= 0)
             return false;
     }
-    
+     
     // Return true if the Homingprojectile is still valid
     return true;
 };
