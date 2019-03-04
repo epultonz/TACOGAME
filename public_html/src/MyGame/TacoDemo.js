@@ -20,6 +20,7 @@ function TacoDemo() {
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
     this.kHealthBar = "assets/UI/healthbar.png";
+    this.kWBPanel = "assets/Taco/WornWhiteboard.png";
 
     // The camera to view the scene
     this.mCamera = null;
@@ -34,6 +35,7 @@ function TacoDemo() {
     this.mPatrol = null;
     this.mCannons = null;
     this.mSceneBG = null;
+    this.mWBpanel = null;
 
     this.backButton = null;
     this.MainMenuButton = null;
@@ -48,6 +50,7 @@ TacoDemo.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kUIButton);
     gEngine.Textures.loadTexture(this.kSprites);
     gEngine.Textures.loadTexture(this.kHealthBar);
+    gEngine.Textures.loadTexture(this.kWBPanel);
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
@@ -58,6 +61,7 @@ TacoDemo.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kUIButton);
     gEngine.Textures.unloadTexture(this.kSprites);
     gEngine.Textures.unloadTexture(this.kHealthBar);
+    gEngine.Textures.unloadTexture(this.kWBPanel);
     //document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back")
         gEngine.Core.startScene(new MyGame());

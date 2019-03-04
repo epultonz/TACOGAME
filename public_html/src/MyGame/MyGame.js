@@ -66,7 +66,7 @@ MyGame.prototype.initialize = function () {
     this.UIText = new UIText("Game Engine TACO Demo",[400,600],8,1,0,[0,0,0,1]);
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
-    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoSelect,this,[400,100],[350,100],"Taco Test",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoSelect,this,[400,100],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
