@@ -24,6 +24,11 @@ function Flier(spriteTexture, atX, atY, heroRef, setRef) {
     this.mFlier.getXform().setSize(this.kWidth, this.kHeight);
     this.mFlier.setElementPixelPositions(598,598+104,2,2+180);
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    
     GameObject.call(this, this.mFlier);   
 }
 gEngine.Core.inheritPrototype(Flier, GameObject);
@@ -43,4 +48,8 @@ Flier.prototype.update = function () {
 
 Flier.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+Flier.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };

@@ -25,6 +25,8 @@ function TacoDemo() {
 
     // The camera to view the scene
     this.mCamera = null;
+    this.mMinimapCam = null;
+    this.mCamAry = [];
 
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
@@ -89,7 +91,17 @@ TacoDemo.prototype.initialize = function () {
         [0, 0, 800, 600]         // viewport (orgX, orgY, width, height)
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-            // sets the background to gray
+    this.mCamAry.push(this.mCamera);
+    
+    // Step A: set up the cameras
+    this.mMinimapCam = new Camera(
+        vec2.fromValues(50, 30), // position of the camera
+        100,                     // width of camera
+        [600, 420, 200, 100]         // viewport (orgX, orgY, width, height)
+    );
+    this.mMinimapCam.setBackgroundColor([0.2, 0.8, 0.4, 1]);
+    this.mCamAry.push(this.mMinimapCam);
+
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
@@ -142,19 +154,26 @@ TacoDemo.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 
-    this.mCamera.setupViewProjection();
+    // Iterate through every camera to draw all objs on them
+    for(var i = 0; i < this.mCamAry.length; i++)
+    {
+        var currCam = this.mCamAry[i];
+        currCam.setupViewProjection();
 
-    this.mSceneBG.draw(this.mCamera);
+        this.mSceneBG.draw(currCam);
 
-    this.mAllObjs.draw(this.mCamera);
-    this.mAllNonPhysObj.draw(this.mCamera);
+        this.mAllObjs.draw(currCam);
+        this.mAllNonPhysObj.draw(currCam);
 
-    this.MainMenuButton.draw(this.mCamera);
-    this.backButton.draw(this.mCamera);
+        this.MainMenuButton.draw(currCam);
+        this.backButton.draw(currCam);
     
-    this.mTutoPanel.draw(this.mCamera);
+        this.mTutoPanel.draw(currCam);
     
-    this.mMsg.draw(this.mCamera);
+        this.mMsg.draw(currCam);
+    }
+    
+    //this.mAllObjs.drawMini(this.mMinimapCam);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw

@@ -37,6 +37,11 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
     //this.mKelvin.addLight(lgtSet.getLightAt(3));
     //this.mKelvin.addLight(lgtSet.getLightAt(2);
+    
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.2, 1, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
 
     GameObject.call(this, this.mKelvin);
 
@@ -180,6 +185,9 @@ Hero.prototype.update = function () {
     this.mIsMoving = false;
     this.mCanJump = false;
 
+    // Move the minimap object to the hero's position
+    var kelvPos = xform.getPosition();
+    this.mMinimapObj.getXform().setPosition(kelvPos[0], kelvPos[1]);
 };
 
 
@@ -228,6 +236,10 @@ Hero.prototype.changeAnimation = function () {
 Hero.prototype.draw = function (aCamera) {
     this.UIHealth.draw(aCamera);
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+Hero.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };
 
 Hero.prototype.canJump = function (b) {

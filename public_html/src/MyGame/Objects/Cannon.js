@@ -24,6 +24,11 @@ function Cannon(spriteTexture, atX, atY, heroRef, setRef) {
     this.mCannon.getXform().setSize(this.kWidth, this.kHeight);
     this.mCannon.setElementPixelPositions(318,318+172,8,8+158);
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    
     GameObject.call(this, this.mCannon);
     
     var r = new RigidRectangle(this.getXform(), this.kWidth , this.kHeight );
@@ -49,4 +54,8 @@ Cannon.prototype.update = function () {
 
 Cannon.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this, aCamera);
+};
+
+Cannon.prototype.drawMini = function (aCamera) {
+    this.mMinimapObj.draw(aCamera);
 };
