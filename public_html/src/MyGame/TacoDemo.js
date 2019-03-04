@@ -179,16 +179,7 @@ TacoDemo.prototype.update = function () {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
         this.mKelvin.tookDamage();
     }
-    // still need to implement the warp
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O) ) {
-        this.LevelSelect = "Win";
-        gEngine.GameLoop.stop();
-    }
-    var hp = this.mKelvin.getHP();
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L ) || hp <= 0 ) {
-        this.LevelSelect = "Lose";
-        gEngine.GameLoop.stop();
-    }
+    this.checkWinLose();
 
     this.mAllObjs.update();
     this.mAllNonPhysObj.update();
@@ -206,7 +197,7 @@ TacoDemo.prototype.update = function () {
     this.backButton.update();
 
     // nice for debugging
-    msg += " Health: " + hp + " |";
+    msg += " Health: " + this.mKelvin.getHP() + " |";
     msg += " CanJump status: " + collided + " |";
     msg += " Q (damage), O (Win), L (Lose)";
     this.mMsg.setText(msg);
@@ -259,7 +250,7 @@ TacoDemo.prototype.createPipe = function(){
     var g = new TextureRenderable(this.kGreenPipe);
     var xf = g.getXform();
     xf.setSize(10,20);
-    xf.setPosition(95,15);
+    xf.setPosition(95,0);
     
     var o = new GameObject(g);
     var r = new RigidRectangle(xf,10,20);
@@ -271,4 +262,27 @@ TacoDemo.prototype.createPipe = function(){
     this.mAllPlatform.addToSet(o);
     
     return o;
+};
+
+TacoDemo.prototype.checkWinLose = function(){
+    // Win conditions
+    var canWarp = false;
+    if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97){
+        canWarp = true;
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.S) && canWarp) {
+        this.mKelvin.getXform().setPosition(95,5);
+        this.LevelSelect = "Win";
+        gEngine.GameLoop.stop();
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O)) {
+        this.LevelSelect = "Win";
+        gEngine.GameLoop.stop();
+    }
+    //lose conditions
+    var hp = this.mKelvin.getHP();
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L ) || hp <= 0 ) {
+        this.LevelSelect = "Lose";
+        gEngine.GameLoop.stop();
+    }
 };
