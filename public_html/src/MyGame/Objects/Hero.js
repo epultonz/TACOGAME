@@ -225,6 +225,10 @@ Hero.prototype.getRbox = function() {
     return this.mRbox;
 };
 
+Hero.prototype.isHurt = function() {
+    return this.mShakeStarted;
+};
+
 //decrement UIhealth bar and shake mKelvin
 Hero.prototype.tookDamage = function () {
     if(this.mShakeStarted === false) // Only get hit if he hasn't been recently

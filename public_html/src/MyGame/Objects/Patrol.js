@@ -91,7 +91,8 @@ Patrol.prototype.update = function () {
     var thisBox = this.getBBox();
     var heroBox = this.mHeroRef.getBBox();
     var collideStatus = thisBox.boundCollideStatus(heroBox);
-    if(collideStatus !== 0)
+    // Only do collision detection if the hero isn't in hitstun/damageboost
+    if(!this.mHeroRef.isHurt() && (collideStatus !== 0))
     {
         /*
         alert("collideStatus: " + collideStatus);

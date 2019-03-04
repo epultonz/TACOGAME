@@ -9,9 +9,10 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-function Cannon(spriteTexture,atX,atY) {
+function Cannon(spriteTexture, atX, atY, heroRef) {
     this.kWidth = 6;
     this.kHeight = 6;
+    this.mHeroRef = heroRef;
     
     // sprite renderable 
     this.mCannon = new SpriteRenderable(spriteTexture);

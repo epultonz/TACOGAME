@@ -92,7 +92,7 @@ TacoDemo.prototype.initialize = function () {
     this.mAllObjs.addToSet(this.mPatrol);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites, 85, 23);
+    this.mCannons = new Cannon(this.kSprites, 85, 23, this.mKelvin);
     this.mAllObjs.addToSet(this.mCannons);
 
     // scene background
