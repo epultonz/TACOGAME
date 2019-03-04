@@ -40,19 +40,20 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
 
     GameObject.call(this, this.mKelvin);
 
-    var r = new RigidRectangle(this.getXform(), this.kWidth/1.1 , this.kHeight/1.1 );
+    var r = new RigidRectangle(this.getXform(), this.kWidth/1.2 , this.kHeight/1.1 );
     this.setRigidBody(r);
-    r.setMass(60);     // high mass so wont get affected by other object much
+    r.setMass(40);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
     r.setFriction(1);   //how much it slides with other object
-
+    r.setInertia(0);    
+    
     this.mRbox = r;
 
     //this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
 
     this.kHealthBar = "assets/UI/healthbar.png";
-    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,400],[200,25],0);
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,450],[200,25],0);
 
     //shake paramaters
     this.xDelta = .5;
@@ -123,7 +124,7 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 20; // Jump velocity
+            v[1] = 25; // Jump velocity
             xform.incYPosBy(this.kDelta+1);
             /*
             this.mPreviousHeroState = this.mHeroState;

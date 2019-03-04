@@ -21,6 +21,7 @@ function TacoDemo() {
     this.kSprites = "assets/Taco/SpriteSheet.png";
     this.kHealthBar = "assets/UI/healthbar.png";
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
+    this.kGreenPipe = "assets/Taco/GreenPipe.png";
 
     // The camera to view the scene
     this.mCamera = null;
@@ -28,6 +29,7 @@ function TacoDemo() {
     this.mAllObjs = null;
     this.mAllBullets = null;
     this.mAllPlatform = null;
+    this.mPipe = null;
     this.LevelSelect = null;
 
     this.mMsg = null;
@@ -54,6 +56,7 @@ TacoDemo.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kSprites);
     gEngine.Textures.loadTexture(this.kHealthBar);
     gEngine.Textures.loadTexture(this.kWBPanel);
+    gEngine.Textures.loadTexture(this.kGreenPipe);
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
@@ -65,6 +68,7 @@ TacoDemo.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kSprites);
     gEngine.Textures.unloadTexture(this.kHealthBar);
     gEngine.Textures.unloadTexture(this.kWBPanel);
+    gEngine.Textures.unloadTexture(this.kGreenPipe);
     //document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back")
         gEngine.Core.startScene(new MyGame());
@@ -90,7 +94,8 @@ TacoDemo.prototype.initialize = function () {
 
     // make the bounds.. platform etc
     this.createBounds();
-
+    this.mPipe = this.createPipe();
+    
     // kelvin with set animation
     this.mKelvin = new Hero(this.kKelvin, 10, 15, null);
     this.mAllObjs.addToSet(this.mKelvin);
@@ -173,6 +178,7 @@ TacoDemo.prototype.update = function () {
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
     
+    // tutorial panel bounding box collision
     var bb = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
     if(bb){
         this.mTutoPanel.actFlag(true);
@@ -182,7 +188,8 @@ TacoDemo.prototype.update = function () {
     this.backButton.update();
 
     // nice for debugging
-    msg += " Relaxation count: " + gEngine.Physics.getRelaxationCount() + " ";
+    msg += " Relaxation count: " + gEngine.Physics.getRelaxationCount() + " |";
+    msg += " CanJump status: " + collided;
     this.mMsg.setText(msg);
 
 };
@@ -192,9 +199,8 @@ TacoDemo.prototype.createBounds = function() {
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
-    var x = 30, w = 30, y = 18;
-    this.platformAt(x,y,w,0);
-    this.platformAt(80,y,w,0);
+    this.platformAt(30,18,30,0);
+    this.platformAt(80,18,30,0);
 };
 
 // Make the platforms
@@ -228,4 +234,22 @@ TacoDemo.prototype.backSelect = function(){
 TacoDemo.prototype.mainSelect = function(){
     this.LevelSelect="Main";
     gEngine.GameLoop.stop();
+};
+
+TacoDemo.prototype.createPipe = function(){
+    var g = new TextureRenderable(this.kGreenPipe);
+    var xf = g.getXform();
+    xf.setSize(10,20);
+    xf.setPosition(95,15);
+    
+    var o = new GameObject(g);
+    var r = new RigidRectangle(xf,10,20);
+    o.setRigidBody(r);
+    
+    r.setMass(0);
+    
+    this.mAllObjs.addToSet(o);
+    this.mAllPlatform.addToSet(o);
+    
+    return o;
 };
