@@ -27,7 +27,7 @@ function TacoDemo() {
     this.mCamera = null;
 
     this.mAllObjs = null;
-    this.mAllBullets = null;
+    this.mAllNonPhysObj = null;
     this.mAllPlatform = null;
     this.mPipe = null;
     this.LevelSelect = null;
@@ -37,6 +37,7 @@ function TacoDemo() {
     this.mKelvin = null;
     this.mPatrol = null;
     this.mCannons = null;
+    this.mFlier = null;
     this.mSceneBG = null;
     
     this.mTutoPanel = null;
@@ -88,7 +89,7 @@ TacoDemo.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
-    this.mAllBullets = new GameObjectSet(); // contains all non-physics objects (bullets)
+    this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
     this.mAllPlatform = new GameObjectSet(); //store all platform
 
@@ -105,8 +106,11 @@ TacoDemo.prototype.initialize = function () {
     this.mAllObjs.addToSet(this.mPatrol);
 
     // init cannon
-    this.mCannons = new Cannon(this.kSprites, 85, 23, this.mKelvin, this.mAllBullets);
+    this.mCannons = new Cannon(this.kSprites, 85, 23.5, this.mKelvin, this.mAllNonPhysObj);
     this.mAllObjs.addToSet(this.mCannons);
+    
+    this.mFlier = new Flier(this.kSprites, 70, 40, this.mKelvin, this.mAllNonPhysObj);
+    this.mAllNonPhysObj.addToSet(this.mFlier);
 
     // scene background
     this.mSceneBG = new TextureRenderable(this.kBG);
@@ -139,7 +143,7 @@ TacoDemo.prototype.draw = function () {
     this.mSceneBG.draw(this.mCamera);
 
     this.mAllObjs.draw(this.mCamera);
-    this.mAllBullets.draw(this.mCamera);
+    this.mAllNonPhysObj.draw(this.mCamera);
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
@@ -173,7 +177,7 @@ TacoDemo.prototype.update = function () {
     }
 
     this.mAllObjs.update();
-    this.mAllBullets.update();
+    this.mAllNonPhysObj.update();
 
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);

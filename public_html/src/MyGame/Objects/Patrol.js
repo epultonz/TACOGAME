@@ -22,7 +22,7 @@ function Patrol(spriteTexture, atX, atY, heroRef) {
     this.mPatrolLeftPoint = atX - 15;
     this.mPatrolRightPoint = atX + 6;
     this.mMoveLeft = true;
-    this.mVelocity = 20;
+    this.mVelocity = 12.5;
     
     // sprite renderable 
     this.mPatrol = new SpriteRenderable(spriteTexture);
