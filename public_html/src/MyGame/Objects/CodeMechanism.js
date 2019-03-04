@@ -14,7 +14,7 @@ function CodeMechanism(atX,atY,w,stubX,stubY,code){
     
     //the text
     this.mText = new FontRenderable("Key in Code");
-    this.mText.getXform().setPosition(38,32);
+    this.mText.getXform().setPosition(38,30);
     this.mText.setTextHeight(2);
     
     //stub in game
