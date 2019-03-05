@@ -201,11 +201,12 @@ TacoDemo.prototype.update = function () {
     }
     this.checkWinLose();
 
-    this.mAllObjs.update();
-    this.mAllNonPhysObj.update();
-
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
+    
+    //the update collision
+    this.mAllObjs.update();
+    this.mAllNonPhysObj.update();
 
     this.MainMenuButton.update();
     this.backButton.update();
@@ -219,7 +220,7 @@ TacoDemo.prototype.update = function () {
 };
 
 TacoDemo.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 0, y2 = 14;// Was 18
+    var x = 15, w = 30, y = 0, y2 = 18;// Was 18
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
