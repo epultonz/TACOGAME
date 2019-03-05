@@ -115,14 +115,14 @@ Hero.prototype.update = function () {
         //}
         //make less movement in air
         if(!this.mCanJump){
-            xform.incXPosBy(-this.kDelta*0.5); // i dont think it works :'(
+            v[0] = -10; // i dont think it works :'(
         } else {
-            xform.incXPosBy(-this.kDelta);
+            v[0] = -20;
         }
 
         this.mKelvin.updateAnimation();
     }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
+    else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
         //if (this.mCanJump === true) {
             this.mPreviousHeroState = this.mHeroState;
             this.mHeroState = Hero.eHeroState.eRunRight;
@@ -130,11 +130,13 @@ Hero.prototype.update = function () {
         //}
         //make less movement in air
         if(!this.mCanJump){
-            xform.incXPosBy(this.kDelta*0.5);
+            v[0] = 10;
         } else {
-            xform.incXPosBy(this.kDelta);
+            v[0] = 20;
         }
         this.mKelvin.updateAnimation();
+    } else {
+        v[0] = 0;
     }
     
     if (this.mCanJump === true) {
@@ -149,7 +151,6 @@ Hero.prototype.update = function () {
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
             v[1] = 27.5; // Jump velocity
-            xform.incYPosBy(this.kDelta+1);
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -163,8 +164,7 @@ Hero.prototype.update = function () {
         }
     } else {
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-            v[1] = -15;
-            xform.incYPosBy(-(this.kDelta+.75));
+            v[1] = -50;
             this.mIsMoving = true;
         }
         
