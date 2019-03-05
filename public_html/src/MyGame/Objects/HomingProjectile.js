@@ -6,7 +6,7 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2 */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2, Projectile */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
@@ -23,6 +23,7 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mTimer = 175;
     this.mDeadTimer = 20;
     this.mHitHero = false;
+    this.mDeflected = false;
 
     // sprite renderable
     this.mHomingProjectile = new SpriteRenderable(spriteTexture);
@@ -48,7 +49,7 @@ function HomingProjectile(spriteTexture, atX, atY, heroRef, leftFacing) {
 
     //this.toggleDrawRigidShape();
 }
-gEngine.Core.inheritPrototype(HomingProjectile, GameObject);
+gEngine.Core.inheritPrototype(HomingProjectile, Projectile);
 
 HomingProjectile.prototype.update = function () {
     // Handle normal behavior only if we aren't currently shaking
@@ -57,17 +58,6 @@ HomingProjectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        this.mTargetPosition = this.mHeroRef.getXform().getPosition();
-
-        //set frontdir
-        this.rotateObjPointTo(this.mTargetPosition, 0.07);
-        //use front dir to find velocity
-        //change constant to increase velocity
-        this.mRigdRect.setVelocity(20 * this.getCurrentFrontDir()[0], 20 * this.getCurrentFrontDir()[1]);
-        //i have no idea but i think its working
-        this.mRigdRect.travel();
-
-        GameObject.prototype.update.call(this);
 
         // Check for pixel-perfect collisions with hero
         var h = [];
@@ -75,7 +65,34 @@ HomingProjectile.prototype.update = function () {
         {
             this.mHeroRef.tookDamage(5);
             this.mHitHero = true;
+        } else if(!this.mDeflected){ //dont redeflect if already deflected
+         
+            if(this.mHeroRef.isDeflecting()) {
+                //area around kelvin where deflection can occur
+                var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
+                    12, 12);
+                var h = [];
+                if (this.getBBox().intersectsBound(deflectBox)) {
+                    this.mDeflected = true;
+                }
+            }
+            if(this.mDeflected) {
+                this.getCurrentFrontDir()[0] = -this.getCurrentFrontDir()[0];
+                this.getCurrentFrontDir()[1] = -this.getCurrentFrontDir()[1];
+            } else {
+                this.mTargetPosition = this.mHeroRef.getXform().getPosition();
+
+                //set frontdir
+                this.rotateObjPointTo(this.mTargetPosition, 0.07);
+            }
+            
         }
+        //use front dir to find velocity
+        //change constant to increase velocity
+        this.mRigdRect.setVelocity(20 * this.getCurrentFrontDir()[0], 20 * this.getCurrentFrontDir()[1]);
+        //i have no idea but i think its working
+        this.mRigdRect.travel();
+        GameObject.prototype.update.call(this);
 
         // Destroyed if the timer is 0
         if(this.mTimer <= 0)

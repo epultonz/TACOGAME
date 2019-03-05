@@ -23,6 +23,7 @@ function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
     this.mTimer = 300;
     this.mDeadTimer = 20;
     this.mHitHero = false;
+    this.mDeflected = false;
     
     // sprite renderable 
     this.mProjectile = new SpriteRenderable(spriteTexture);
@@ -57,18 +58,37 @@ Projectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        var currPos = this.getXform().getPosition();
-        this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
-        GameObject.prototype.update.call(this);
+        
 
         // Check for pixel-perfect collisions with hero            
         var h = [];
+        
+        
+        
+        
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
             this.mHeroRef.tookDamage(10);
             this.mHitHero = true;
+        }else if(!this.mDeflected){ //dont redeflect if already deflected
+         
+            if(this.mHeroRef.isDeflecting()) {
+                var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
+                    12, 12);
+                var h = [];
+                if (this.getBBox().intersectsBound(deflectBox)) {
+                    this.mDeflected = true;
+                }
+            }
+            if(this.mDeflected) {
+                this.mDelta = -this.mDelta;
+            }
         }
-
+        
+        var currPos = this.getXform().getPosition();
+        this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
+        GameObject.prototype.update.call(this);
+        
         // Destroyed if the timer is 0
         if(this.mTimer <= 0)
         {
@@ -96,6 +116,10 @@ Projectile.prototype.update = function () {
     
     // Return true if the projectile is still valid
     return true;
+};
+
+Projectile.prototype.checkDeflect = function() {
+    
 };
 
 Projectile.prototype.draw = function (aCamera) {

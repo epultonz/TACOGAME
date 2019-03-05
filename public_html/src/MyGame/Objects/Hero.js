@@ -86,6 +86,9 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mPet.setElementPixelPositions(0, 32, 0, 32); //left right top bottom
     this.mInterpolatePet = new InterpolateVec2(
             this.mPet.getXform().getPosition(), 120, 0.05);
+    
+    //deflection
+    this.mDeflecting = false;
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
@@ -211,12 +214,15 @@ Hero.prototype.update = function () {
         }
     }
     
+    this.mDeflecting = gEngine.Input.isKeyClicked(gEngine.Input.keys.I);
+    
+    
     this.mLight.set2DPosition(xform.getPosition());
     this.changeAnimation();
     this.UIHealth.update();
 
     //stop kevin from rotating
-    this.getRbox().setAngularVelocity(0);
+    //this.getRbox().setAngularVelocity(0);
     this.mIsMoving = false;
     this.mCanJump = false;
 
@@ -241,8 +247,6 @@ Hero.prototype._updateInterp = function(){
     this.mInterpolatePet.setFinalValue(heroFollowVector);
     this.mInterpolatePet.updateInterpolation();
 };
-
-
 
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {
@@ -298,6 +302,10 @@ Hero.prototype.drawMini = function (aCamera) {
 
 Hero.prototype.canJump = function (b) {
     this.mCanJump = b;
+};
+
+Hero.prototype.isDeflecting = function() {
+    return this.mDeflecting;
 };
 
 Hero.prototype.getRbox = function() {
