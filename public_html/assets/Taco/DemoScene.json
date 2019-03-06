@@ -1,0 +1,77 @@
+{
+    "_comment": "reference: http://www.json.org/",
+    "_comment": "example JSON files: http://json.org/example.html",
+    "_comment": "simple parsing example: http://www.w3schools.com/json/json_http.asp",
+    
+    "Camera": [{
+        
+        "Center": [50, 36],
+        "Width": 100,
+        "Viewport": [0, 0, 800, 600],
+        "BgColor": [0.8, 0.8, 0.8, 1.0]
+        },
+        {
+        "Center": [50, 26],
+        "Width": 100,
+        "Viewport": [600, 420, 200, 100],
+        "BgColor": [0.8, 0.8, 0.8, 1.0]
+        }
+    ],
+    
+    
+    
+    "Patrol": [
+        {
+            "Pos": [35, 19]
+        },
+        {
+            "Pos": [60, 19]
+        }
+    ],
+    
+    "Cannon": [
+        {
+            "Pos": [85, 19.5]
+        }
+    ],
+    
+    "Flier": [
+        {
+            "Pos": [70, 36]
+        },
+        {
+            "Pos": [50, 36]
+        }
+    ],
+    
+    "Powerup": [
+        {
+            "Pos": [20, 30]
+        },
+        {
+            "Pos": [30, 30]
+        }
+    ],
+    
+    "SceneBG": [
+        {
+            "filePath": "/assets/..",
+            "Pos": [50, 26],
+            "Size": [100,50]
+        }
+    ],
+    
+    "StoryPanel": [
+        {
+            "Pos": [50, 20],
+            "Width": 70,
+            "txt": "Story Element Panel Demo",
+            "stubX": 15,
+            "stubY": 3,
+            "setText": [
+                "Space to jump. S to stomp. E to super.\n Take the health pack above.\n Solve the code and warp down to win."]
+        }
+    ]
+    
+    
+}
