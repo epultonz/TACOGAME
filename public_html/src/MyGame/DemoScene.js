@@ -219,21 +219,28 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         stubX = storyPanels[i].stubX;
         stubY = storyPanels[i].stubY;
         setText = storyPanels[i].setText;
-        // init cannon
+        
+        //probably need to make an array for panels.
+        // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
         this.mTutoPanel = new StoryPanel(this.kWBPanel,pos[0],pos[1],width,
         txt,stubX,stubY);
-        this.mTutoPanel.setText4(setText);
-        
+        var k;
+        var text = ["","",""];
+        for (k =0; k< setText.length; k++) {
+            text[k] = setText[k];
+        }
+        this.mTutoPanel.setText2(text[0], text[1], text[2]);
     }
-    // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
-    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
-        "Story Element Panel Demo",15,3);
-    this.mTutoPanel.setText2("Space to jump. S to stomp. E to super.");
-    this.mTutoPanel.setText3("Take the health pack above.");
     
+    var platforms = sceneInfo.Platform;
+    var i, pos, w, rot;
+    for (i = 0; i < platforms.length; i++) {
+        pos = platforms[i].Pos;    
+        w = platforms[i].W;
+        rot = platforms[i].Rot;
+        this.platformAt(pos[0],pos[1],w,rot);
+    }
     
-
-
 };
 
 
@@ -315,8 +322,7 @@ DemoScene.prototype.createBounds = function() {
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
 
-    this.platformAt(30,y2,30,0);
-    this.platformAt(80,y2,30,0);
+    
 };
 
 // Make the platforms

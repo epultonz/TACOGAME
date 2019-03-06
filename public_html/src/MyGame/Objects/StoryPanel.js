@@ -78,14 +78,8 @@ StoryPanel.prototype.setText1 = function(s){
     this.mText1.setText(s);
 };
 
-StoryPanel.prototype.setText2 = function(s){
-    this.mText2.setText(s);
-};
-
-StoryPanel.prototype.setText3 = function(s){
-    this.mText3.setText(s);
-};
-
-StoryPanel.prototype.setText4 = function(s){
-    this.mText4.setText(s);
+StoryPanel.prototype.setText2 = function(s1, s2, s3){
+    this.mText2.setText(s1);
+    this.mText3.setText(s2);
+    this.mText4.setText(s3);
 };

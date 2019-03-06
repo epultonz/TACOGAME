@@ -139,10 +139,10 @@ TacoDemo.prototype.initialize = function () {
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
     this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
         "Story Element Panel Demo",15,3);
-    this.mTutoPanel.setText2("Space to jump. S to stomp. E to super.");
-    this.mTutoPanel.setText3("Take the health pack above.");
-    this.mTutoPanel.setText4("Solve the code and warp down to win.");
-
+     //should probably change this to take an array of strings
+    this.mTutoPanel.setText2("Space to jump. S to stomp. E to super.",
+                             "Take the health pack above.",
+                            "Solve the code and warp down to win.");
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
     this.mCodeBox = new CodeMechanism(280,240,40,85,3,"1234");
