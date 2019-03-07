@@ -174,11 +174,12 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
     }
     
     var cannons = sceneInfo.Cannon;
-    var i, pos, cannon;
+    var i, pos, cannon, facing;
     for (i = 0; i < cannons.length; i++) {
         pos = cannons[i].Pos;    
+        facing = cannons[i].Facing;
         // init cannon
-        cannon = new Cannon(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
+        cannon = new Cannon(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
         this.mAllNonPhysObj.addToSet(cannon);  
     }
     
@@ -205,9 +206,11 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
     var background = sceneInfo.SceneBG[0];
     var pos = background.Pos;
     var size = background.Size;
+    
     this.mSceneBG = new TextureRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(size[0],size[1]);
     this.mSceneBG.getXform().setPosition(pos[0],pos[1]);
+    
     
     //story panels
     var storyPanels = sceneInfo.StoryPanel;
@@ -314,6 +317,8 @@ DemoScene.prototype.update = function () {
     msg += " CanJump status: " + collided + " |";
     msg += " Q (damage), O (Win), L (Lose)";
     this.mMsg.setText(msg);
+    this.mCamera.panXWith(this.mKelvin.getXform(), 0);
+    this.mCamera.update();
 
 };
 
@@ -400,7 +405,13 @@ DemoScene.prototype.checkWinLose = function(){
 
 DemoScene.prototype.drawMain = function() {
     this.mCamera.setupViewProjection();
-    this.mSceneBG.draw(this.mCamera);
+    var i;
+    var pos = this.mSceneBG.getXform().getPosition();
+    for(i=0; i<4; i++) {
+        this.mSceneBG.draw(this.mCamera);
+        pos[0] += 100;
+    }
+    pos[0] = 0;
 
     this.mAllObjs.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
@@ -411,10 +422,11 @@ DemoScene.prototype.drawMain = function() {
     this.mTutoPanel.draw(this.mCamera);
     this.mCodeBox.draw(this.mCamera);
 
-    this.mMsg.draw(this.mCamera);
+    //this.mMsg.draw(this.mCamera);
 };
 
 DemoScene.prototype.drawMap = function() {
+    /*
     this.mMinimapCam.setupViewProjection();
 
     this.mSceneBG.draw(this.mMinimapCam);
@@ -423,4 +435,5 @@ DemoScene.prototype.drawMap = function() {
     this.mAllNonPhysObj.draw(this.mMinimapCam);
 
     this.mMsg.draw(this.mMinimapCam);
+    */
 };

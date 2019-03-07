@@ -4,7 +4,6 @@
  */
 
 /*jslint node: true, vars: true, bitwise: true */
-/*global gEngine, Camera, BoundingBox, vec2, CameraShake */
 /* find out more about jslint: http://www.jslint.com/help.html */
 "use strict";
 
@@ -66,6 +65,23 @@ Camera.prototype.panWith = function (aXform, zone) {
         }
         this.mCameraState.setCenter(newC);
     }
+};
+
+Camera.prototype.panXWith = function (aXform, zone) {
+    var status = this.collideWCBound(aXform, zone);
+    //if (status !== BoundingBox.eboundCollideStatus.eInside) {
+        var pos = aXform.getPosition();
+        var newC = vec2.clone(this.getWCCenter());
+        if(pos[0] >= 50) {
+            if ((BoundingBox.eboundCollideStatus.eCollideRight) !== 0) {
+                newC[0] = pos[0] + (aXform.getWidth() / 2) - (zone * this.getWCWidth() / 2);
+            }
+            if ((BoundingBox.eboundCollideStatus.eCollideLeft) !== 0) {
+                newC[0] = pos[0] - (aXform.getWidth() / 2) + (zone * this.getWCWidth() / 2);
+            }
+            this.mCameraState.setCenter(newC);
+        }
+    //}
 };
 
 /**
