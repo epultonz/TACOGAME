@@ -26,7 +26,7 @@ var gEngine = gEngine || { };
  */
 gEngine.Physics = (function () {
 
-    var mSystemtAcceleration = [0, -20];        // system-wide default acceleration
+    var mSystemtAcceleration = [0, -100];        // system-wide default acceleration
     var mPosCorrectionRate = 0.8;               // percentage of separation to project objects
     var mRelaxationCount = 15;                  // number of relaxation iteration
     
