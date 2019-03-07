@@ -33,6 +33,11 @@ function Flier(spriteTexture, atX, atY, heroRef, setRef) {
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     
     GameObject.call(this, this.mFlier);   
+    
+    var r = new RigidRectangle(this.getXform(), this.kWidth , this.kHeight );
+    this.setRigidBody(r);
+    r.setMass(0);
+    //this.toggleDrawRigidShape();
 }
 gEngine.Core.inheritPrototype(Flier, GameObject);
 

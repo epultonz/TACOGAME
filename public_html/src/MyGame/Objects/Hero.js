@@ -295,17 +295,13 @@ Hero.prototype._updateInterp = function(){
     this.mInterpolatePet.updateInterpolation();
 };
 
-Hero.prototype.getPetRef = function() {
-    return this.mPet;
-}
-
 Hero.prototype.setPetFollowVect = function(newVect) {
     this.mHeroFollowVector = newVect;
-}
+};
 
 Hero.prototype.wasDeflected = function() {
     this.mConfirmedDeflect = true;
-}
+};
 
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {

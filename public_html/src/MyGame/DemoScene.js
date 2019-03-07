@@ -112,6 +112,10 @@ DemoScene.prototype.initialize = function () {
     // make the bounds.. platform etc
     this.createBounds();
     this.mPipe = this.createPipe();
+    
+    var smasher = new Smasher(this.kSprites, 80, 20, this.mKelvin);
+    this.mAllObjs.addToSet(smasher);
+    this.mAllPlatform.addToSet(smasher);
 
     
 
@@ -170,6 +174,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         pos = patrols[i].Pos;
         patrol = new Patrol(this.kSprites, pos[0], pos[1], this.mKelvin);
         this.mAllObjs.addToSet(patrol);
+        //this.mAllPlatform.addToSet(patrol);
         
     }
     
@@ -180,7 +185,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         facing = cannons[i].Facing;
         // init cannon
         cannon = new Cannon(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
-        this.mAllNonPhysObj.addToSet(cannon);  
+        this.mAllObjs.addToSet(cannon);  
     }
     
     var fliers = sceneInfo.Flier;
@@ -189,7 +194,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         pos = fliers[i].Pos;    
         // init cannon
         flier = new Flier(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
-        this.mAllNonPhysObj.addToSet(flier);  
+        this.mAllObjs.addToSet(flier);  
     }
     
     var powerups = sceneInfo.Powerup;
