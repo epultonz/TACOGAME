@@ -220,6 +220,9 @@ Hero.prototype.update = function () {
         }
     }
     
+    
+    //----------Pet Interpolation and deflection code-------------------
+    //lots of dupliacted and messy code will create methods soon
     if (!this.mDeflecting) {
         if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
             this.mPetDeflected = false;
@@ -264,7 +267,7 @@ Hero.prototype.update = function () {
         this._updateInterp();
 
     }
-    
+    //-------------------end of pet code-------------------
     
     this.mLight.set2DPosition(xform.getPosition());
     this.changeAnimation();
