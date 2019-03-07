@@ -79,6 +79,9 @@ HomingProjectile.prototype.update = function () {
             if(this.mDeflected) {
                 this.getCurrentFrontDir()[0] = -this.getCurrentFrontDir()[0];
                 this.getCurrentFrontDir()[1] = -this.getCurrentFrontDir()[1];
+                this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
+                this.mHeroRef.wasDeflected();
+                
             } else {
                 this.mTargetPosition = this.mHeroRef.getXform().getPosition();
 

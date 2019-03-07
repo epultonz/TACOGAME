@@ -49,7 +49,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.setRigidBody(r);
     r.setMass(40);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
-    r.setFriction(1);   //how much it slides with other object
+    r.setFriction(0);   //how much it slides with other object
     r.setInertia(0);    
     
     this.mRbox = r;
@@ -86,9 +86,11 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mPet.setElementPixelPositions(0, 32, 0, 32); //left right top bottom
     this.mInterpolatePet = new InterpolateVec2(
             this.mPet.getXform().getPosition(), 120, 0.05);
-    
+    this.mHeroFollowVector = null;
+    this.mPetDeflected = true;
     //deflection
     this.mDeflecting = false;
+    this.mConfirmedDeflect = false;
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
@@ -107,6 +109,7 @@ Hero.prototype.update = function () {
 
     // control by WASD
     var xform = this.getXform();
+    var kelvPos = xform.getPosition();
     this.mIsMoving = false;
     var v = this.getRigidBody().getVelocity();
 
@@ -118,7 +121,7 @@ Hero.prototype.update = function () {
         //}
         //make less movement in air
         if(!this.mCanJump){
-            v[0] = -10; // i dont think it works :'(
+            v[0] = -20; // i dont think it works :'(
         } else {
             v[0] = -20;
         }
@@ -133,13 +136,16 @@ Hero.prototype.update = function () {
         //}
         //make less movement in air
         if(!this.mCanJump){
-            v[0] = 10;
+            v[0] = 20;
         } else {
             v[0] = 20;
         }
         this.mKelvin.updateAnimation();
     } else {
         v[0] = 0;
+        if(this.mCanJump) {
+            v[1] = 0; //prevent from sliding down ramps
+        }
     }
     
     if (this.mCanJump === true) {
@@ -153,7 +159,7 @@ Hero.prototype.update = function () {
             */
         }
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
-            v[1] = 27.5; // Jump velocity
+            v[1] = 60; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight
@@ -167,7 +173,7 @@ Hero.prototype.update = function () {
         }
     } else {
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-            v[1] = -50;
+            v[1] = -60;
             this.mIsMoving = true;
         }
         
@@ -214,7 +220,50 @@ Hero.prototype.update = function () {
         }
     }
     
+    if (!this.mDeflecting) {
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
+            this.mPetDeflected = false;
+        }
+    }
     this.mDeflecting = gEngine.Input.isKeyClicked(gEngine.Input.keys.I);
+    
+    if(!this.mPetDeflected && this.mConfirmedDeflect) {
+        this.mInterpolatePet.configInterpolation(.5, 120);
+        
+        this._updateInterp();
+        
+        if(Math.abs(this.mHeroFollowVector[0] -
+                this.mInterpolatePet.getValue()[0]) < 0.5) {
+            this.mPetDeflected = true;
+            this.mConfirmedDeflect = false;
+        }
+    } else if (!this.mPetDeflected) {
+        var heroPos = this.getXform().getPosition();
+
+    
+        var xComp1 = (heroPos[0] + 4); //distance from hero
+        var yComp1 = (heroPos[1] + 2); //distnance form hero in the y
+ 
+        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
+        this.mInterpolatePet.configInterpolation(.5, 120);
+        this._updateInterp();
+        
+        if(Math.abs(this.mHeroFollowVector[0] -
+                this.mInterpolatePet.getValue()[0]) < 0.5) {
+            this.mPetDeflected = true;
+        }
+    } else {
+        var heroPos = this.getXform().getPosition();
+
+    
+        var xComp1 = (heroPos[0] - 2); //distance from hero
+        var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
+ 
+        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
+        this.mInterpolatePet.configInterpolation(.1, 120);
+        this._updateInterp();
+
+    }
     
     
     this.mLight.set2DPosition(xform.getPosition());
@@ -227,26 +276,33 @@ Hero.prototype.update = function () {
     this.mCanJump = false;
 
     // Move the minimap object to the hero's position
-    var kelvPos = xform.getPosition();
+    
     this.mMinimapObj.getXform().setPosition(kelvPos[0], kelvPos[1]);
     
-    this._updateInterp();
+    
     this.mPet.update();
 };
 
 Hero.prototype._updateInterp = function(){
-    var heroPos = this.getXform().getPosition();
-
+    /*
     
-    var xComp1 = (heroPos[0] - 2); //distance from hero
-    var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
-
-    var heroFollowVector = vec2.fromValues(xComp1, yComp1);
+    */
     
-   
-    this.mInterpolatePet.setFinalValue(heroFollowVector);
+    this.mInterpolatePet.setFinalValue(this.mHeroFollowVector);
     this.mInterpolatePet.updateInterpolation();
 };
+
+Hero.prototype.getPetRef = function() {
+    return this.mPet;
+}
+
+Hero.prototype.setPetFollowVect = function(newVect) {
+    this.mHeroFollowVector = newVect;
+}
+
+Hero.prototype.wasDeflected = function() {
+    this.mConfirmedDeflect = true;
+}
 
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {

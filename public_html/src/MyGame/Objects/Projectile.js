@@ -6,7 +6,7 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2 */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
@@ -82,6 +82,8 @@ Projectile.prototype.update = function () {
             }
             if(this.mDeflected) {
                 this.mDelta = -this.mDelta;
+                this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
+                this.mHeroRef.wasDeflected();
             }
         }
         
