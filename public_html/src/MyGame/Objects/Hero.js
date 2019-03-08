@@ -91,6 +91,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //deflection
     this.mDeflecting = false;
     this.mConfirmedDeflect = false;
+    this.mParticles = new ParticleGameObjectSet();
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
@@ -104,9 +105,22 @@ Hero.eHeroState = Object.freeze({
     eJumpLeft: 5
 });
 
+Hero.prototype.addEmitterToPet = function() {    
+    // create an emitter to start emitting particles
+    this.mParticles.addEmitterAt(
+        this.mPet.getXform().getPosition(), 400, 
+        this.createParticle);
+     // start emit immediately
+    
+};
+
+
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
-
+    if (this.mParticles.size() < 150) {
+        this.addEmitterToPet();
+    }
+    this.mParticles.update();
     // control by WASD
     var xform = this.getXform();
     var kelvPos = xform.getPosition();
@@ -348,6 +362,9 @@ Hero.prototype.changeAnimation = function () {
 Hero.prototype.draw = function (aCamera) {
     this.mPet.draw(aCamera);
     this.UIHealth.draw(aCamera);
+    if (this.mParticles !== null) {
+        this.mParticles.draw(aCamera);
+    }
     GameObject.prototype.draw.call(this, aCamera);
 };
 
@@ -409,4 +426,32 @@ Hero.prototype.goSuper = function(){
         s = 0;
     }
     this.mLight.setIntensity(s+a);
+};
+
+Hero.prototype.createParticle = function(atX, atY) {
+    var life = 10 + (Math.random() * (30-10));
+    var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
+    p.getRenderable().setColor([1, 0, 0, 1]);
+    
+    // size of the particle
+    var r = 2 + (Math.random() * (2-1));   //(Math.random * (max-min)) + min
+    p.getXform().setSize(r, r);
+    
+    // final color
+    var fr = 3.5 + Math.random();
+    var fg = 0.4 + 0.1 * Math.random();
+    var fb = 0.3 + 0.1 * Math.random();
+    p.setFinalColor([fr, fg, fb, 0.6]);
+    
+    // velocity on the particle
+    var fx = -5 + (Math.random() * (10));
+    var fy = -5 + (Math.random() * (10));
+    p.getParticle().setVelocity([fx, fy]);
+    //p.getParticle().setAcceleration(0);
+    p.getParticle().setDrag(0);
+
+    // size delta
+    p.setSizeDelta(0.9);
+    
+    return p;
 };

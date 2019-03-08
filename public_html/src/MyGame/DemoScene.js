@@ -23,6 +23,7 @@ function DemoScene() {
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
     this.kSceneFile = "assets/Taco/DemoScene.json";
+    this.kParticleTexture = "assets/Taco/particle.png";
     // The camera to view the scene
     this.mCamera = null;
     this.mMinimapCam = null;
@@ -47,7 +48,7 @@ function DemoScene() {
 
     this.backButton = null;
     this.MainMenuButton = null;
-
+    
 }
 gEngine.Core.inheritPrototype(DemoScene, Scene);
 
@@ -60,6 +61,7 @@ DemoScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kHealthBar);
     gEngine.Textures.loadTexture(this.kWBPanel);
     gEngine.Textures.loadTexture(this.kGreenPipe);
+    gEngine.Textures.loadTexture(this.kParticleTexture);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -73,6 +75,7 @@ DemoScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kHealthBar);
     gEngine.Textures.unloadTexture(this.kWBPanel);
     gEngine.Textures.unloadTexture(this.kGreenPipe);
+    gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     //document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back")
@@ -113,10 +116,13 @@ DemoScene.prototype.initialize = function () {
     this.createBounds();
     this.mPipe = this.createPipe();
     
-    var smasher = new Smasher(this.kSprites, 80, 20, this.mKelvin);
+    var smasher = new Smasher(this.kSprites, 20, 5, this.mKelvin,15);
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
-
+    
+    var smasher = new Smasher(this.kSprites, 35, 5, this.mKelvin,19);
+    this.mAllObjs.addToSet(smasher);
+    this.mAllPlatform.addToSet(smasher);
     
 
     // the code box to unlock green pipe
@@ -174,7 +180,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         pos = patrols[i].Pos;
         patrol = new Patrol(this.kSprites, pos[0], pos[1], this.mKelvin);
         this.mAllObjs.addToSet(patrol);
-        //this.mAllPlatform.addToSet(patrol);
+        this.mAllPlatform.addToSet(patrol);
         
     }
     
@@ -306,7 +312,7 @@ DemoScene.prototype.update = function () {
         this.mKelvin.tookDamage(15);
     }
     this.checkWinLose();
-
+    
     // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
     
@@ -426,7 +432,7 @@ DemoScene.prototype.drawMain = function() {
 
     this.mTutoPanel.draw(this.mCamera);
     this.mCodeBox.draw(this.mCamera);
-
+    
     //this.mMsg.draw(this.mCamera);
 };
 
@@ -441,4 +447,30 @@ DemoScene.prototype.drawMap = function() {
 
     this.mMsg.draw(this.mMinimapCam);
     */
+};
+
+DemoScene.prototype.createParticle = function(atX, atY) {
+    var life = 30 + Math.random() * 200;
+    var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
+    p.getRenderable().setColor([1, 0, 0, 1]);
+    
+    // size of the particle
+    var r = .5 + (Math.random() * (1-.5));   //(Math.random * (max-min)) + min
+    p.getXform().setSize(r, r);
+    
+    // final color
+    var fr = 3.5 + Math.random();
+    var fg = 0.4 + 0.1 * Math.random();
+    var fb = 0.3 + 0.1 * Math.random();
+    p.setFinalColor([fr, fg, fb, 0.6]);
+    
+    // velocity on the particle
+    var fx = 10 * Math.random() - 20 * Math.random();
+    var fy = 10 * Math.random();
+    p.getParticle().setVelocity([fx, fy]);
+    
+    // size delta
+    p.setSizeDelta(0.98);
+    
+    return p;
 };
