@@ -9,7 +9,7 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-function Smasher(spriteTexture, atX, atY, heroRef) {
+function Smasher(spriteTexture, atX, atY, heroRef, topBound) {
     this.kWidth = 7;
     this.kHeight = 7;
     this.mHeroRef = heroRef;
@@ -29,7 +29,7 @@ function Smasher(spriteTexture, atX, atY, heroRef) {
     this.mMinimapObj.setColor([1, .2, .2, 0]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
-    this.mTopBound = atY + 15;
+    this.mTopBound = atY + topBound;
     this.mBottomBound = atY+1;
     GameObject.call(this, this.mCannon);
     
