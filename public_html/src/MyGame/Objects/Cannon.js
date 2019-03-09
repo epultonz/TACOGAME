@@ -22,15 +22,15 @@
  * @param {float} spawnY The Y coord to start the object at
  * @param {Hero} heroRef A reference to the Hero obj
  * @param {GameObjectSet} setRef A reference to the set for Projectiles to become a part of
+ * @param {boolean} facingLeft Boolean to show if the cannon is facing left (true) or right (false)
  * @param {int} shootTimer The amount of update ticks between projectile shots. Normally updates 60 times a second
  * @param {int} projectileTimer The amount of update ticks for projectiles to stay on screen
  * @param {float} projectileDelta The delta to give projectiles (how fast they move)
  *      should ALWAYS be positive!
- * @param {boolean} facingLeft Boolean to show if the cannon is facing left (true) or right (false)
  * @returns {Cannon}
  */
-function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 300,
-        projectileTimer = 300, projectileDelta = 0.4, facingLeft = true) {
+function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, shootTimer = 210,
+        projectileTimer = 300, projectileDelta = 0.4) {
     this.kWidth = 7;
     this.kHeight = 7;
     this.mHeroRef = heroRef;

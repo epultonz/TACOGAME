@@ -72,11 +72,11 @@ function Flier(spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
     
     GameObject.call(this, this.mFlier);   
     
-    /*
+    
     var r = new RigidRectangle(this.getXform(), this.kWidth , this.kHeight );
     this.setRigidBody(r);
     r.setMass(0);
-    */
+    
     //this.toggleDrawRigidShape();
 }
 gEngine.Core.inheritPrototype(Flier, GameObject);

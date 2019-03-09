@@ -116,13 +116,15 @@ DemoScene.prototype.initialize = function () {
     this.createBounds();
     this.mPipe = this.createPipe();
     
-    var smasher = new Smasher(this.kSprites, 20, 5, this.mKelvin,15);
+    
+    var smasher = new Smasher(this.kSprites, 20, 13, this.mKelvin);
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
     
-    var smasher = new Smasher(this.kSprites, 35, 5, this.mKelvin,19);
+    var smasher = new Smasher(this.kSprites, 35, 12, this.mKelvin, 15, 6);
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
+    
     
 
     // the code box to unlock green pipe
@@ -174,6 +176,7 @@ DemoScene.prototype.parseCamera = function (camInfo) {
 };
 
 DemoScene.prototype.parseObjects = function (sceneInfo) {
+    
     var patrols = sceneInfo.Patrol;
     var i, pos, patrol;
     for (i = 0; i < patrols.length; i++) {
@@ -183,7 +186,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
         this.mAllPlatform.addToSet(patrol);
         
     }
-    
+   
     var cannons = sceneInfo.Cannon;
     var i, pos, cannon, facing;
     for (i = 0; i < cannons.length; i++) {

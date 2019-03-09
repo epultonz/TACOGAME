@@ -24,6 +24,7 @@ function MyGame() {
     
     //Our game test scene
     this.tacoDemoButton = null;
+    this.tacoLevelButton = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -46,6 +47,9 @@ MyGame.prototype.unloadScene = function () {
     else if(this.LevelSelect==="tacoTest"){
         gEngine.Core.startScene(new TacoDemo());
     }
+    else if(this.LevelSelect==="tacoLevel"){
+        gEngine.Core.startScene(new DemoScene());
+    }
 };
 
 MyGame.prototype.initialize = function () {
@@ -63,11 +67,12 @@ MyGame.prototype.initialize = function () {
     //this.ParticleButton = new UIButton(this.kUIButton,this.particleSelect,this,[400,400],[600,100],"Particle Demos",8,[1,1,1,1],[0,0,0,1]);
     //this.PhysicsButton = new UIButton(this.kUIButton,this.physicsSelect,this,[400,300],[500,100],"Physics Demo",8,[1,1,1,1],[0,0,0,1]);
     //this.UIButton =  new UIButton(this.kUIButton,this.uiSelect,this,[400,200],[320,100],"UI Demo",8,[1,1,1,1],[0,0,0,1]);
-    this.UIText = new UIText("Game Engine TACO Demo",[400,600],8,1,0,[0,0,0,1]);
+    this.UIText = new UIText("Adventures of Kelvin",[400,600],8,1,0,[0,0,0,1]);
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
-    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoSelect,this,[400,400],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
-};
+    this.tacoLevelButton = new UIButton(this.kUIButton,this.tacoLevelSelect,this,[400,400],[350,100],"Taco Level",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoDemoSelect,this,[400,200],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
+};  
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
@@ -82,6 +87,7 @@ MyGame.prototype.draw = function () {
     //this.UIButton.draw(this.mCamera);
     this.UIText.draw(this.mCamera);
     this.tacoDemoButton.draw(this.mCamera);
+    this.tacoLevelButton.draw(this.mCamera);
 };
 
 MyGame.prototype.update = function () {
@@ -89,6 +95,7 @@ MyGame.prototype.update = function () {
     //this.PhysicsButton.update();
     //this.UIButton.update();
     this.tacoDemoButton.update();
+    this.tacoLevelButton.update();
 };
 
 MyGame.prototype.particleSelect = function(){
@@ -106,7 +113,12 @@ MyGame.prototype.uiSelect= function(){
     gEngine.GameLoop.stop();
 };
 
-MyGame.prototype.tacoSelect= function(){
+MyGame.prototype.tacoDemoSelect= function(){
     this.LevelSelect="tacoTest";
+    gEngine.GameLoop.stop();
+};
+
+MyGame.prototype.tacoLevelSelect= function(){
+    this.LevelSelect="tacoLevel";
     gEngine.GameLoop.stop();
 };

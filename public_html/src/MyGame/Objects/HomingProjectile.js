@@ -24,7 +24,7 @@
  * @param {int} timer How many update ticks the projectile should last for.
  * @returns {HomingProjectile}
  */
-function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, timer = 175) {
+function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, timer = 140) {
     /*
      * this.mWidth = 1.25;
     this.mHeight = 2;
@@ -84,7 +84,7 @@ HomingProjectile.prototype.move = function() {
     {
         this.mTargetPosition = this.mHeroRef.getXform().getPosition();
         //set frontdir
-        this.rotateObjPointTo(this.mTargetPosition, 0.07);   
+        this.rotateObjPointTo(this.mTargetPosition, 0.1);   
     }
     
     //use front dir to find velocity
