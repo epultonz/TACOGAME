@@ -9,6 +9,8 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
+
 function Powerup(spriteTexture, atX, atY, heroRef) {
     this.kWidth = 3;
     this.kHeight = 3;

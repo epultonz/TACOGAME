@@ -11,33 +11,52 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Patrol(spriteTexture, atX, atY, heroRef) {
+/**
+ * The Patrol enemy goes back and forth between its left and right boundaries, damages
+ * + knocks back the hero if it runs into him with its left or right sides, and dies if
+ * the hero "stomps" on it by landing on top of it.
+ * 
+ * @param {TextureInfo} spriteTexture The texturesheet for the patrol's sprite. Should be extended to have
+ *     a "mirrored" sprite version as well so the patrol can flip between left/right facing.
+ * @param {float} spawnX The X coord to start the object at
+ * @param {float} spawnY The Y coord to start the object at
+ * @param {Hero} heroRef A reference to the Hero obj
+ * @param {float} patrolDelta The speed at which the obj moves
+ * @param {float} leftBound The X coord of the patrol's left boundary
+ * @param {float} rightBound The X coord of the patrol's right boundary
+ * @param {boolean} moveLeft Boolean stating if the patrol starts off going left (true) or right (false)
+ * @returns {Patrol} The completed object, ready to be called via update() and draw()
+ */
+function Patrol(spriteTexture, spawnX, spawnY, heroRef, patrolDelta = 0.225,
+        leftBound = (spawnX - 10), rightBound = (spawnX + 10), moveLeft = true) {
     this.kWidth = 6;
     this.kHeight = 6;
     this.mHeroRef = heroRef;
     this.mRigdRect = null;
     
     // Vars for patrolling
-    this.mPatrolDelta = 0.2;
-    this.mPatrolLeftPoint = atX - 15;
-    this.mPatrolRightPoint = atX + 6;
-    this.mMoveLeft = true;
+    this.mPatrolDelta = patrolDelta;
+    this.mPatrolLeftXBound = leftBound;
+    this.mPatrolRightXBound = rightBound;
+    this.mMoveLeft = moveLeft;
     this.mVelocity = 12.5;
     
     // sprite renderable 
     this.mPatrol = new SpriteRenderable(spriteTexture);
     this.mPatrol.setColor([1, 1, 1, 0]);
-    this.mPatrol.getXform().setPosition(atX, atY);
+    this.mPatrol.getXform().setPosition(spawnX, spawnY);
     this.mPatrol.getXform().setSize(this.kWidth, this.kHeight);
     this.mPatrol.setElementPixelPositions(130,130+180,0,0+180);
     
+    // simplified minimap renderable
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([1, .2, .2, 0]);
-    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     
     GameObject.call(this, this.mPatrol); // Finish construction via GameObject constructor
     
+    // Physics variables for knocking the hero back
     this.mRigdRect = new RigidRectangle(this.mPatrol.getXform(), this.kWidth , this.kHeight);
     this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(-this.mVelocity, 0);
@@ -61,13 +80,10 @@ Patrol.prototype.update = function () {
     var xForm = this.mPatrol.getXform();
     var currPos = xForm.getPosition();
     
-    //alert("Left?" + this.mMoveLeft + " Limits:" + this.mPatrolLeftPoint + "_" +
-    //        this.mPatrolRightPoint + " Cur:" + currPos[0]);
-    
     if(this.mMoveLeft) // If we're moving left
     {
         xForm.setPosition(currPos[0] - this.mPatrolDelta, currPos[1]);
-        if(currPos[0] <= this.mPatrolLeftPoint)
+        if(currPos[0] <= this.mPatrolLeftXBound)
         {
             this.mRigdRect.setVelocity(this.mVelocity, 0);
             this.mMoveLeft = false;
@@ -76,7 +92,7 @@ Patrol.prototype.update = function () {
     else // Otherwise, we're moving right
     {
         xForm.setPosition(currPos[0] + this.mPatrolDelta, currPos[1]);
-        if(currPos[0] >= this.mPatrolRightPoint)
+        if(currPos[0] >= this.mPatrolRightXBound)
         {
             this.mRigdRect.setVelocity(-this.mVelocity, 0);
             this.mMoveLeft = true;
@@ -88,33 +104,24 @@ Patrol.prototype.update = function () {
     
     // Test for collision with hero
     /*
-     * eCollideLeft: 1,
+    eCollideLeft: 1,
     eCollideRight: 2,
     eCollideTop: 4,
     eCollideBottom: 8,
     eInside : 16,
     eOutside: 0
-     */
+    */
     var thisBox = this.getBBox();
     var heroBox = this.mHeroRef.getBBox();
     var collideStatus = thisBox.boundCollideStatus(heroBox);
+    
     // Only do collision detection if the hero isn't in hitstun/damageboost
     if(!this.mHeroRef.isHurt() && (collideStatus !== 0))
-    {
-        /*
-        alert("collideStatus: " + collideStatus);
-        if(((collideStatus & 1) === 1) || 
-                ((collideStatus & 2) === 2))
-        {
-            alert("sidehit");
-        }*/
-        
+    {        
         // Determine if its a top hit primarily or a left hit primarily
         // by checking if the hero's bot bound is within the top 10% of the top of the patrol
         // i.e. its top 10% Y range -- same for left/right bound and left/right 10% X range
         // In case of tie, go for tophit
-        
-       // alert("UpDown stuff- HminY:" + heroBox.minY + " -BoxMaxY:" + thisBox.maxY)
         
         // Check top hit first
         if(heroBox.minY() > (thisBox.maxY() - (this.kHeight / 10)))

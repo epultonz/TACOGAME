@@ -9,6 +9,8 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
+
 function Smasher(spriteTexture, atX, atY, heroRef, topBound) {
     this.kWidth = 7;
     this.kHeight = 7;

@@ -9,45 +9,50 @@
 /*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, vec2 */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-function Projectile(spriteTexture, atX, atY, heroRef, leftFacing) {
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
+
+/**
+ * A projectile is... well, a projectile. It can be "shot" by enemies and collides with the
+ * hero, dealing damage to him upon hit.
+ * 
+ * @param {type} spriteTexture The texturesheet for the projectile's sprite.
+ * @param {float} spawnX The X coord to start the object at
+ * @param {float} spawnY The Y coord to start the object at
+ * @param {Hero} heroRef A reference to the Hero obj
+ * @param {float} delta The speed at which the obj moves- Should be positive for right-wards
+ *      and negative for left-wards movement
+ * @param {int} timer How many update ticks the projectile should last for.
+ * @returns {Projectile}
+ */
+function Projectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, timer = 300) {
     this.mWidth = 1.25;
     this.mHeight = 2;
     this.mHeroRef = heroRef;
-    this.mDelta = 0;
-    if(leftFacing)
-        this.mDelta = -0.4;
-    else
-        this.mDelta = 0.4;
+    this.mDelta = delta;
     
     // pack variables
-    this.mTimer = 300;
+    this.mTimer = timer;
     this.mDeadTimer = 20;
+    this.mDamage = 10; // How much damage the pack deals
     this.mHitHero = false;
     this.mDeflected = false;
     
     // sprite renderable 
     this.mProjectile = new SpriteRenderable(spriteTexture);
     this.mProjectile.setColor([1, 1, 1, 0]);
-    this.mProjectile.getXform().setPosition(atX, atY);
+    this.mProjectile.getXform().setPosition(spawnX, spawnY);
     this.mProjectile.getXform().setSize(this.mWidth, this.mHeight);
     this.mProjectile.setElementPixelPositions(510, 595, 23, 153);
     this.mProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
+    // Simplified minimap renderable
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.8, .8, .2, 0]);
-    this.mMinimapObj.getXform().setPosition(atX, atY);
+    this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     this.mMinimapObj.getXform().incRotationByDegree(90);
     
-    GameObject.call(this, this.mProjectile);
-    
-    /*
-    this.mRigdRect = new RigidRectangle(this.mProjectile.getXform(), this.mWidth , this.mHeight);
-    this.mRigdRect.setMass(0);
-    this.mRigdRect.setVelocity(0, 0);
-    this.setRigidBody(this.mRigdRect);
-    this.toggleDrawRigidShape();
-    */
+    GameObject.call(this, this.mProjectile); // call GameObj constructor to finish construction
 }
 gEngine.Core.inheritPrototype(Projectile, GameObject);
 
@@ -58,37 +63,28 @@ Projectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        
-
         // Check for pixel-perfect collisions with hero            
         var h = [];
-        
-        
-        
-        
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
-            this.mHeroRef.tookDamage(10);
+            this.mHeroRef.tookDamage(this.mDamage);
             this.mHitHero = true;
+            
         }else if(!this.mDeflected){ //dont redeflect if already deflected
          
             if(this.mHeroRef.isDeflecting()) {
                 var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
                     12, 12);
-                var h = [];
                 if (this.getBBox().intersectsBound(deflectBox)) {
                     this.mDeflected = true;
                 }
             }
             if(this.mDeflected) {
-                this.mDelta = -this.mDelta;
-                this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
-                this.mHeroRef.wasDeflected();
+                this.deflected();
             }
         }
         
-        var currPos = this.getXform().getPosition();
-        this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
+        this.move();
         GameObject.prototype.update.call(this);
         
         // Destroyed if the timer is 0
@@ -112,7 +108,7 @@ Projectile.prototype.update = function () {
             return false;
     }
     
-    // Move the minimap object to the patrol's position
+    // Move the minimap object to the projectile's position
     var projPos = this.getXform().getPosition();
     this.mMinimapObj.getXform().setPosition(projPos[0], projPos[1]);
     
@@ -122,6 +118,17 @@ Projectile.prototype.update = function () {
 
 Projectile.prototype.checkDeflect = function() {
     
+};
+
+Projectile.prototype.deflected = function() {
+    this.mDelta = -this.mDelta;
+    this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
+    this.mHeroRef.wasDeflected();
+};
+
+Projectile.prototype.move = function() {
+    var currPos = this.getXform().getPosition();
+    this.getXform().setPosition(currPos[0] + this.mDelta, currPos[1]);
 };
 
 Projectile.prototype.draw = function (aCamera) {
