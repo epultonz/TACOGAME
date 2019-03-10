@@ -46,6 +46,9 @@ function DemoScene() {
 
     this.mTutoPanel = null;
     this.mCodeBox = null;
+    
+    this.mTimer = null;
+    this.mLastPos = null;
 
     this.backButton = null;
     this.MainMenuButton = null;
@@ -121,8 +124,9 @@ DemoScene.prototype.initialize = function () {
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
     
+    this.mTimer = Date.now();
+    this.mLastPos = this.mKelvin.getXform().getPosition();
     
-
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
     this.mCodeBox = new CodeMechanism(280,240,40,85,3,"1234");
@@ -332,14 +336,18 @@ DemoScene.prototype.update = function () {
     //the update collision
     this.mAllObjs.update();
     this.mAllNonPhysObj.update();
-
+    
+    //check fall
+    this.checkFall();
+    
     this.MainMenuButton.update();
     this.backButton.update();
 
     // nice for debugging
     msg += " Health: " + this.mKelvin.getHP() + " |";
     msg += " CanJump status: " + collided + " |";
-    msg += " Q (damage), O (Win), L (Lose)";
+    //msg += " Q (damage), O (Win), L (Lose)";
+    msg += "x " + this.mLastPos[0] + " " + this.mLastPos[1];
     this.mMsg.setText(msg);
     this.mCamera.panXWith(this.mKelvin.getXform(), 0);
     this.mCamera.update();
@@ -446,7 +454,7 @@ DemoScene.prototype.drawMain = function() {
     this.mTutoPanel.draw(this.mCamera);
     this.mCodeBox.draw(this.mCamera);
     
-    //this.mMsg.draw(this.mCamera);
+    this.mMsg.draw(this.mCamera);
 };
 
 DemoScene.prototype.drawMap = function() {
@@ -486,4 +494,22 @@ DemoScene.prototype.createParticle = function(atX, atY) {
     p.setSizeDelta(0.98);
     
     return p;
+};
+
+DemoScene.prototype.checkFall = function() {
+    //check if kelvin falls. If yes, take damage and spawn at location 2sec b4
+    //else, update the last spawn pos
+    if(this.mKelvin.getXform().getYPos() < -10){
+        this.mKelvin.tookDamage(10);
+        this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]);
+    } else {
+        var t = Date.now();
+        var t2 = this.mTimer + 2000;
+        if(t > t2){
+            var p = this.mKelvin.getXform().getPosition();
+            this.mLastPos = [p[0],p[1]];
+            this.mTimer = Date.now();
+        }
+    }
+    
 };
