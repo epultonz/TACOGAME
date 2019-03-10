@@ -104,11 +104,9 @@ DemoScene.prototype.initialize = function () {
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 
-    this.parseObjects(sceneInfo);
-    
-    
     var cams = sceneInfo.Camera;   
     this.mCamera = this.parseCamera(cams[0]); 
+    this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
 
 
@@ -232,25 +230,16 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
     
     //story panels
     var storyPanels = sceneInfo.StoryPanel;
-    var i, pos, width, txt, stubX, stubY, setText, panel;
+    var i, pos, width, txt, spawnX, spawnY, panel;
     for (i = 0; i < storyPanels.length; i++) {
         pos = storyPanels[i].Pos;    
         width = storyPanels[i].Width;
-        txt = storyPanels[i].txt;
-        stubX = storyPanels[i].stubX;
-        stubY = storyPanels[i].stubY;
-        setText = storyPanels[i].setText;
+        txt = storyPanels[i].text;
+        spawnX = storyPanels[i].stubX;
+        spawnY = storyPanels[i].stubY;
         
-        //probably need to make an array for panels.
-        // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
-        this.mTutoPanel = new StoryPanel(this.kWBPanel,pos[0],pos[1],width,
-        txt,stubX,stubY);
-        var k;
-        var text = ["","",""];
-        for (k =0; k< setText.length; k++) {
-            text[k] = setText[k];
-        }
-        this.mTutoPanel.setText2(text[0], text[1], text[2]);
+        this.mTutoPanel = new StoryPanel(this.kWBPanel,spawnX, spawnY, width, 
+            this.mCamera, this.mKelvin, txt);
     }
     
     var platforms = sceneInfo.Platform;
@@ -290,10 +279,7 @@ DemoScene.prototype.update = function () {
     var msg = "";
     
     // tutorial panel bounding box collision
-    var tBB = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
-    if(tBB){
-        this.mTutoPanel.actFlag(true);
-    } else { this.mTutoPanel.actFlag(false); }
+    this.mTutoPanel.update();
 
     // code box stub outside bbox collision
     var cBB = this.mCodeBox.getStubBBox().boundCollideStatus(this.mKelvin.getBBox());

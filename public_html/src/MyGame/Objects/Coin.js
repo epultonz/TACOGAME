@@ -44,12 +44,10 @@ Coin.prototype.update = function () {
     var thisBox = this.getBBox();
     var heroBox = this.mHeroRef.getBBox();
     var collideStatus = thisBox.boundCollideStatus(heroBox);
-    // Only do collision detection if the powerup isn't still respawning and hero isn't full hp
     if(collideStatus !== 0){
         this.mRespawningFlag = true;
     }
     
-    // Always return true for now, as this powerup respawns
     return true;
 };
 
