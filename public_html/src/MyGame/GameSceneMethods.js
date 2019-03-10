@@ -135,17 +135,6 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     
 };
 
-
-GameScene.prototype.drawCamera = function (camera) {
-    //this.mSupport.draw(camera.getVPMatrix());
-    //this.mHero.draw(camera.getVPMatrix());
-    var i;
-    for (i = 0; i < this.mSqSet.length; i++) {
-        this.mSqSet[i].draw(camera.getVPMatrix());
-    }
-};
-
-
 GameScene.prototype.createBounds = function() {
     var x = 15, w = 30, y = 0, y2 = 15;// Was 18
     for (x = 15; x < 120; x+=30)
@@ -247,6 +236,7 @@ GameScene.prototype.drawMain = function() {
     this.mCodeBox.draw(this.mCamera);
     
     this.mMsg.draw(this.mCamera);
+    this.mScore.draw(this.mCamera);
 };
 
 GameScene.prototype.drawMap = function() {

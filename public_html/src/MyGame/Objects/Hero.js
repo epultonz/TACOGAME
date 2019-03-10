@@ -133,12 +133,6 @@ Hero.prototype.update = function () {
             this.mHeroState = Hero.eHeroState.eRunLeft;
             this.mIsMoving = true;
         //}
-        //make less movement in air
-        if(!this.mCanJump){
-            v[0] = -20; // i dont think it works :'(
-        } else {
-            v[0] = -20;
-        }
 
         this.mKelvin.updateAnimation();
     }

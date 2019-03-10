@@ -134,6 +134,7 @@ Patrol.prototype.update = function () {
                   (heroBox.minX() > (thisBox.maxX() - (this.kWidth / 10)))   )
         {
             this.mHeroRef.tookDamage(20);
+            gScore += 10;
         }
     }
 

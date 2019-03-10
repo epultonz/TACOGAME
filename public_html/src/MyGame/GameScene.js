@@ -12,6 +12,8 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
+var gScore = gScore || 0;
+
 function GameScene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
@@ -36,7 +38,8 @@ function GameScene() {
     this.LevelSelect = null;
     
     this.mMsg = null;
-
+    this.mScore = null;
+    
     this.mKelvin = null;
     this.mPatrol = null;
     this.mCannons = null;
@@ -136,7 +139,12 @@ GameScene.prototype.initialize = function () {
     this.mMsg.setColor([0, 0, 0, 1]);
     this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
-
+    
+    this.mScore = new FontRenderable("Score");
+    this.mScore.setColor([0, 0, 0, 1]);
+    this.mScore.getXform().setPosition(5, 63);
+    this.mScore.setTextHeight(2);
+    
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
@@ -156,8 +164,10 @@ GameScene.prototype.draw = function () {
 // anything from this function!
 GameScene.prototype.update = function () {
     var msg = "";
+    var sc = "";
     
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
+    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
     
     // tutorial panel bounding box collision
     this.mTutoPanel.update();
@@ -206,6 +216,10 @@ GameScene.prototype.update = function () {
     //msg += " Q (damage), O (Win), L (Lose)";
     msg += "x " + this.mLastPos[0] + " " + this.mLastPos[1];
     this.mMsg.setText(msg);
+    
+    sc += "Score :" + gScore;
+    this.mScore.setText(sc);
+    
     this.mCamera.panXWith(this.mKelvin.getXform(), 0);
     this.mCamera.update();
 
