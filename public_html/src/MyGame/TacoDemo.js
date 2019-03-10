@@ -139,13 +139,13 @@ TacoDemo.prototype.initialize = function () {
     this.mSceneBG.getXform().setSize(100,50);
     this.mSceneBG.getXform().setPosition(50,26);
 
+    var tutoText = ["Story Element Panel Demo",
+        "Space to jump. S to stomp. E to super.",
+        "Take the health pack above.",
+        "Solve the code and warp down to win."];
     // tutorial panel. @param(texture,atX,atY,width,txt,stubX,stubY)
-    this.mTutoPanel = new StoryPanel(this.kWBPanel,50,20,70,
-        "Story Element Panel Demo",15,3);
-     //should probably change this to take an array of strings
-    this.mTutoPanel.setText2("Space to jump. S to stomp. E to super.",
-                             "Take the health pack above.",
-                            "Solve the code and warp down to win.");
+    // function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry)
+    this.mTutoPanel = new StoryPanel(this.kWBPanel, 50, 20, 70, this.mCamera, this.mKelvin, tutoText);
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
     this.mCodeBox = new CodeMechanism(280,240,40,85,3,"1234");
@@ -175,12 +175,7 @@ TacoDemo.prototype.draw = function () {
 // anything from this function!
 TacoDemo.prototype.update = function () {
     var msg = "";
-    
-    // tutorial panel bounding box collision
-    var tBB = this.mTutoPanel.getPanelBBox().boundCollideStatus(this.mKelvin.getBBox());
-    if(tBB){
-        this.mTutoPanel.actFlag(true);
-    } else { this.mTutoPanel.actFlag(false); }
+    this.mTutoPanel.update();
 
     // code box stub outside bbox collision
     var cBB = this.mCodeBox.getStubBBox().boundCollideStatus(this.mKelvin.getBBox());

@@ -71,7 +71,7 @@ MyGame.prototype.initialize = function () {
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
     this.tacoLevelButton = new UIButton(this.kUIButton,this.tacoLevelSelect,this,[400,400],[350,100],"Taco Level",8,[1,1,1,1],[0,0,0,1]);
-    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoDemoSelect,this,[400,200],[350,100],"Taco Demo",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoDemoSelect,this,[400,200],[350,100],"Tech Demo",8,[1,1,1,1],[0,0,0,1]);
 };  
 
 // This is the draw function, make sure to setup proper drawing environment, and more

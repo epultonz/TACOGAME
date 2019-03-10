@@ -142,10 +142,10 @@
         {
             "Pos": [50, 20],
             "Width": 70,
-            "txt": "Story Element Panel Demo",
             "stubX": 15,
             "stubY": 3,
-            "setText": [
+            "text": [
+                "Story Element Panel Demo",
                 "Space to jump. S to stomp. E to super.", 
                 "Take the health pack above.",
                 "Solve the code and warp down to win."]

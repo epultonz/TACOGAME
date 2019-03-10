@@ -10,36 +10,54 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function StoryPanel(texture,atX,atY,w,text,stubX,stubY){
+function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, midScreenY = 20){
+    this.mCamRef = camRef;
+    this.mHeroRef = heroRef;
+    this.mMidScreenY = midScreenY;
+    this.mActive = false; // If the panel should be shown or not
+    
+    
     // the board as background of txt
     this.mPanel = new TextureRenderable(texture);
-    this.mPanel.getXform().setPosition(atX,atY);
-    this.mPanel.getXform().setSize(w,w);
+    this.mPanel.getXform().setSize(width, width);
     
-    //the text
-    this.mText1 = new FontRenderable(text);
-    this.mText1.getXform().setPosition(atX-21,atY+17);
-    this.mText1.setTextHeight(2);
-    
+    this.mText1 = new FontRenderable(" ");
     this.mText2 = new FontRenderable(" ");
-    this.mText2.getXform().setPosition(atX-21,atY+14);
-    this.mText2.setTextHeight(2);
-    
     this.mText3 = new FontRenderable(" ");
-    this.mText3.getXform().setPosition(atX-21,atY+11);
-    this.mText3.setTextHeight(2);
-    
     this.mText4 = new FontRenderable(" ");
-    this.mText4.getXform().setPosition(atX-21,atY+8);
-    this.mText4.setTextHeight(2);
+    
+    
+    //the text - positions are set in update()
+    if(lineAry.length >= 4)
+    {
+        this.mText4.setText(lineAry[3]);
+        this.mText4.setTextHeight(2);
+    }
+    
+    if(lineAry.length >= 3)
+    {
+        this.mText3.setText(lineAry[2]);
+        this.mText3.setTextHeight(2);
+    }
+    
+    if(lineAry.length >= 2)
+    {
+        this.mText2.setText(lineAry[1]);
+        this.mText2.setTextHeight(2);
+    }
+    
+    if(lineAry.length >= 1)
+    {
+        this.mText1.setText(lineAry[0]);
+        this.mText1.setTextHeight(2);
+    }
     
     //stub in game
     this.mStub = new Renderable();
     this.mStub.setColor([0.5,0,0.5,1]);
-    this.mStub.getXform().setPosition(stubX,stubY);
+    this.mStub.getXform().setPosition(spawnX, spawnY);
     this.mStub.getXform().setSize(2,2);
     
-    this.mActive = false;
     
     GameObject.call(this,this.mPanel);
     
@@ -52,10 +70,32 @@ gEngine.Core.inheritPrototype(StoryPanel, GameObject);
 
 StoryPanel.prototype.update = function(){
     GameObject.prototype.update.call(this);
+    var camPos = this.mCamRef.getWCCenter();
+    var camX = camPos[0];
     
+    // tutorial panel bounding box collision
+    var heroCollision = this.mPanelBBox.boundCollideStatus(this.mHeroRef.getBBox());
+    if(heroCollision !== 0){
+        this.mActive = true;
+    }
+    else
+    {
+        this.mActive = false;
+    }
+
+    if(this.mActive){
+        this.mPanel.getXform().setPosition(camX, this.mMidScreenY);
+   
+        //the text
+        this.mText1.getXform().setPosition(camX-21,this.mMidScreenY+17);   
+        this.mText2.getXform().setPosition(camX-21,this.mMidScreenY+14);  
+        this.mText3.getXform().setPosition(camX-21,this.mMidScreenY+11);
+        this.mText4.getXform().setPosition(camX-21,this.mMidScreenY+8);
+    }
 };
 
 StoryPanel.prototype.draw = function(aCam){
+    this.mStub.draw(aCam);
     if(this.mActive){
         GameObject.prototype.draw.call(this,aCam);
         this.mText1.draw(aCam);
@@ -63,23 +103,4 @@ StoryPanel.prototype.draw = function(aCam){
         this.mText3.draw(aCam);
         this.mText4.draw(aCam);
     };
-    this.mStub.draw(aCam);
-};
-
-StoryPanel.prototype.actFlag = function(a){
-    this.mActive = a;
-};
-
-StoryPanel.prototype.getPanelBBox = function(){
-    return this.mPanelBBox;
-};
-
-StoryPanel.prototype.setText1 = function(s){
-    this.mText1.setText(s);
-};
-
-StoryPanel.prototype.setText2 = function(s1, s2, s3){
-    this.mText2.setText(s1);
-    this.mText3.setText(s2);
-    this.mText4.setText(s3);
 };
