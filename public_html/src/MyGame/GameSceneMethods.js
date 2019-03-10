@@ -33,7 +33,7 @@ GameScene.prototype.parseCamera = function (camInfo) {
 };
 
 GameScene.prototype.parseObjects = function (sceneInfo) {
-    
+    //parse patrols
     var patrols = sceneInfo.Patrol;
     var i, pos, patrol;
     for (i = 0; i < patrols.length; i++) {
@@ -44,6 +44,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         
     }
    
+    //parse cannons
     var cannons = sceneInfo.Cannon;
     var i, pos, cannon, facing;
     for (i = 0; i < cannons.length; i++) {
@@ -55,6 +56,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         this.mAllPlatform.addToSet(cannon);
     }
     
+    //parse fliers
     var fliers = sceneInfo.Flier;
     var i, pos, flier;
     for (i = 0; i < fliers.length; i++) {
@@ -63,6 +65,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         this.mAllObjs.addToSet(flier);  
     }
     
+    //parse smashers
     var smashers = sceneInfo.Smasher;
     var i, pos, bBound, tBound, uVelocity, dVelocity, smasher;
     for (i = 0; i < smashers.length; i++) {
@@ -73,13 +76,14 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         dVelocity = smashers[i].velocityDown;
 
         
-        // init cannon
+        // init smashers
         smasher = new Smasher(this.kSprites, pos[0], pos[1], this.mKelvin, 
             tBound, bBound, uVelocity, dVelocity);
         this.mAllObjs.addToSet(smasher);
         this.mAllPlatform.addToSet(smasher);
     }
     
+    //parse coins
     var coins = sceneInfo.Coin;
     var i, pos, coin;
     for (i = 0; i < coins.length; i++) {
@@ -94,9 +98,10 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     var pos = background.Pos;
     var size = background.Size;
     
-    this.mSceneBG = new TextureRenderable(this.kBG);
+    this.mSceneBG = new LightRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(size[0],size[1]);
     this.mSceneBG.getXform().setPosition(pos[0],pos[1]);
+    this.mBG = new TiledGameObject(this.mSceneBG);
     
     
     //story panels
@@ -113,6 +118,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             this.mCamera, this.mKelvin, txt);
     }
     
+    //parse platforms
     var platforms = sceneInfo.Platform;
     var i, pos, w, rot;
     for (i = 0; i < platforms.length; i++) {
@@ -122,14 +128,15 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         this.platformAt(pos[0],pos[1],w,rot);
     }
     
+    
+    
 };
 
 GameScene.prototype.createBounds = function() {
-    var x = 15, w = 30, y = 0, y2 = 15;// Was 18
+    var x = 15, w = 30, y = 0;
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
-
-    
+ 
 };
 
 // Make the platforms
@@ -208,13 +215,15 @@ GameScene.prototype.checkWinLose = function(){
 GameScene.prototype.drawMain = function() {
     this.mCamera.setupViewProjection();
     var i;
+    /*
     var pos = this.mSceneBG.getXform().getPosition();
     for(i=0; i<4; i++) {
         this.mSceneBG.draw(this.mCamera);
         pos[0] += 100;
     }
     pos[0] = 0;
-
+    */
+    this.mBG.draw(this.mCamera);
     this.mAllObjs.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
 
@@ -229,16 +238,17 @@ GameScene.prototype.drawMain = function() {
 };
 
 GameScene.prototype.drawMap = function() {
-    /*
+    
     this.mMinimapCam.setupViewProjection();
 
-    this.mSceneBG.draw(this.mMinimapCam);
-
+    //this.mSceneBG.draw(this.mMinimapCam);
+    this.mBG.draw(this.mMinimapCam);
     this.mAllObjs.draw(this.mMinimapCam);
     this.mAllNonPhysObj.draw(this.mMinimapCam);
 
     this.mMsg.draw(this.mMinimapCam);
-    */
+    
+    
 };
 
 GameScene.prototype.createParticle = function(atX, atY) {

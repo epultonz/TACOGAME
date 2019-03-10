@@ -110,6 +110,7 @@ GameScene.prototype.initialize = function () {
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 
+    
     var cams = sceneInfo.Camera;   
     this.mCamera = this.parseCamera(cams[0]); 
     this.parseObjects(sceneInfo);
@@ -222,5 +223,8 @@ GameScene.prototype.update = function () {
     
     this.mCamera.panXWith(this.mKelvin.getXform(), 0);
     this.mCamera.update();
+    
+    this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
+    this.mMinimapCam.update();
 
 };
