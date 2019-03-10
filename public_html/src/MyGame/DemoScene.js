@@ -78,7 +78,7 @@ DemoScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kWBPanel);
     gEngine.Textures.unloadTexture(this.kGreenPipe);
     gEngine.Textures.unloadTexture(this.kParticleTexture);
-    gEngine.Textures.unloadTexture(this.kParticleTexture);
+    gEngine.Textures.unloadTexture(this.kCoin);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     //document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back")
