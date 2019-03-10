@@ -24,6 +24,7 @@ function DemoScene() {
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
     this.kSceneFile = "assets/Taco/DemoScene.json";
     this.kParticleTexture = "assets/Taco/particle.png";
+    this.kCoin = "assets/Taco/coin.png";
     // The camera to view the scene
     this.mCamera = null;
     this.mMinimapCam = null;
@@ -62,6 +63,7 @@ DemoScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kWBPanel);
     gEngine.Textures.loadTexture(this.kGreenPipe);
     gEngine.Textures.loadTexture(this.kParticleTexture);
+    gEngine.Textures.loadTexture(this.kCoin);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -75,6 +77,7 @@ DemoScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kHealthBar);
     gEngine.Textures.unloadTexture(this.kWBPanel);
     gEngine.Textures.unloadTexture(this.kGreenPipe);
+    gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     //document.getElementById("particle").style.display="none";
@@ -125,7 +128,8 @@ DemoScene.prototype.initialize = function () {
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
     
-    
+    var coin = new Coin(this.kCoin, 27, 4, this.mKelvin);
+    this.mAllNonPhysObj.addToSet(coin);
 
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
