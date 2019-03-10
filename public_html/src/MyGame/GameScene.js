@@ -194,7 +194,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         facing = cannons[i].Facing;
         // init cannon
         cannon = new Cannon(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
-        this.mAllObjs.addToSet(cannon);  
+        this.mAllObjs.addToSet(cannon);
+        this.mAllPlatform.addToSet(cannon);
     }
     
     var fliers = sceneInfo.Flier;
@@ -301,6 +302,8 @@ GameScene.prototype.draw = function () {
 // anything from this function!
 GameScene.prototype.update = function () {
     var msg = "";
+    
+    this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     
     // tutorial panel bounding box collision
     this.mTutoPanel.update();
