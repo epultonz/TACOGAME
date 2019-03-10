@@ -6,7 +6,7 @@
  */
 
 /*jslint node: true, vars: true, white: true */
-/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable */
+/*global gEngine, GameObject, LightRenderable, IllumRenderable, SpriteAnimateRenderable, gScore */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!

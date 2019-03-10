@@ -1,3 +1,6 @@
+/*jslint node: true, vars: true */
+/*global GameScene, vec2, gEngine */
+/* find out more about jslint: http://www.jslint.com/help.html */
 
 GameScene.prototype.parseCamera = function (camInfo) {
     var cxy = camInfo.Center;
