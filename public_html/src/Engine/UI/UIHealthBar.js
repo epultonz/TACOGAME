@@ -2,39 +2,24 @@
  * 
  */
 
+/* global GameObject */
+
 "use strict";
 
-/**
- * A health bar to can be used for UI's
- * @param {texture} sprite Texture for the UIHealthBar
- * @param {Array[]} position Base position for the UIHealthBar
- * @param {Array[]} size The size for the UIHealthBar
- * @param {int} buffer Size different between background and foreground
- * @class UIHealthBar
- * @returns {UIHealthBar}
- */
-function UIHealthBar(sprite, position, size, buffer) {
-    this.mBack = new SpriteRenderable(sprite);
-    this.mBack.setElementUVCoordinate(0.0, 1.0, 0.5, 1.0);
-    UIElement.call(this, this.mBack, position, size);
-    
-    this.mBuffer = buffer;
-    
+
+function UIHealthBar(sprite, pos) {
+    this.mHearts = new SpriteRenderable(sprite);
+    this.mHearts.setElementPixelPositions(0,270, 0, 64);
+    this.mHearts.setColor([1, 1, 1, 0]);
+    this.mHearts.getXform().setPosition(pos[0], pos[1]);
+    this.mWidth = 15;
+    this.mHearts.getXform().setSize(this.mWidth, 5);
     this.mMaxHP = 100;
     this.mCurHP = this.mMaxHP;
-    
-    
-    this.mHPElem = new UISprite(sprite, position, size, [0.0, 1.0, 0.0, 0.5]);
 };
-gEngine.Core.inheritPrototype(UIHealthBar, UIElement);
-/**
- * Draws the UIHealthBar 
- * @param {Camera} aCamera The camera to draw it on
- * @memberOf UIHealthBar
- */
+
 UIHealthBar.prototype.draw = function(aCamera) {
-  UIElement.prototype.draw.call(this, aCamera);
-  this.mHPElem.draw(aCamera);
+  this.mHearts.draw(aCamera);
 };
 
 /**
@@ -42,15 +27,6 @@ UIHealthBar.prototype.draw = function(aCamera) {
  * @memberOf UIHealthBar
  */
 UIHealthBar.prototype.update = function() {
-    UIElement.prototype.update.call(this);
-    
-    var s = this.getUIXform().getSize();
-    var p = this.getUIXform().getPosition();
-    this.mHPElem.getUIXform().setSize((s[0] - 2*this.mBuffer) * (this.mCurHP / this.mMaxHP), s[1] - 2*this.mBuffer);
-    
-    //left align
-    this.mHPElem.getUIXform().setPosition(p[0] - s[0]/2 + this.mBuffer + (this.mHPElem.getUIXform().getSize()[0]/2), p[1]);
-    this.mHPElem.update();
 };
 
 /**
@@ -60,7 +36,7 @@ UIHealthBar.prototype.update = function() {
  */
 UIHealthBar.prototype.setMaxHP = function(hp) {
     if(hp > 0)
-        this.mMaxHP = hp;  
+        this.mMaxHP = hp;
 };
 
 /**
@@ -102,7 +78,25 @@ UIHealthBar.prototype.incCurrentHP = function(hp) {
     if(this.mCurHP + hp > this.mMaxHP)
         this.mCurHP = this.mMaxHP; 
     else if(this.mCurHP + hp < 0)
-        this.mCurHP = this.mMaxHP; //demo purposes
+        this.mCurHP = 0; //demo purposes
     else
         this.mCurHP = this.mCurHP + hp;
+    
+    var heartPercentage = this.mCurHP / this.mMaxHP;
+    var newWidth = 270.0 * heartPercentage;
+    this.mHearts.setElementPixelPositions(0,newWidth, 0, 64);
+    
+    var oldWidth = this.mHearts.getXform().getSize()[0];
+    var newWidth = this.mWidth * heartPercentage;
+    this.mHearts.getXform().setSize(newWidth, 5);
+    
+    var heartPos = this.mHearts.getXform().getPosition();
+    heartPos[0] = heartPos[0] - ((oldWidth - newWidth)/2.0);
+    
+
+    
+
+    
+    
+    
 };

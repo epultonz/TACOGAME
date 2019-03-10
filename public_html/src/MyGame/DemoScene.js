@@ -19,7 +19,7 @@ function DemoScene() {
     this.kBG = "assets/Taco/scene_example.png";
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
-    this.kHealthBar = "assets/UI/healthbar.png";
+    this.kHealthBar = "assets/UI/lives.png";
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
     this.kSceneFile = "assets/Taco/DemoScene.json";
@@ -34,7 +34,7 @@ function DemoScene() {
     this.mAllPlatform = null;
     this.mPipe = null;
     this.LevelSelect = null;
-
+    
     this.mMsg = null;
 
     this.mKelvin = null;
@@ -116,9 +116,7 @@ DemoScene.prototype.initialize = function () {
     // make the bounds.. platform etc
     this.createBounds();
     this.mPipe = this.createPipe();
-    
-    
-    
+        
     var smasher = new Smasher(this.kSprites, 35, 12, this.mKelvin, 15, 6);
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);

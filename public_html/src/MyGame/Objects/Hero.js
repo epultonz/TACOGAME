@@ -57,8 +57,8 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.toggleDrawRenderable();
     //this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
-    this.kHealthBar = "assets/UI/healthbar.png";
-    this.UIHealth = new UIHealthBar(this.kHealthBar,[110,446],[200,25],0);
+    this.kHealthBar = "assets/UI/lives.png";
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[15,50]);
     
     //Light settings
     this.mLight = new Light();
@@ -78,7 +78,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mShake = null;
     
     //interpolation pet follower
-    this.kPet = "assets/UI/healthbar.png"; //using this as pet for now
+    this.kPet = "assets/UI/lives.png"; //using this as pet for now
     this.mPet = new SpriteRenderable(this.kPet);
     this.mPet.setColor([1, 1, 1, 0]);
     this.mPet.getXform().setPosition(atX, atY);
@@ -365,7 +365,7 @@ Hero.prototype.draw = function (aCamera) {
     if (this.mParticles !== null) {
         this.mParticles.draw(aCamera);
     }
-    GameObject.prototype.draw.call(this, aCamera);
+    this.mKelvin.draw(aCamera);
 };
 
 Hero.prototype.drawMini = function (aCamera) {
@@ -403,21 +403,10 @@ Hero.prototype.tookDamage = function (damage) {
     }  
 };
 
-// increment the hero's HP by some amount. Sets to max if it would go over it
-Hero.prototype.incHP = function (hpAmt) {
-    if((this.UIHealth.getCurrentHP() + hpAmt) >= this.UIHealth.getMaxHP())
-        this.UIHealth.setCurrentHP(this.UIHealth.getMaxHP());
-    else
-        this.UIHealth.incCurrentHP(hpAmt); 
-};
-
 Hero.prototype.getHP = function () {
     return this.UIHealth.getCurrentHP();
 };
 
-Hero.prototype.isAtFullHP = function () {
-    return (this.UIHealth.getCurrentHP() === this.UIHealth.getMaxHP());
-};
 
 Hero.prototype.goSuper = function(){
     var s = this.mLight.getIntensity();
