@@ -395,9 +395,9 @@ Hero.prototype.getHP = function () {
 
 Hero.prototype.goSuper = function(){
     var s = this.mLight.getIntensity();
-    var a = 0.1;
-    if (s >= 5) {
-        s = 0;
+    var a = 0.05;
+    if (s >= 2) {
+        s = 0.2;
     }
     this.mLight.setIntensity(s+a);
 };
@@ -428,4 +428,8 @@ Hero.prototype.createParticle = function(atX, atY) {
     p.setSizeDelta(0.9);
     
     return p;
+};
+
+Hero.prototype.getSuperLight = function() {
+    return this.mLight;
 };

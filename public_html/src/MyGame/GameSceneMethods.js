@@ -93,6 +93,10 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         
     }
     
+    //parse powerups
+    var pu = sceneInfo.Powerup;
+    
+    
     // scene background
     var background = sceneInfo.SceneBG[0];
     var pos = background.Pos;
@@ -101,6 +105,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     this.mSceneBG = new LightRenderable(this.kBG);
     this.mSceneBG.getXform().setSize(size[0],size[1]);
     this.mSceneBG.getXform().setPosition(pos[0],pos[1]);
+    this.mSceneBG.addLight(this.mKelvin.getSuperLight());
     this.mBG = new TiledGameObject(this.mSceneBG);
     
     
