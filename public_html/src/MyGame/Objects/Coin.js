@@ -16,7 +16,7 @@ function Coin(spriteTexture, atX, atY, heroRef) {
     this.kHeight = 3;
     this.mHeroRef = heroRef;
     this.mRespawnTimer = 300;
-    this.mRespawningFlag = false;
+    this.mCollectedFlag = false;
     this.mSpriteText = spriteTexture;
     
     // sprite renderable 
@@ -39,24 +39,26 @@ function Coin(spriteTexture, atX, atY, heroRef) {
 gEngine.Core.inheritPrototype(Coin, Powerup);
 
 Coin.prototype.update = function () {
-    GameObject.prototype.update.call(this);
-    this.mCoin.updateAnimation();
-    var thisBox = this.getBBox();
-    var heroBox = this.mHeroRef.getBBox();
-    var collideStatus = thisBox.boundCollideStatus(heroBox);
-    if(collideStatus !== 0){
-        this.mRespawningFlag = true;
+    if(!this.mCollectedFlag){
+        GameObject.prototype.update.call(this);
+        this.mCoin.updateAnimation();
+        var thisBox = this.getBBox();
+        var heroBox = this.mHeroRef.getBBox();
+        var collideStatus = thisBox.boundCollideStatus(heroBox);
+        if(collideStatus !== 0){
+            this.mCollectedFlag = true;
+            gScore += 10;
+        }
     }
     
-    return true;
 };
 
 Coin.prototype.draw = function (aCamera) {
-    if(!this.mRespawningFlag)
+    if(!this.mCollectedFlag)
         GameObject.prototype.draw.call(this, aCamera);
 };
 
 Coin.prototype.drawMini = function (aCamera) {
-    if(!this.mRespawningFlag)
+    if(!this.mCollectedFlag)
         this.mMinimapObj.draw(aCamera);
 };
