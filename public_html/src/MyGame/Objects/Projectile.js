@@ -74,7 +74,7 @@ Projectile.prototype.update = function () {
          
             if(this.mHeroRef.isDeflecting()) {
                 var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
-                    12, 12);
+                    15, 15);
                 if (this.getBBox().intersectsBound(deflectBox)) {
                     this.mDeflected = true;
                 }

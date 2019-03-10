@@ -13,13 +13,18 @@ function UIHealthBar(sprite, pos) {
     this.mHearts.setColor([1, 1, 1, 0]);
     this.mHearts.getXform().setPosition(pos[0], pos[1]);
     this.mWidth = 15;
+    this.mPos = [pos[0] - 50, pos[1]];
     this.mHearts.getXform().setSize(this.mWidth, 5);
     this.mMaxHP = 100;
     this.mCurHP = this.mMaxHP;
+    this.mPositionChange = null;
 };
 
 UIHealthBar.prototype.draw = function(aCamera) {
-  this.mHearts.draw(aCamera);
+    //use this to set position to stay even when camera moves
+    this.mHearts.getXform().setPosition(aCamera.getWCCenter()[0] + this.mPos[0] - 
+        this.mPositionChange, this.mPos[1]);
+    this.mHearts.draw(aCamera);
 };
 
 /**
@@ -91,7 +96,8 @@ UIHealthBar.prototype.incCurrentHP = function(hp) {
     this.mHearts.getXform().setSize(newWidth, 5);
     
     var heartPos = this.mHearts.getXform().getPosition();
-    heartPos[0] = heartPos[0] - ((oldWidth - newWidth)/2.0);
+    this.mPositionChange += (oldWidth - newWidth)/2.0;
+    //heartPos[0] = heartPos[0] - this.mPositionChange;
     
 
     
