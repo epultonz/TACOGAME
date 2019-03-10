@@ -63,17 +63,6 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         this.mAllObjs.addToSet(flier);  
     }
     
-    var fliers = sceneInfo.Flier;
-    var i, pos, flier;
-    for (i = 0; i < fliers.length; i++) {
-        pos = fliers[i].Pos;    
-        // init cannon
-        flier = new Smasher(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
-        this.mAllNonPhysObj.addToSet(flier);
-    }
-    
-    
-    
     var smashers = sceneInfo.Smasher;
     var i, pos, bBound, tBound, uVelocity, dVelocity, smasher;
     for (i = 0; i < smashers.length; i++) {
