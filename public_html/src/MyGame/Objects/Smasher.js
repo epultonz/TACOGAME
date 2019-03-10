@@ -75,13 +75,7 @@ Smasher.prototype.update = function () {
     this._smashHero();
     
     this.getRigidBody().setVelocity(0,this.mVelocity);
-    GameObject.prototype.update.call(this);
-    
-    
-
-    //update rigid rectangle as not using velocity
-    
-
+    GameObject.prototype.update.call(this);    
     
 };
 
@@ -90,7 +84,7 @@ Smasher.prototype._smashHero = function() {
     var heroBox = this.mHeroRef.getBBox();
     var collideStatus = thisBox.boundCollideStatus(heroBox);
     // Only do collision detection if the hero isn't in hitstun/damageboost
-    if(!this.mHeroRef.isHurt() && 
+    if(!this.mHeroRef.isHurt() && this.mVelocity < 0 && 
         (collideStatus === 8 || collideStatus === 9 || collideStatus === 10)) {
             this.mVelocity = this.mVelocityUp;
             this.mHeroRef.tookDamage(20);
