@@ -51,7 +51,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         facing = cannons[i].Facing;
         // init cannon
         cannon = new Cannon(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
-        this.mAllObjs.addToSet(cannon);  
+        this.mAllObjs.addToSet(cannon);
+        this.mAllPlatform.addToSet(cannon);
     }
     
     var fliers = sceneInfo.Flier;
