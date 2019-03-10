@@ -128,26 +128,17 @@ Hero.prototype.update = function () {
     var v = this.getRigidBody().getVelocity();
 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-        //if (this.mCanJump === true) {
-            this.mPreviousHeroState = this.mHeroState;
-            this.mHeroState = Hero.eHeroState.eRunLeft;
-            this.mIsMoving = true;
-        //}
-
+        this.mPreviousHeroState = this.mHeroState;
+        this.mHeroState = Hero.eHeroState.eRunLeft;
+        this.mIsMoving = true;
+        v[0] = -20;
         this.mKelvin.updateAnimation();
     }
     else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-        //if (this.mCanJump === true) {
-            this.mPreviousHeroState = this.mHeroState;
-            this.mHeroState = Hero.eHeroState.eRunRight;
-            this.mIsMoving = true;
-        //}
-        //make less movement in air
-        if(!this.mCanJump){
-            v[0] = 20;
-        } else {
-            v[0] = 20;
-        }
+        this.mPreviousHeroState = this.mHeroState;
+        this.mHeroState = Hero.eHeroState.eRunRight;
+        this.mIsMoving = true;
+        v[0] = 20;
         this.mKelvin.updateAnimation();
     } else {
         v[0] = 0;
