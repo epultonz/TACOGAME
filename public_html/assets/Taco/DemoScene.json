@@ -56,6 +56,22 @@
         }
     ],
     
+    "Smasher": [
+        {
+            "Pos": [20, 13],
+            "topBound": 20,
+            "botBound": 6,
+            "velocityUp": 10,
+            "velocityDown": -50
+        }
+    ],
+    
+    "Coin": [
+        {
+            "Pos": [27,4]
+        }
+    ],
+    
     "Powerup": [
         {
             "Pos": [20, 30]

@@ -118,16 +118,12 @@ DemoScene.prototype.initialize = function () {
     this.mPipe = this.createPipe();
     
     
-    var smasher = new Smasher(this.kSprites, 20, 13, this.mKelvin);
-    this.mAllObjs.addToSet(smasher);
-    this.mAllPlatform.addToSet(smasher);
     
     var smasher = new Smasher(this.kSprites, 35, 12, this.mKelvin, 15, 6);
     this.mAllObjs.addToSet(smasher);
     this.mAllPlatform.addToSet(smasher);
     
-    var coin = new Coin(this.kCoin, 27, 4, this.mKelvin);
-    this.mAllNonPhysObj.addToSet(coin);
+    
 
     // the code box to unlock green pipe
     //@param [atX,atY,w,stubX,stubY,code]
@@ -203,20 +199,46 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
     var i, pos, flier;
     for (i = 0; i < fliers.length; i++) {
         pos = fliers[i].Pos;    
-        // init cannon
         flier = new Flier(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
         this.mAllObjs.addToSet(flier);  
     }
     
-    var powerups = sceneInfo.Powerup;
-    var i, pos, powerup;
-    for (i = 0; i < powerups.length; i++) {
-        pos = powerups[i].Pos;    
+    var fliers = sceneInfo.Flier;
+    var i, pos, flier;
+    for (i = 0; i < fliers.length; i++) {
+        pos = fliers[i].Pos;    
         // init cannon
-        powerup = new Powerup(this.kSprites, pos[0], pos[1], this.mKelvin);
-        this.mAllNonPhysObj.addToSet(powerup);
+        flier = new Smasher(this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
+        this.mAllNonPhysObj.addToSet(flier);
     }
     
+    
+    
+    var smashers = sceneInfo.Smasher;
+    var i, pos, bBound, tBound, uVelocity, dVelocity, smasher;
+    for (i = 0; i < smashers.length; i++) {
+        pos = smashers[i].Pos;    
+        bBound = smashers[i].botBound;
+        tBound = smashers[i].topBound;
+        uVelocity = smashers[i].velocityUp;
+        dVelocity = smashers[i].velocityDown;
+
+        
+        // init cannon
+        smasher = new Smasher(this.kSprites, pos[0], pos[1], this.mKelvin, 
+            tBound, bBound, uVelocity, dVelocity);
+        this.mAllObjs.addToSet(smasher);
+        this.mAllPlatform.addToSet(smasher);
+    }
+    
+    var coins = sceneInfo.Coin;
+    var i, pos, coin;
+    for (i = 0; i < coins.length; i++) {
+        pos = coins[i].Pos;
+        coin = new Coin(this.kCoin, pos[0], pos[1], this.mKelvin);
+        this.mAllNonPhysObj.addToSet(coin);
+        
+    }
     
     // scene background
     var background = sceneInfo.SceneBG[0];
