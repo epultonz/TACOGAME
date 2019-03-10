@@ -1,5 +1,5 @@
 /*
- * File: DemoScene.js
+ * File: GameScene.js
  * Main file that we will use to test our Taco game DEMO
  *
  */
@@ -12,7 +12,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function DemoScene() {
+function GameScene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
     this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
@@ -22,7 +22,7 @@ function DemoScene() {
     this.kHealthBar = "assets/UI/lives.png";
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
-    this.kSceneFile = "assets/Taco/DemoScene.json";
+    this.kSceneFile = "assets/Taco/GameScene.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
     // The camera to view the scene
@@ -54,9 +54,9 @@ function DemoScene() {
     this.MainMenuButton = null;
     
 }
-gEngine.Core.inheritPrototype(DemoScene, Scene);
+gEngine.Core.inheritPrototype(GameScene, Scene);
 
-DemoScene.prototype.loadScene = function () {
+GameScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kPlatformTexture);
     gEngine.Textures.loadTexture(this.kKelvin);
     gEngine.Textures.loadTexture(this.kBG);
@@ -71,7 +71,7 @@ DemoScene.prototype.loadScene = function () {
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
-DemoScene.prototype.unloadScene = function () {
+GameScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kPlatformTexture);
     gEngine.Textures.unloadTexture(this.kKelvin);
     gEngine.Textures.unloadTexture(this.kBG);
@@ -95,7 +95,7 @@ DemoScene.prototype.unloadScene = function () {
     
 };
 
-DemoScene.prototype.initialize = function () {
+GameScene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
@@ -143,7 +143,7 @@ DemoScene.prototype.initialize = function () {
 };
 
 
-DemoScene.prototype.parseCamera = function (camInfo) {
+GameScene.prototype.parseCamera = function (camInfo) {
     
     
     var cxy = camInfo.Center;
@@ -175,7 +175,7 @@ DemoScene.prototype.parseCamera = function (camInfo) {
     return cam;
 };
 
-DemoScene.prototype.parseObjects = function (sceneInfo) {
+GameScene.prototype.parseObjects = function (sceneInfo) {
     
     var patrols = sceneInfo.Patrol;
     var i, pos, patrol;
@@ -278,7 +278,7 @@ DemoScene.prototype.parseObjects = function (sceneInfo) {
 };
 
 
-DemoScene.prototype.drawCamera = function (camera) {
+GameScene.prototype.drawCamera = function (camera) {
     //this.mSupport.draw(camera.getVPMatrix());
     //this.mHero.draw(camera.getVPMatrix());
     var i;
@@ -289,7 +289,7 @@ DemoScene.prototype.drawCamera = function (camera) {
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
-DemoScene.prototype.draw = function () {
+GameScene.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
@@ -299,7 +299,7 @@ DemoScene.prototype.draw = function () {
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
-DemoScene.prototype.update = function () {
+GameScene.prototype.update = function () {
     var msg = "";
     
     // tutorial panel bounding box collision
@@ -354,7 +354,7 @@ DemoScene.prototype.update = function () {
 
 };
 
-DemoScene.prototype.createBounds = function() {
+GameScene.prototype.createBounds = function() {
     var x = 15, w = 30, y = 0, y2 = 15;// Was 18
     for (x = 15; x < 120; x+=30)
         this.platformAt(x, y, w, 0);
@@ -363,7 +363,7 @@ DemoScene.prototype.createBounds = function() {
 };
 
 // Make the platforms
-DemoScene.prototype.platformAt = function (x, y, w, rot) {
+GameScene.prototype.platformAt = function (x, y, w, rot) {
     var h = w / 8;
     var p = new TextureRenderable(this.kPlatformTexture);
     var xf = p.getXform();
@@ -383,17 +383,17 @@ DemoScene.prototype.platformAt = function (x, y, w, rot) {
     this.mAllPlatform.addToSet(g);
 };
 // back button UI
-DemoScene.prototype.backSelect = function(){
+GameScene.prototype.backSelect = function(){
     this.LevelSelect="Back";
     gEngine.GameLoop.stop();
 };
 // menu button UI
-DemoScene.prototype.mainSelect = function(){
+GameScene.prototype.mainSelect = function(){
     this.LevelSelect="Main";
     gEngine.GameLoop.stop();
 };
 
-DemoScene.prototype.createPipe = function(){
+GameScene.prototype.createPipe = function(){
     var g = new TextureRenderable(this.kGreenPipe);
     var xf = g.getXform();
     xf.setSize(10,20);
@@ -411,7 +411,7 @@ DemoScene.prototype.createPipe = function(){
     return o;
 };
 
-DemoScene.prototype.checkWinLose = function(){
+GameScene.prototype.checkWinLose = function(){
     // Win conditions
     var canWarp = false;
     if(this.mKelvin.getXform().getXPos() >= 93 && this.mKelvin.getXform().getXPos() <= 97 &&
@@ -435,7 +435,7 @@ DemoScene.prototype.checkWinLose = function(){
     }
 };
 
-DemoScene.prototype.drawMain = function() {
+GameScene.prototype.drawMain = function() {
     this.mCamera.setupViewProjection();
     var i;
     var pos = this.mSceneBG.getXform().getPosition();
@@ -457,7 +457,7 @@ DemoScene.prototype.drawMain = function() {
     this.mMsg.draw(this.mCamera);
 };
 
-DemoScene.prototype.drawMap = function() {
+GameScene.prototype.drawMap = function() {
     /*
     this.mMinimapCam.setupViewProjection();
 
@@ -470,7 +470,7 @@ DemoScene.prototype.drawMap = function() {
     */
 };
 
-DemoScene.prototype.createParticle = function(atX, atY) {
+GameScene.prototype.createParticle = function(atX, atY) {
     var life = 30 + Math.random() * 200;
     var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
     p.getRenderable().setColor([1, 0, 0, 1]);
@@ -496,14 +496,20 @@ DemoScene.prototype.createParticle = function(atX, atY) {
     return p;
 };
 
-DemoScene.prototype.checkFall = function() {
+GameScene.prototype.checkFall = function() {
     //check if kelvin falls. If yes, take damage and spawn at location 2sec b4
     //else, update the last spawn pos
-    if(this.mKelvin.getXform().getYPos() < -10){
+    var t = Date.now();
+    if(this.mKelvin.getXform().getYPos() < -5){
         this.mKelvin.tookDamage(10);
-        this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]);
+        // check if xPos is the same as fall xPos to avoid constant fall
+        if(this.mLastPos[0] === this.mKelvin.getXform().getXPos()){
+            this.mKelvin.getXform().setPosition(this.mLastPos[0]-20,this.mLastPos[1]+5);
+        } else {
+            this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]+5);
+        }
+        
     } else {
-        var t = Date.now();
         var t2 = this.mTimer + 2000;
         if(t > t2){
             var p = this.mKelvin.getXform().getPosition();

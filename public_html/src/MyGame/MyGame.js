@@ -48,7 +48,7 @@ MyGame.prototype.unloadScene = function () {
         gEngine.Core.startScene(new TacoDemo());
     }
     else if(this.LevelSelect==="tacoLevel"){
-        gEngine.Core.startScene(new DemoScene());
+        gEngine.Core.startScene(new GameScene());
     }
 };
 
