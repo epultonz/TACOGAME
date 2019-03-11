@@ -320,7 +320,8 @@ GameScene.prototype.checkFall = function() {
     if(this.mKelvin.getXform().getYPos() < -5){
         this.mKelvin.tookDamage(10);
         // check if xPos is the same as fall xPos to avoid constant fall
-        if(this.mLastPos[0] === this.mKelvin.getXform().getXPos()){
+        var pos = this.mKelvin.getXform().getXPos();
+        if(this.mLastPos[0] === pos){
             this.mKelvin.getXform().setPosition(this.mLastPos[0]-20,this.mLastPos[1]+5);
         } else {
             this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]+5);

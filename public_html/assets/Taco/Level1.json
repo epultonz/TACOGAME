@@ -66,32 +66,11 @@
     
     "Powerup": [
         {
-            "Pos": [30, 10],
-            "Type": 0,
-            "respawnFlag": false,
-            "respawnTimer": 300,
-            "powerupTimer": 600
-        },
-        {
-            "Pos": [40, 10],
-            "Type": 1,
-            "respawnFlag": true,
-            "respawnTimer": 300,
-            "powerupTimer": 600
-        },
-        {
-            "Pos": [50, 10],
-            "Type": 2,
-            "respawnFlag": true,
-            "respawnTimer": 300,
-            "powerupTimer": null
-        },
-        {
             "Pos": [320, 50],
             "Type": 2,
             "respawnFlag": false,
             "respawnTimer": 300,
-            "powerupTimer": 600
+            "powerupTimer": null
         },
         {
             "Pos": [415, 10],
