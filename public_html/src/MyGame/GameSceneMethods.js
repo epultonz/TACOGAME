@@ -110,14 +110,19 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     if(sceneInfo.hasOwnProperty("Powerup")){
         //parse powerups
         var pu = sceneInfo.Powerup;
-        var i, pos, mPU;
+        var i, pos, type, respawnFlag, respawnTimer, powerupTimer, mPU;
         for(i = 0; i < pu.length; i++){
             pos = pu[i].Pos;
-            mPU = new Powerup(this.kSprites,pos[0],pos[1],this.mKelvin);
+            type = pu[i].Type;
+            respawnFlag = pu[i].respwanFlag;
+            respawnTimer = pu[i].respawnTimer;
+            powerupTimer = pu[i].powerupTimer;
+            
+            mPU = new Powerup(this.kSprites,pos[0],pos[1],this.mKelvin, type,
+                respawnFlag, respawnTimer, powerupTimer);
             this.mAllNonPhysObj.addToSet(mPU);
         }
     }
-
     
     // scene background
     var background = sceneInfo.SceneBG[0];

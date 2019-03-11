@@ -61,9 +61,28 @@
     
     "Powerup": [
         {
-            "Pos": [410, 10]
+            "Pos": [30, 10],
+            "Type": 0,
+            "respawnFlag": false,
+            "respawnTimer": 300,
+            "powerupTimer": 600
+        },
+        {
+            "Pos": [40, 10],
+            "Type": 1,
+            "respawnFlag": false,
+            "respawnTimer": 300,
+            "powerupTimer": 600
+        },
+        {
+            "Pos": [50, 10],
+            "Type": 2,
+            "respawnFlag": false,
+            "respawnTimer": 300,
+            "powerupTimer": 600
         }  
     ],
+    
     
     "Platform": [
         {   "Pos": [-5, 15],
