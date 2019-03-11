@@ -32,7 +32,7 @@ LoseScene.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.kUIButton);
     // next level to be loaded
     if(this.LevelSelect==="Retry")
-        gEngine.Core.startScene(new TacoDemo());
+        gEngine.Core.startScene(new GameScene());
     else if(this.LevelSelect==="Main")
         gEngine.Core.startScene(new MyGame());
 };

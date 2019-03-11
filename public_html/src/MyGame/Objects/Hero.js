@@ -392,6 +392,9 @@ Hero.prototype.getHP = function () {
     return this.UIHealth.getCurrentHP();
 };
 
+Hero.prototype.incHP = function (i) {
+    this.UIHealth.incCurrentHP(i);
+};
 
 Hero.prototype.goSuper = function(){
     var s = this.mLight.getIntensity();

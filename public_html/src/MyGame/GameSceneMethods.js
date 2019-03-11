@@ -132,7 +132,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     for (i = 0; i < pipes.length; i++) {
         pos = pipes[i].Pos;    
         size = pipes[i].Size;
-        pipe = createPipe(pos[0],pos[1],size[0],size[1]);
+        pipe = this.createPipe(pos[0],pos[1],size[0],size[1]);
     }
     
     //parse platforms

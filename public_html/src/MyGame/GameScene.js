@@ -120,8 +120,8 @@ GameScene.prototype.initialize = function () {
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // make the bounds.. platform etc
-    createBounds();
-    this.mPipe = createPipe(95,-4,10,20);
+    this.createBounds();
+    this.mPipe = this.createPipe(95,-4,10,20);
     
     this.mTimer = Date.now();
     this.mLastPos = this.mKelvin.getXform().getPosition();
