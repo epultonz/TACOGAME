@@ -71,17 +71,35 @@ Projectile.prototype.update = function () {
         // Decrease the lifespan of the pack
         this.mTimer--;
 
-        // Check for pixel-perfect collisions with hero            
+        // Check for pixel-perfect collisions with hero 
+        
+        /* Different cases
+         * DeflectKill, NoKill
+         * NotDeflected(hero), Deflected(Source)
+         *
+         * Kill + NotDeflect = hit Hero
+         * NoKill + NotDeflect = hit Hero
+         * Kill + Deflected = hit source
+         * NoKill + Deflected = hit nothing
+         * 
+         * If not deflected, ALWAYS hit hero
+         * If deflected, NEVER hit hero
+         * If deflected and nokill, dont hit ANYTHING
+         */
+        
+        /*
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
             if(this.mDeflectKill && this.mDeflected) // If deflected, we're hitting a cannon/flier
                 this.mHeroRef.hit();
-            else if (!this.mDeflected)// Otherwise, we must be hitting the hero if not deflected
+            else if (!this.mDeflected)// Otherwise, we must be hitting the hero (if not deflected)
                 this.mHeroRef.tookDamage(this.mDamage);
             this.mHitHero = true;
             
-        }else if(!this.mDeflected){ //dont redeflect if already deflected
+        }*/
+        /*
+        else if(!this.mDeflected){ //dont redeflect if already deflected
          
             if(this.mHeroRef.isDeflecting()) {
                 var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
@@ -93,6 +111,44 @@ Projectile.prototype.update = function () {
             if(this.mDeflected) {
                 this.deflected();
             }
+        }*/
+        
+        if(!this.mDeflected) // Check for hero collision if not deflected
+        {
+            var h = [];
+            if(this.pixelTouches(this.mHeroRef, h))
+            {
+                this.mHeroRef.tookDamage(this.mDamage);
+                this.mHitHero = true;
+            }
+            else // Dont re-deflect if already deflected
+            {
+                if(this.mHeroRef.isDeflecting())
+                {
+                    var deflectBox = new BoundingBox(this.mHeroRef.getXform().getPosition(),
+                    15, 15);
+                    if (this.getBBox().intersectsBound(deflectBox))
+                    {
+                    this.mDeflected = true;
+                    }
+                }
+                if(this.mDeflected) {
+                    this.deflected();
+                }
+            }
+        }
+        else // We must be deflected
+        {
+            if(this.mDeflectKill) // If we kill on deflect hit, check collision with spawner
+            {
+                var h = [];
+                if(this.pixelTouches(this.mSpawningRef, h))
+                {
+                    this.mSpawningRef.hit();
+                    this.mHitHero = true;
+                }
+            }
+            // Otherwise, don't check any collision at all 
         }
         
         this.move();
