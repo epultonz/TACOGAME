@@ -178,6 +178,7 @@ Hero.prototype.update = function () {
         
     }
     
+    /*
     // toggle super saiyan mode!!!!!! UWOOOOHHHHHHHHHHHHH
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
         if(!this.mIsSuper){
@@ -188,7 +189,7 @@ Hero.prototype.update = function () {
             this.mIsSuper = false;
         }
     }
-    if(this.mIsSuper){this.goSuper();}
+    if(this.mIsSuper){this.goSuper();} */
 
     if(this.mShakeStarted) {
         var c = this.mKelvin.getColor();
@@ -396,6 +397,11 @@ Hero.prototype.incHP = function (i) {
     this.UIHealth.incCurrentHP(i);
 };
 
+Hero.prototype.getSuper = function()
+{
+    return this.mIsSuper;
+};
+
 Hero.prototype.goSuper = function(){
     var s = this.mLight.getIntensity();
     var a = 0.05;
@@ -403,6 +409,24 @@ Hero.prototype.goSuper = function(){
         s = 0.2;
     }
     this.mLight.setIntensity(s+a);
+};
+
+Hero.prototype.activateSuper = function(){
+    if(!this.mIsSuper){
+        this.mLight.setLightTo(true);
+        this.mIsSuper = true;
+        
+        var s = this.mLight.getIntensity();
+        var a = 0.05;
+        if (s >= 2) {
+            s = 0.2;
+            }
+        this.mLight.setIntensity(s+a);
+        
+    }else{
+        this.mLight.setLightTo(false);
+        this.mIsSuper = false;
+    }
 };
 
 Hero.prototype.createParticle = function(atX, atY) {

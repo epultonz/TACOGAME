@@ -11,17 +11,34 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Powerup(spriteTexture, atX, atY, heroRef, type) {
+// type is the type of powerup this is: 0 for healing, 1 for super saiyan
+// respawnFlag and Timer is for respawning powerups - set it to false to delete it once picked up
+// powerupTimer is how long a powerup (i.e. invuln) should last - Flag is if it's active
+function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true, respawnTimer = 300, powerupTimer = 600) {
     this.kWidth = 3;
     this.kHeight = 3;
     this.mHeroRef = heroRef;
-    this.mRespawnTimer = 300;
-    this.mRespawningFlag = false;
+    this.mRespawnTimerCurr = respawnTimer;
+    this.mRespawnTimerMax = respawnTimer;
+    this.mWillRespawn = respawnFlag;
+    this.mRespawningFlag = true;
     this.mSpriteText = spriteTexture;
+    this.mPowerType = type;
+    this.mPowerupActiveFlag = false;
+    this.mPowerupTimerCurr = powerupTimer;
+    this.mPowerupTimerMax = powerupTimer;
     
     // sprite renderable 
     this.mPowerup = new SpriteRenderable(spriteTexture);
-    this.mPowerup.setColor([1, 1, 1, 0]);
+    
+    // Different colors for different powerup types
+    if(type === 0)
+        this.mPowerup.setColor([.5, 1, .5, 0]);
+    if(type === 1)
+        this.mPowerup.setColor([1, 1, .2, 0]);
+    else
+        this.mPowerup.setColor([1, 1, 1, 0]);
+    
     this.mPowerup.getXform().setPosition(atX, atY);
     this.mPowerup.getXform().setSize(this.kWidth, this.kHeight);
     this.mPowerup.setElementPixelPositions(510, 595, 23, 153);
@@ -38,36 +55,86 @@ gEngine.Core.inheritPrototype(Powerup, GameObject);
 Powerup.prototype.update = function () {
     GameObject.prototype.update.call(this);
     
-    var thisBox = this.getBBox();
-    var heroBox = this.mHeroRef.getBBox();
-    var collideStatus = thisBox.boundCollideStatus(heroBox);
-    // Only do collision detection if the powerup isn't still respawning and hero isn't full hp
-    if((!this.mRespawningFlag) && (this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
+    if(this.mPowerupActiveFlag) // If we currently have a powerup running...
     {
-        this.mRespawningFlag = true;
-        this.mHeroRef.incHP(30);
-        return true;
-    }
-    else // we must be respawning
-    {
-        this.mRespawnTimer--;
-        if(this.mRespawnTimer <= 0)
+        this.mPowerupTimerCurr--;
+        if(this.mPowerupTimerCurr <= 0) // If the powerup's timer is over...
         {
-            this.mRespawnTimer = 300;
+            if(this.mPowerType === 1) // Invulnerability should be turned off
+                this.mHeroRef.activateSuper();
+            
+            
+            if(!this.mWillRespawn) // If it shouldn't respawn, delete it after ending its powerup
+                return false;
+            else // If it should, then reset the variables for another round to occur
+            {
+                this.mPowerupActiveFlag = false;
+                this.mPowerupTimerCurr = this.mPowerupTimerMax;
+            }
+        }
+    }
+    
+    // Only check collision if we aren't respawning AND we don't have a powerup running atm
+    else if(!this.mRespawningFlag)
+    {
+        var thisBox = this.getBBox();
+        var heroBox = this.mHeroRef.getBBox();
+        var collideStatus = thisBox.boundCollideStatus(heroBox);
+
+        if(this.mPowerType === 0) // Healing
+        {
+            // If the hero isn't at full, and the hero's colliding with pack
+            if((this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
+            {
+                this.mHeroRef.incHP(30);
+                if(!this.mWillRespawn)
+                    return false;
+                else
+                {
+                    this.mRespawningFlag = true;
+                    return true;
+                }
+            }
+        }
+
+        else if (this.mPowerType === 1) // Invulnerability
+        {
+            // If the hero's colliding with pack
+            if(collideStatus !== 0)
+            {
+                // Activate super and wait till the timer runs out to turn it off
+                this.mHeroRef.activateSuper();
+                this.mPowerupActiveFlag = true;
+                // Respawn flag always activated- if unnecessary, it'll never come up
+                // as the powerup will be deleted before respawning calculations take place
+                this.mRespawningFlag = true;
+                return true;
+            }
+        }
+    }
+    
+    
+    else if (this.mRespawningFlag) // if respawning...
+    {
+        this.mRespawnTimerCurr--;
+        if(this.mRespawnTimerCurr <= 0)
+        {
+            this.mRespawnTimerCurr = this.mRespawnTimerMax;
             this.mRespawningFlag = false;
         }
     }
     
-    // Always return true for now, as this powerup respawns
+    // Always return true if we reach the end- non-respawning powerups always return false on pickup
     return true;
 };
 
 Powerup.prototype.draw = function (aCamera) {
-    if(!this.mRespawningFlag)
+    // Only draw if it isn't respawning or currently in use by hero
+    if((!this.mRespawningFlag) && (!this.mPowerupActiveFlag))
         GameObject.prototype.draw.call(this, aCamera);
 };
 
 Powerup.prototype.drawMini = function (aCamera) {
-    if(!this.mRespawningFlag)
+    if((!this.mRespawningFlag) && (!this.mPowerupActiveFlag))
         this.mMinimapObj.draw(aCamera);
 };
