@@ -14,7 +14,7 @@
 
 var gScore = gScore || 0;
 
-function Level1Scene() {
+function Level2Scene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
     this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
@@ -24,7 +24,7 @@ function Level1Scene() {
     this.kHealthBar = "assets/UI/lives.png";
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
-    this.kSceneFile = "assets/Taco/Level1.json";
+    this.kSceneFile = "assets/Taco/Level2.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
     // The camera to view the scene
@@ -52,9 +52,9 @@ function Level1Scene() {
     this.MainMenuButton = null;
     
 }
-gEngine.Core.inheritPrototype(Level1Scene, GameScene);
+gEngine.Core.inheritPrototype(Level2Scene, GameScene);
 
-Level1Scene.prototype.loadScene = function () {
+Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kPlatformTexture);
     gEngine.Textures.loadTexture(this.kKelvin);
     gEngine.Textures.loadTexture(this.kBG);
@@ -69,7 +69,7 @@ Level1Scene.prototype.loadScene = function () {
     //document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
-Level1Scene.prototype.unloadScene = function () {
+Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kPlatformTexture);
     gEngine.Textures.unloadTexture(this.kKelvin);
     gEngine.Textures.unloadTexture(this.kBG);
@@ -87,13 +87,13 @@ Level1Scene.prototype.unloadScene = function () {
     else if(this.LevelSelect==="Main")
         gEngine.Core.startScene(new MyGame());
     else if(this.LevelSelect==="Win")
-        gEngine.Core.startScene(new Level2Scene());
+        gEngine.Core.startScene(new WinScene());
     else if(this.LevelSelect==="Lose")
         gEngine.Core.startScene(new LoseScene());
     
 };
 
-Level1Scene.prototype.initialize = function () {
+Level2Scene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
@@ -139,7 +139,7 @@ Level1Scene.prototype.initialize = function () {
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
-Level1Scene.prototype.draw = function () {
+Level2Scene.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
@@ -149,6 +149,6 @@ Level1Scene.prototype.draw = function () {
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
-Level1Scene.prototype.update = function () {
+Level2Scene.prototype.update = function () {
    GameScene.prototype.update.call(this);
 };
