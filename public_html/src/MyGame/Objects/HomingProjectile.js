@@ -60,7 +60,7 @@ function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, d
     this.mProjectile.getXform().incRotationByDegree(-90); // Turn it back so that the projectile is top-bottom facing
     this.mMinimapObj.getXform().incRotationByDegree(-90);
     this.setCurrentFrontDir(vec2.fromValues(0, 1)); // set "forward" to be up
- 
+    
     this.mRigdRect = new RigidRectangle(this.mProjectile.getXform(), this.mWidth , this.mHeight);
     this.mRigdRect.setMass(0);
     this.mRigdRect.setVelocity(0, 0);
@@ -73,12 +73,20 @@ HomingProjectile.prototype.update = function () {
 };
 
 HomingProjectile.prototype.deflected = function() {
-    this.getCurrentFrontDir()[0] = -this.getCurrentFrontDir()[0];
-    this.getCurrentFrontDir()[1] = -this.getCurrentFrontDir()[1];
+    //find the vector that points from projectile location to spawnRef
+    var spawnPos = this.mSpawningRef.getXform().getPosition();
+    var curPos = this.getXform().getPosition();
+    var xComp = spawnPos[0] - curPos[0];
+    var yComp = spawnPos[1] - curPos[1];
+    //set projectiles front dir to the above vector
+    this.setCurrentFrontDir(vec2.fromValues(xComp, yComp));
+    //pet starts to move towards projectile
+    this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
+    //lets pet know that an actual deflection occured and to move to the projectile
+    this.mHeroRef.wasDeflected();
+    
     if(this.mDeflectKill)
         this.mHeroRef = this.mSpawningRef;
-    this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
-    this.mHeroRef.wasDeflected();
 };
 
 HomingProjectile.prototype.move = function() {
