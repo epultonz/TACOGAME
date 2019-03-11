@@ -70,16 +70,16 @@
         {
             "Pos": [40, 10],
             "Type": 1,
-            "respawnFlag": false,
+            "respawnFlag": true,
             "respawnTimer": 300,
             "powerupTimer": 600
         },
         {
             "Pos": [50, 10],
             "Type": 2,
-            "respawnFlag": false,
+            "respawnFlag": true,
             "respawnTimer": 300,
-            "powerupTimer": 600
+            "powerupTimer": 60
         }  
     ],
     

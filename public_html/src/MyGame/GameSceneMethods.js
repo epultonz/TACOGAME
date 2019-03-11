@@ -114,7 +114,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         for(i = 0; i < pu.length; i++){
             pos = pu[i].Pos;
             type = pu[i].Type;
-            respawnFlag = pu[i].respwanFlag;
+            respawnFlag = pu[i].respawnFlag;
             respawnTimer = pu[i].respawnTimer;
             powerupTimer = pu[i].powerupTimer;
             
