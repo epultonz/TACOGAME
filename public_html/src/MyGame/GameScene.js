@@ -165,7 +165,7 @@ GameScene.prototype.update = function () {
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
 
-    this.mCodeBox.update();
+    //this.mCodeBox.update();
     
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
