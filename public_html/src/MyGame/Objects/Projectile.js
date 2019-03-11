@@ -26,8 +26,8 @@
  * @returns {Projectile}
  */
 function Projectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta = 0.4, timer = 300) {
-    this.mWidth = 1.25;
-    this.mHeight = 2;
+    this.mWidth = 3;
+    this.mHeight = 3;
     this.mHeroRef = heroRef;
     this.mSpawningRef = spawningRef;
     this.mDelta = delta;
@@ -50,7 +50,7 @@ function Projectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta =
     this.mProjectile.setColor([1, 1, 1, 0]);
     this.mProjectile.getXform().setPosition(spawnX, spawnY);
     this.mProjectile.getXform().setSize(this.mWidth, this.mHeight);
-    this.mProjectile.setElementPixelPositions(510, 595, 23, 153);
+    this.mProjectile.setElementPixelPositions(0, 64, 0, 64);
     this.mProjectile.getXform().incRotationByDegree(90); // Turn it sideways so the long end is left-right
     
     // Simplified minimap renderable

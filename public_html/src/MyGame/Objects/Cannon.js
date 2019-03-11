@@ -48,7 +48,13 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     this.mCannon.setColor([1, 1, 1, 0]);
     this.mCannon.getXform().setPosition(spawnX, spawnY);
     this.mCannon.getXform().setSize(this.kWidth, this.kHeight);
-    this.mCannon.setElementPixelPositions(318,318+172,8,8+158);
+    if(facingLeft){
+        this.mCannon.setElementPixelPositions(0,64,256-64,256);
+    } else
+    {   //left, right, bot, top
+        this.mCannon.setElementPixelPositions(64,128,256-64,256); 
+    }
+    
     
     // simplified minimap renderable
     this.mMinimapObj = new Renderable();

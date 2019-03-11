@@ -31,19 +31,21 @@ function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true,
     // sprite renderable 
     this.mPowerup = new SpriteRenderable(spriteTexture);
     
-    // Different colors for different powerup types
-    if(type === 0)
-        this.mPowerup.setColor([0, 1, 0, .2]);
-    else if(type === 1)
-        this.mPowerup.setColor([0, 0, 1, .2]);
-    else if(type === 2)
-        this.mPowerup.setColor([1, 0, 0, .2]);
-    else
-        this.mPowerup.setColor([1, 1, 1, 0]);
-    
     this.mPowerup.getXform().setPosition(atX, atY);
     this.mPowerup.getXform().setSize(this.kWidth, this.kHeight);
-    this.mPowerup.setElementPixelPositions(510, 595, 23, 153);
+    
+    // Different colors for different powerup types
+    if(type === 0){
+        this.mPowerup.setColor([0, 1, 0, .2]);
+        this.mPowerup.setElementPixelPositions(64, 128, 128, 192);
+    }else if(type === 1){
+        this.mPowerup.setColor([0, 0, 1, .2]);
+        this.mPowerup.setElementPixelPositions(64, 128, 64, 128);
+    }else if(type === 2){
+        this.mPowerup.setColor([1, 0, 0, .2]);
+        this.mPowerup.setElementPixelPositions(0, 64, 128, 192);
+    }else
+        this.mPowerup.setColor([1, 1, 1, 0]);
     
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.2, .8, .8, 0]);

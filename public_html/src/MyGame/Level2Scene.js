@@ -21,6 +21,7 @@ function Level2Scene() {
     this.kBG = "assets/Taco/scene_example.png";
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
+    this.kSprites2 = "assets/Taco/spritesheet2.png";
     this.kHealthBar = "assets/UI/lives.png";
     this.kWBPanel = "assets/Taco/WornWhiteboard.png";
     this.kGreenPipe = "assets/Taco/GreenPipe.png";
@@ -60,6 +61,7 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBG);
     gEngine.Textures.loadTexture(this.kUIButton);
     gEngine.Textures.loadTexture(this.kSprites);
+    gEngine.Textures.loadTexture(this.kSprites2);
     gEngine.Textures.loadTexture(this.kHealthBar);
     gEngine.Textures.loadTexture(this.kWBPanel);
     gEngine.Textures.loadTexture(this.kGreenPipe);
@@ -75,6 +77,7 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBG);
     gEngine.Textures.unloadTexture(this.kUIButton);
     gEngine.Textures.unloadTexture(this.kSprites);
+    gEngine.Textures.unloadTexture(this.kSprites2);
     gEngine.Textures.unloadTexture(this.kHealthBar);
     gEngine.Textures.unloadTexture(this.kWBPanel);
     gEngine.Textures.unloadTexture(this.kGreenPipe);

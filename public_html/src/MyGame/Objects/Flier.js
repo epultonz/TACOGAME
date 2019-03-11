@@ -28,13 +28,16 @@
  * @param {int} patrolTimer the amount of time between switching patrol target locations
  * @returns {Flier}
  */
-function Flier(spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
+function Flier(projTexture,spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
         projectileTimer = 180, projectileDelta = 0.4, patrolDelta = 0.025,
         patrolDist = 15, patrolTimer = 400) {
     // Renderable Vars
     this.mSpriteText = spriteTexture;
     this.kWidth = 3;
     this.kHeight = 5.25;
+    
+    //projectile texture
+    this.mProjText = projTexture;
     
     // Projectile Vars
     this.mHeroRef = heroRef;
@@ -99,7 +102,7 @@ Flier.prototype.update = function () {
     {
         var timerVariation = (this.mShootTimerMax / 10) * (Math.random() - 0.5);
         this.mShootTimerCurr = this.mShootTimerMax + timerVariation;
-        var bullet = new HomingProjectile(this.mSpriteText, currPos[0], currPos[1], this.mHeroRef, this, this.mProjectileDelta, this.mProjectileTimer);
+        var bullet = new HomingProjectile(this.mProjText, currPos[0], currPos[1], this.mHeroRef, this, this.mProjectileDelta, this.mProjectileTimer);
         this.mSetRef.addToSet(bullet);
     }
     
