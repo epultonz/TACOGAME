@@ -244,13 +244,14 @@ GameScene.prototype.checkWinLose = function(){
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
     }
+    /*
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O)) {
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
-    }
+    }*/
     //lose conditions
     var hp = this.mKelvin.getHP();
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L ) || hp <= 0 ) {
+    if (hp <= 0 ) {
         this.LevelSelect = "Lose";
         gEngine.GameLoop.stop();
     }

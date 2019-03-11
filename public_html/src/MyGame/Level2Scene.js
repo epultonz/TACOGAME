@@ -172,10 +172,11 @@ Level2Scene.prototype.checkWinLose = function(){
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
     }
+    /*
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O)) {
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
-    }
+    }*/
     //lose conditions
     var hp = this.mKelvin.getHP();
     if (hp <= 0 || this.mKelvin.getXform().getXPos() > 490) {
