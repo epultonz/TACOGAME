@@ -52,6 +52,8 @@ function Flier(spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
     this.mPatrolTimerCurr = 0;
     this.mPatrolTimerMax = patrolTimer;
     
+    // Deflected projectile vars
+    this.mHitByDeflect = false;
     
     // sprite renderable 
     this.mFlier = new SpriteRenderable(spriteTexture);
@@ -82,6 +84,11 @@ function Flier(spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
 gEngine.Core.inheritPrototype(Flier, GameObject);
 
 Flier.prototype.update = function () {
+    if(this.mHitByDeflect) // Flier should vanish after being hit
+    {
+        gScore += 50;
+        return false;
+    }
     GameObject.prototype.update.call(this);
     
     // get the current position for projectile spawning and patrolling
@@ -90,8 +97,9 @@ Flier.prototype.update = function () {
     this.mShootTimerCurr--;
     if(this.mShootTimerCurr <= 0)
     {
-        this.mShootTimerCurr = this.mShootTimerMax;
-        var bullet = new HomingProjectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, true);
+        var timerVariation = (this.mShootTimerMax / 10) * (Math.random() - 0.5);
+        this.mShootTimerCurr = this.mShootTimerMax + timerVariation;
+        var bullet = new HomingProjectile(this.mSpriteText, currPos[0], currPos[1], this.mHeroRef, this, this.mProjectileDelta, this.mProjectileTimer);
         this.mSetRef.addToSet(bullet);
     }
     
@@ -128,6 +136,10 @@ Flier.prototype.update = function () {
         this.touchUp = true;
     } else if(fPos <= fDownTarget){this.touchUp = false;}
     */
+};
+
+Flier.prototype.hit = function () {
+    this.mHitByDeflect = true;
 };
 
 Flier.prototype.draw = function (aCamera) {

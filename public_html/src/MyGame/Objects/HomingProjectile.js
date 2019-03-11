@@ -24,7 +24,7 @@
  * @param {int} timer How many update ticks the projectile should last for.
  * @returns {HomingProjectile}
  */
-function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, timer = 140) {
+function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta = 0.4, timer = 140) {
     /*
      * this.mWidth = 1.25;
     this.mHeight = 2;
@@ -55,7 +55,7 @@ function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, t
     GameObject.call(this, this.mProjectile); // call GameObj constructor to finish construction
      */
     // Projectile Constructor call + Homing-Specific stuff
-    Projectile.call(this, spriteTexture, spawnX, spawnY, heroRef, delta, timer);
+    Projectile.call(this, spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta, timer);
     this.mDamage = 5; // How much damage the pack deals
     this.mProjectile.getXform().incRotationByDegree(-90); // Turn it back so that the projectile is top-bottom facing
     this.mMinimapObj.getXform().incRotationByDegree(-90);
@@ -75,6 +75,8 @@ HomingProjectile.prototype.update = function () {
 HomingProjectile.prototype.deflected = function() {
     this.getCurrentFrontDir()[0] = -this.getCurrentFrontDir()[0];
     this.getCurrentFrontDir()[1] = -this.getCurrentFrontDir()[1];
+    if(this.mDeflectKill)
+        this.mHeroRef = this.mSpawningRef;
     this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
     this.mHeroRef.wasDeflected();
 };

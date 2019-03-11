@@ -19,16 +19,24 @@
  * @param {float} spawnX The X coord to start the object at
  * @param {float} spawnY The Y coord to start the object at
  * @param {Hero} heroRef A reference to the Hero obj
+ * @param {Object} spawningRef A reference to the object that spawned the projectile
  * @param {float} delta The speed at which the obj moves- Should be positive for right-wards
  *      and negative for left-wards movement
  * @param {int} timer How many update ticks the projectile should last for.
  * @returns {Projectile}
  */
-function Projectile(spriteTexture, spawnX, spawnY, heroRef, delta = 0.4, timer = 300) {
+function Projectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta = 0.4, timer = 300) {
     this.mWidth = 1.25;
     this.mHeight = 2;
     this.mHeroRef = heroRef;
+    this.mSpawningRef = spawningRef;
     this.mDelta = delta;
+    
+    /**
+     * This flag determines if deflects should kill or not.
+     * Set it to false to have deflected projectiles go right through their spawners.
+     */
+    this.mDeflectKill = true;
     
     // pack variables
     this.mTimer = timer;
@@ -67,7 +75,10 @@ Projectile.prototype.update = function () {
         var h = [];
         if(this.pixelTouches(this.mHeroRef, h)) // Hit Hero
         {
-            this.mHeroRef.tookDamage(this.mDamage);
+            if(this.mDeflectKill && this.mDeflected) // If deflected, we're hitting a cannon/flier
+                this.mHeroRef.hit();
+            else // Otherwise, we must be hitting the hero
+                this.mHeroRef.tookDamage(this.mDamage);
             this.mHitHero = true;
             
         }else if(!this.mDeflected){ //dont redeflect if already deflected
@@ -122,6 +133,8 @@ Projectile.prototype.checkDeflect = function() {
 
 Projectile.prototype.deflected = function() {
     this.mDelta = -this.mDelta;
+    if(this.mDeflectKill)
+        this.mHeroRef = this.mSpawningRef;
     this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
     this.mHeroRef.wasDeflected();
 };

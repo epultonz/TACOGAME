@@ -47,7 +47,7 @@ Coin.prototype.update = function () {
         var collideStatus = thisBox.boundCollideStatus(heroBox);
         if(collideStatus !== 0){
             this.mCollectedFlag = true;
-            gScore += 10;
+            gScore += 20;
         }
     }
     

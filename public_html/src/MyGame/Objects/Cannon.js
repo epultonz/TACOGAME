@@ -41,6 +41,7 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     this.mProjectileTimer = projectileTimer;
     this.mProjectileDelta = projectileDelta;
     this.mFacingLeft = facingLeft;
+    this.mHitByDeflect = false;
     
     // sprite renderable 
     this.mCannon = new SpriteRenderable(spriteTexture);
@@ -67,6 +68,12 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
 gEngine.Core.inheritPrototype(Cannon, GameObject);
 
 Cannon.prototype.update = function () {
+    if(this.mHitByDeflect) // Cannon should vanish after being hit
+    {
+        gScore += 35;
+        return false;
+    }
+        
     GameObject.prototype.update.call(this);
     
     // Subtract one from the timer, and shoot if it's 0 (or less in case of glitch)
@@ -81,9 +88,13 @@ Cannon.prototype.update = function () {
         if(this.mFacingLeft)
             delta = 0 - delta;
         
-        var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, delta, this.mProjectileTimer);
+        var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, this, delta, this.mProjectileTimer);
         this.mSetRef.addToSet(bullet);
     }
+};
+
+Cannon.prototype.hit = function () {
+    this.mHitByDeflect = true;
 };
 
 Cannon.prototype.draw = function (aCamera) {
