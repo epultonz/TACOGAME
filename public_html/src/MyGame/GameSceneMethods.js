@@ -187,6 +187,7 @@ GameScene.prototype.createBounds = function() {
 GameScene.prototype.platformAt = function (x, y, w, rot) {
     var h = w / 8;
     var p = new TextureRenderable(this.kPlatformTexture);
+    p.setColor([1, 1, 1, 0.2]);
     var xf = p.getXform();
 
     var g = new GameObject(p);

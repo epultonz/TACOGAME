@@ -77,7 +77,7 @@ Projectile.prototype.update = function () {
         {
             if(this.mDeflectKill && this.mDeflected) // If deflected, we're hitting a cannon/flier
                 this.mHeroRef.hit();
-            else // Otherwise, we must be hitting the hero
+            else if (!this.mDeflected)// Otherwise, we must be hitting the hero if not deflected
                 this.mHeroRef.tookDamage(this.mDamage);
             this.mHitHero = true;
             

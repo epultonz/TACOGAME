@@ -44,11 +44,11 @@ MyGame.prototype.unloadScene = function () {
     else if(this.LevelSelect==="UI"){
         gEngine.Core.startScene(new UIDemo());
     }
-    else if(this.LevelSelect==="tacoTest"){
-        gEngine.Core.startScene(new GameScene());
-    }
-    else if(this.LevelSelect==="tacoLevel"){
+    else if(this.LevelSelect==="tacoLevel1"){
         gEngine.Core.startScene(new Level1Scene());
+    }
+    else if(this.LevelSelect==="tacoLevel2"){
+        gEngine.Core.startScene(new Level2Scene());
     }
 };
 
@@ -70,8 +70,8 @@ MyGame.prototype.initialize = function () {
     this.UIText = new UIText("Adventures of Kelvin",[400,600],8,1,0,[0,0,0,1]);
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
-    this.tacoLevelButton = new UIButton(this.kUIButton,this.tacoLevelSelect,this,[400,400],[350,100],"Level 1",8,[1,1,1,1],[0,0,0,1]);
-    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoDemoSelect,this,[400,200],[350,100],"GameScene",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoLevelButton = new UIButton(this.kUIButton,this.tacoLevel1Select,this,[400,400],[350,100],"Level 1",8,[1,1,1,1],[0,0,0,1]);
+    this.tacoDemoButton = new UIButton(this.kUIButton,this.tacoLevel2Select,this,[400,200],[350,100],"Level 2",8,[1,1,1,1],[0,0,0,1]);
 };  
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -113,12 +113,12 @@ MyGame.prototype.uiSelect= function(){
     gEngine.GameLoop.stop();
 };
 
-MyGame.prototype.tacoDemoSelect= function(){
-    this.LevelSelect="tacoTest";
+MyGame.prototype.tacoLevel1Select= function(){
+    this.LevelSelect="tacoLevel1";
     gEngine.GameLoop.stop();
 };
 
-MyGame.prototype.tacoLevelSelect= function(){
-    this.LevelSelect="tacoLevel";
+MyGame.prototype.tacoLevel2Select= function(){
+    this.LevelSelect="tacoLevel2";
     gEngine.GameLoop.stop();
 };

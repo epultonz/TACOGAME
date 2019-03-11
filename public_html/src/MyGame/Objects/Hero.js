@@ -184,7 +184,7 @@ Hero.prototype.update = function () {
         }
     } else {
         if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-            v[1] = -60;
+            v[1] = -75;
             this.mIsMoving = true;
         }
         
