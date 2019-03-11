@@ -95,6 +95,9 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //deflection
     this.mDeflecting = false;
     this.mConfirmedDeflect = false;
+    this.mLastDeflectTime = 0;    //time of the last time deflect was used
+    this.mDeflectCD = 500;         //cooldown time for deflect
+    this.mIsDeflectDown = true;     //is deflect currently cooling down
     this.mParticles = new ParticleGameObjectSet();
 
 }
@@ -232,15 +235,34 @@ Hero.prototype.update = function () {
     
     //----------Pet Interpolation and deflection code-------------------
     //lots of dupliacted and messy code will create methods soon
-    if (!this.mDeflecting) {
-        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
-            this.mPetDeflected = false;
-        }
-    }
-    if(this.mCanDeflect)
-        this.mDeflecting = gEngine.Input.isKeyClicked(gEngine.Input.keys.I);
     
-    if(this.mCanDeflect && !this.mPetDeflected && this.mConfirmedDeflect) {
+    //if currently has deflect power and deflect currently on cooldown
+    
+    
+    
+    
+    if(this.mCanDeflect && !this.mDeflecting){
+ 
+        // only check I input if not currently deflecting and deflect power on
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
+            //check if cooldown done, if so start reflect
+            if(this.mIsDeflectDown
+                && (Date.now() - this.mLastDeflectTime >= this.mDeflectCD)) 
+            {    
+                //has the pet made contact?
+                this.mPetDeflected = false;
+                //deflect initiated
+                this.mDeflecting = true;
+                //cooldown off
+                this.mIsDeflectDown = false; //turn off cooldown if cooldowned
+            }
+
+        }   
+    }
+    
+    //if deflect succesful move pet to projectile
+    if(this.mCanDeflect && !this.mIsDeflectDown && this.mPetDeflected 
+            && this.mConfirmedDeflect) {
         this.mInterpolatePet.configInterpolation(.5, 120);
         
         this._updateInterp();
@@ -248,9 +270,12 @@ Hero.prototype.update = function () {
         if(Math.abs(this.mHeroFollowVector[0] -
                 this.mInterpolatePet.getValue()[0]) < 0.5) {
             this.mPetDeflected = true;
-            this.mConfirmedDeflect = false;
+            this.mLastDeflectTime = Date.now();
+            this.mIsDeflectDown = true;
+            this.mConfirmedDeflect = false;   //projectile sets this to true when in reflect Bbox
         }
-    } else if (this.mCanDeflect && !this.mPetDeflected) {
+    //if the deflect missed then move pet to defualt blocking position (front of kelvin)
+    } else if (this.mCanDeflect && !this.mIsDeflectDown && !this.mPetDeflected) {
         var heroPos = this.getXform().getPosition();
 
     
@@ -263,12 +288,15 @@ Hero.prototype.update = function () {
         
         if(Math.abs(this.mHeroFollowVector[0] -
                 this.mInterpolatePet.getValue()[0]) < 0.5) {
+            this.mLastDeflectTime = Date.now();
             this.mPetDeflected = true;
+            this.mIsDeflectDown = true;
         }
+    //if the pet has finished deflect move back to side of kelvin
     } else {
+        this.mDeflecting = false;   //no longer deflecting
         var heroPos = this.getXform().getPosition();
 
-    
         var xComp1 = (heroPos[0] - 2); //distance from hero
         var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
  
