@@ -151,3 +151,7 @@ Projectile.prototype.draw = function (aCamera) {
 Projectile.prototype.drawMini = function (aCamera) {
     this.mMinimapObj.draw(aCamera);
 };
+
+Projectile.prototype.setDeflectionKills = function(t) {
+    this.mDeflectKill = t;
+};

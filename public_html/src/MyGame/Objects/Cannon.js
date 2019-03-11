@@ -89,6 +89,7 @@ Cannon.prototype.update = function () {
             delta = 0 - delta;
         
         var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, this, delta, this.mProjectileTimer);
+        bullet.setDeflectionKills(false);
         this.mSetRef.addToSet(bullet);
     }
 };
