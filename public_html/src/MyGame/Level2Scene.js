@@ -68,7 +68,7 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kParticleTexture);
     gEngine.Textures.loadTexture(this.kCoin);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
-    //document.getElementById("particle").style.display="block"; //display the instruction below
+    document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
 Level2Scene.prototype.unloadScene = function () {
@@ -84,7 +84,7 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.Textures.unloadTexture(this.kCoin);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
-    //document.getElementById("particle").style.display="none";
+    document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back"){
         gScore = 0;
         gEngine.Core.startScene(new MyGame());
