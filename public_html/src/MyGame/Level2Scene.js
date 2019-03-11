@@ -18,7 +18,7 @@ function Level2Scene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
     this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
-    this.kBG = "assets/Taco/scene_example.png";
+    this.kBG = "assets/Taco/cavern.png";
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
     this.kSprites2 = "assets/Taco/spritesheet2.png";
