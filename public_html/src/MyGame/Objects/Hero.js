@@ -241,71 +241,7 @@ Hero.prototype.update = function () {
     
     
     
-    if(this.mCanDeflect && !this.mDeflecting){
- 
-        // only check I input if not currently deflecting and deflect power on
-        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
-            //check if cooldown done, if so start reflect
-            if(this.mIsDeflectDown
-                && (Date.now() - this.mLastDeflectTime >= this.mDeflectCD)) 
-            {    
-                //has the pet made contact?
-                this.mPetDeflected = false;
-                //deflect initiated
-                this.mDeflecting = true;
-                //cooldown off
-                this.mIsDeflectDown = false; //turn off cooldown if cooldowned
-            }
-
-        }   
-    }
-    
-    //if deflect succesful move pet to projectile
-    if(this.mCanDeflect && !this.mIsDeflectDown && this.mPetDeflected 
-            && this.mConfirmedDeflect) {
-        this.mInterpolatePet.configInterpolation(.5, 120);
-        
-        this._updateInterp();
-        
-        if(Math.abs(this.mHeroFollowVector[0] -
-                this.mInterpolatePet.getValue()[0]) < 0.5) {
-            this.mPetDeflected = true;
-            this.mLastDeflectTime = Date.now();
-            this.mIsDeflectDown = true;
-            this.mConfirmedDeflect = false;   //projectile sets this to true when in reflect Bbox
-        }
-    //if the deflect missed then move pet to defualt blocking position (front of kelvin)
-    } else if (this.mCanDeflect && !this.mIsDeflectDown && !this.mPetDeflected) {
-        var heroPos = this.getXform().getPosition();
-
-    
-        var xComp1 = (heroPos[0] + 4); //distance from hero
-        var yComp1 = (heroPos[1] + 2); //distnance form hero in the y
- 
-        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
-        this.mInterpolatePet.configInterpolation(.5, 120);
-        this._updateInterp();
-        
-        if(Math.abs(this.mHeroFollowVector[0] -
-                this.mInterpolatePet.getValue()[0]) < 0.5) {
-            this.mLastDeflectTime = Date.now();
-            this.mPetDeflected = true;
-            this.mIsDeflectDown = true;
-        }
-    //if the pet has finished deflect move back to side of kelvin
-    } else {
-        this.mDeflecting = false;   //no longer deflecting
-        var heroPos = this.getXform().getPosition();
-
-        var xComp1 = (heroPos[0] - 2); //distance from hero
-        var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
- 
-        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
-        this.mInterpolatePet.configInterpolation(.1, 120);
-        this._updateInterp();
-
-    }
-    //-------------------end of pet code-------------------
+    this._updatePetAndReflect();
     
     this.mLight.set2DPosition(xform.getPosition());
     this.changeAnimation();
@@ -530,3 +466,71 @@ Hero.prototype.createParticleGreen = function(atX, atY) {
 Hero.prototype.getSuperLight = function() {
     return this.mLight;
 };
+
+Hero.prototype._updatePetAndReflect = function() {
+    if(this.mCanDeflect && !this.mDeflecting){
+ 
+        // only check I input if not currently deflecting and deflect power on
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
+            //check if cooldown done, if so start reflect
+            if(this.mIsDeflectDown
+                && (Date.now() - this.mLastDeflectTime >= this.mDeflectCD)) 
+            {    
+                //has the pet made contact?
+                this.mPetDeflected = false;
+                //deflect initiated
+                this.mDeflecting = true;
+                //cooldown off
+                this.mIsDeflectDown = false; //turn off cooldown if cooldowned
+            }
+
+        }   
+    }
+    
+    //if deflect succesful move pet to projectile
+    if(this.mCanDeflect && !this.mIsDeflectDown && !this.mPetDeflected 
+            && this.mConfirmedDeflect) {
+        this.mInterpolatePet.configInterpolation(.5, 120);
+        
+        this._updateInterp();
+        
+        if(Math.abs(this.mHeroFollowVector[0] -
+                this.mInterpolatePet.getValue()[0]) < 0.2) {
+            this.mPetDeflected = true;
+            this.mLastDeflectTime = Date.now();
+            this.mIsDeflectDown = true;
+            this.mConfirmedDeflect = false;   //projectile sets this to true when in reflect Bbox
+        }
+    //if the deflect missed then move pet to defualt blocking position (front of kelvin)
+    } else if (this.mCanDeflect && !this.mIsDeflectDown && !this.mPetDeflected) {
+        var heroPos = this.getXform().getPosition();
+
+    
+        var xComp1 = (heroPos[0] + 4); //distance from hero
+        var yComp1 = (heroPos[1] + 2); //distnance form hero in the y
+ 
+        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
+        this.mInterpolatePet.configInterpolation(.5, 120);
+        this._updateInterp();
+        
+        if(Math.abs(this.mHeroFollowVector[0] -
+                this.mInterpolatePet.getValue()[0]) < 0.5) {
+            this.mLastDeflectTime = Date.now();
+            this.mPetDeflected = true;
+            this.mIsDeflectDown = true;
+        }
+    //if the pet has finished deflect move back to side of kelvin
+    } else {
+        this.mDeflecting = false;   //no longer deflecting
+        var heroPos = this.getXform().getPosition();
+
+        var xComp1 = (heroPos[0] - 2); //distance from hero
+        var yComp1 = (heroPos[1] + 4); //distnance form hero in the y
+ 
+        this.mHeroFollowVector = vec2.fromValues(xComp1, yComp1);
+        this.mInterpolatePet.configInterpolation(.1, 120);
+        this._updateInterp();
+
+    }
+    //-------------------end of pet code-------------------
+}
