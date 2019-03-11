@@ -29,6 +29,7 @@ WinScene.prototype.loadScene = function () {
 WinScene.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.kUIButton);
     // next level to be loaded
+    gScore = 0;
     gEngine.Core.startScene(new MyGame());
 };
 
@@ -61,7 +62,9 @@ WinScene.prototype.draw = function () {
     this.mMsg.getXform().setPosition(10, 55);
     this.mMsg.draw(this.mCamera);
     
-    this.mMsg.setText("Click Menu");
+    var sc = "";
+    sc += "Your score is: " + gScore;
+    this.mMsg.setText(sc);
     this.mMsg.getXform().setPosition(10, 45);
     this.mMsg.draw(this.mCamera);
     

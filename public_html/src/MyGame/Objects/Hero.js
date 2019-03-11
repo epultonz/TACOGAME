@@ -197,8 +197,8 @@ Hero.prototype.update = function () {
             this.mLight.setLightTo(false);
             this.mIsSuper = false;
         }
-    }
-    if(this.mIsSuper){this.goSuper();} */
+    */
+    if(this.mIsSuper){this.goSuper();} 
 
     if(this.mShakeStarted) {
         var c = this.mKelvin.getColor();

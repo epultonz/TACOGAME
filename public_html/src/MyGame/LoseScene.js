@@ -30,9 +30,10 @@ LoseScene.prototype.loadScene = function () {
 
 LoseScene.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.kUIButton);
+    gScore = 0;
     // next level to be loaded
     if(this.LevelSelect==="Retry")
-        gEngine.Core.startScene(new GameScene());
+        gEngine.Core.startScene(new Level1Scene());
     else if(this.LevelSelect==="Main")
         gEngine.Core.startScene(new MyGame());
 };
@@ -67,7 +68,9 @@ LoseScene.prototype.draw = function () {
     this.mMsg.getXform().setPosition(10, 55);
     this.mMsg.draw(this.mCamera);
     
-    this.mMsg.setText("Or back to Menu");
+    var sc = "";
+    sc += "Your score is: " + gScore;
+    this.mMsg.setText(sc);
     this.mMsg.getXform().setPosition(10, 45);
     this.mMsg.draw(this.mCamera);
     

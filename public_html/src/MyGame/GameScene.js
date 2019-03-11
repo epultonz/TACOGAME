@@ -89,11 +89,13 @@ GameScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kCoin);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     //document.getElementById("particle").style.display="none";
-    if(this.LevelSelect==="Back")
+    if(this.LevelSelect==="Back"){
+        gScore = 0;
         gEngine.Core.startScene(new MyGame());
-    else if(this.LevelSelect==="Main")
+    }else if(this.LevelSelect==="Main"){
+        gScore = 0;
         gEngine.Core.startScene(new MyGame());
-    else if(this.LevelSelect==="Win")
+    }else if(this.LevelSelect==="Win")
         gEngine.Core.startScene(new WinScene());
     else if(this.LevelSelect==="Lose")
         gEngine.Core.startScene(new LoseScene());

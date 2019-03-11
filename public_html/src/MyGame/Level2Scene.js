@@ -85,11 +85,13 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kCoin);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     //document.getElementById("particle").style.display="none";
-    if(this.LevelSelect==="Back")
+    if(this.LevelSelect==="Back"){
+        gScore = 0;
         gEngine.Core.startScene(new MyGame());
-    else if(this.LevelSelect==="Main")
+    }else if(this.LevelSelect==="Main"){
+        gScore = 0;
         gEngine.Core.startScene(new MyGame());
-    else if(this.LevelSelect==="Win")
+    }else if(this.LevelSelect==="Win")
         gEngine.Core.startScene(new WinScene());
     else if(this.LevelSelect==="Lose")
         gEngine.Core.startScene(new LoseScene());
@@ -115,7 +117,7 @@ Level2Scene.prototype.initialize = function () {
     this.mMinimapCam = this.parseCamera(cams[1]);
 
 
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
+    gEngine.DefaultResources.setGlobalAmbientIntensity(2.5); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
