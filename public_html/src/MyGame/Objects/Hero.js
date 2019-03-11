@@ -66,8 +66,12 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     this.mLight.set2DPosition(this.mKelvin.getXform().getPosition());
     this.mLight.setLightTo(false);
     
-    //super saiyan settings
+    // powerup settings
     this.mIsSuper = false;
+    this.mCanDeflect = false;
+    /*
+     * Set this.mCanDeflect to true if hero should be able to deflect from the start
+     */
     
     //shake paramaters
     this.xDelta = .7;
@@ -228,9 +232,10 @@ Hero.prototype.update = function () {
             this.mPetDeflected = false;
         }
     }
-    this.mDeflecting = gEngine.Input.isKeyClicked(gEngine.Input.keys.I);
+    if(this.mCanDeflect)
+        this.mDeflecting = gEngine.Input.isKeyClicked(gEngine.Input.keys.I);
     
-    if(!this.mPetDeflected && this.mConfirmedDeflect) {
+    if(this.mCanDeflect && !this.mPetDeflected && this.mConfirmedDeflect) {
         this.mInterpolatePet.configInterpolation(.5, 120);
         
         this._updateInterp();
@@ -240,7 +245,7 @@ Hero.prototype.update = function () {
             this.mPetDeflected = true;
             this.mConfirmedDeflect = false;
         }
-    } else if (!this.mPetDeflected) {
+    } else if (this.mCanDeflect && !this.mPetDeflected) {
         var heroPos = this.getXform().getPosition();
 
     
@@ -297,6 +302,14 @@ Hero.prototype.setPetFollowVect = function(newVect) {
 
 Hero.prototype.wasDeflected = function() {
     this.mConfirmedDeflect = true;
+};
+
+Hero.prototype.getCanDeflect = function() {
+    return this.mCanDeflect;
+};
+
+Hero.prototype.setCanDeflect = function(bool) {
+    this.mCanDeflect = bool;
 };
 
 Hero.prototype.changeAnimation = function () {

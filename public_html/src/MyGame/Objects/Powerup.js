@@ -11,7 +11,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-// type is the type of powerup this is: 0 for healing, 1 for super saiyan
+// type is the type of powerup this is: 0 for healing, 1 for super saiyan, 2 for deflection
 // respawnFlag and Timer is for respawning powerups - set it to false to delete it once picked up
 // powerupTimer is how long a powerup (i.e. invuln) should last - Flag is if it's active
 function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true, respawnTimer = 300, powerupTimer = 600) {
@@ -33,9 +33,11 @@ function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true,
     
     // Different colors for different powerup types
     if(type === 0)
-        this.mPowerup.setColor([.5, 1, .5, 0]);
-    if(type === 1)
-        this.mPowerup.setColor([1, 1, .2, 0]);
+        this.mPowerup.setColor([0, 1, 0, .2]);
+    else if(type === 1)
+        this.mPowerup.setColor([0, 0, 1, .2]);
+    else if(type === 2)
+        this.mPowerup.setColor([1, 0, 0, .2]);
     else
         this.mPowerup.setColor([1, 1, 1, 0]);
     
@@ -109,6 +111,22 @@ Powerup.prototype.update = function () {
                 // as the powerup will be deleted before respawning calculations take place
                 this.mRespawningFlag = true;
                 return true;
+            }
+        }
+        
+        if(this.mPowerType === 2) // Deflecting
+        {
+            // If the hero can't already deflect and is colliding with pack
+            if((!this.mHeroRef.getCanDeflect()) && (collideStatus !== 0))
+            {
+                this.mHeroRef.setCanDeflect(true);
+                if(!this.mWillRespawn)
+                    return false;
+                else
+                {
+                    this.mRespawningFlag = true;
+                    return true;
+                }
             }
         }
     }
