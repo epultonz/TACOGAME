@@ -323,8 +323,8 @@ GameScene.prototype.checkFall = function() {
             this.mKelvin.getXform().setPosition(this.mLastPos[0]-20,this.mLastPos[1]+5);
         } else {
             this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]+5);
-        }
-        
+    }
+    
     } else {
         var t2 = this.mTimer + 2000;
         if(t > t2){

@@ -105,7 +105,7 @@ Level2Scene.prototype.initialize = function () {
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
     // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
+    this.mKelvin = new Hero(this.kKelvin, 15, 15, null);
     this.mAllObjs.addToSet(this.mKelvin);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
@@ -116,26 +116,27 @@ Level2Scene.prototype.initialize = function () {
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
 
-
     gEngine.DefaultResources.setGlobalAmbientIntensity(2.5); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
-    this.mPipe = this.createPipe(505,10,10,20);
+    this.mPipe = this.createPipe(325,5,10,10);
     
     this.mTimer = Date.now();
     this.mLastPos = this.mKelvin.getXform().getPosition();
-
+    
+    this.mCodeBox = new CodeMechanism(315,51,"0311",this.mKelvin,this.mCamera);
+    
     // For debug
     this.mMsg = new FontRenderable("Status Message");
-    this.mMsg.setColor([0, 0, 0, 1]);
+    this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
     
     this.mScore = new FontRenderable("Score");
-    this.mScore.setColor([0, 0, 0, 1]);
-    this.mScore.getXform().setPosition(5, 63);
-    this.mScore.setTextHeight(2);
+    this.mScore.setColor([1, 1, 1, 1]);
+    this.mScore.getXform().setPosition(5, 62);
+    this.mScore.setTextHeight(3);
     
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
@@ -149,6 +150,7 @@ Level2Scene.prototype.draw = function () {
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
     this.drawMain();
+    this.mCodeBox.draw(this.mCamera);
     this.drawMap();
 };
 
@@ -156,4 +158,28 @@ Level2Scene.prototype.draw = function () {
 // anything from this function!
 Level2Scene.prototype.update = function () {
    GameScene.prototype.update.call(this);
+   this.mCodeBox.update();
+};
+
+Level2Scene.prototype.checkWinLose = function(){
+    // Win conditions
+    var canWarp = false;
+    if(this.mKelvin.getXform().getXPos() >= 323 && this.mKelvin.getXform().getXPos() <= 327){
+        canWarp = true;
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.S) && canWarp &&
+            this.mCodeBox.getSolve()) {
+        this.LevelSelect = "Win";
+        gEngine.GameLoop.stop();
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O)) {
+        this.LevelSelect = "Win";
+        gEngine.GameLoop.stop();
+    }
+    //lose conditions
+    var hp = this.mKelvin.getHP();
+    if (hp <= 0 || this.mKelvin.getXform().getXPos() > 490) {
+        this.LevelSelect = "Lose";
+        gEngine.GameLoop.stop();
+    }
 };

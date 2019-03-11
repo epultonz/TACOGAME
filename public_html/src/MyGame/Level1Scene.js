@@ -134,8 +134,8 @@ Level1Scene.prototype.initialize = function () {
     
     this.mScore = new FontRenderable("Score");
     this.mScore.setColor([0, 0, 0, 1]);
-    this.mScore.getXform().setPosition(5, 63);
-    this.mScore.setTextHeight(2);
+    this.mScore.getXform().setPosition(5, 62);
+    this.mScore.setTextHeight(3);
     
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);

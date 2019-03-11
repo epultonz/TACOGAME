@@ -125,15 +125,15 @@ GameScene.prototype.initialize = function () {
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // make the bounds.. platform etc
-    this.createBounds();
-    this.mPipe = this.createPipe(95,-4,10,20);
+    //this.createBounds();
+    //this.mPipe = this.createPipe(95,-4,10,20);
     
     this.mTimer = Date.now();
     this.mLastPos = this.mKelvin.getXform().getPosition();
     
     // the code box to unlock green pipe
     //@param [stubX,stubY,code]
-    this.mCodeBox = new CodeMechanism(40,85,"1234",this.mKelvin,this.mCamera);
+    //this.mCodeBox = new CodeMechanism(40,85,"1234",this.mKelvin,this.mCamera);
 
     // For debug
     this.mMsg = new FontRenderable("Status Message");
@@ -205,9 +205,8 @@ GameScene.prototype.update = function () {
 
     // nice for debugging
     msg += " Health: " + this.mKelvin.getHP() + " |";
-    msg += " CanJump status: " + collided + " |";
     //msg += " Q (damage), O (Win), L (Lose)";
-    msg += "x " + this.mLastPos[0] + " " + this.mLastPos[1];
+    msg += "x " + this.mLastPos[0].toPrecision(4) + " " + this.mLastPos[1].toPrecision(4);
     this.mMsg.setText(msg);
     
     sc += "Score :" + gScore;

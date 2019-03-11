@@ -22,9 +22,9 @@ function CodeMechanism(stubX,stubY,code,hero,aCam1){
     
     //stub in game
     this.mStub = new Renderable();
-    this.mStub.setColor([0,0,1,1]);
+    this.mStub.setColor([1,0,0,1]);
     this.mStub.getXform().setPosition(stubX,stubY);
-    this.mStub.getXform().setSize(2,2);
+    this.mStub.getXform().setSize(4,4);
     
     this.mActive = false;
     this.mSolved = false;
