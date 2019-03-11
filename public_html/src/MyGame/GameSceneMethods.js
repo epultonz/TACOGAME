@@ -74,7 +74,6 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         tBound = smashers[i].topBound;
         uVelocity = smashers[i].velocityUp;
         dVelocity = smashers[i].velocityDown;
-
         
         // init smashers
         smasher = new Smasher(this.kSprites, pos[0], pos[1], this.mKelvin, 
@@ -95,7 +94,12 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     
     //parse powerups
     var pu = sceneInfo.Powerup;
-    
+    var i, pos, mPU;
+    for(i = 0; i < pu.length; i++){
+        pos = pu[i].Pos;
+        mPU = new Powerup(this.kSprites,pos[0],pos[1],this.mKelvin);
+        this.mAllNonPhysObj.addToSet(mPU);
+    }
     
     // scene background
     var background = sceneInfo.SceneBG[0];
@@ -111,16 +115,24 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     
     //story panels
     var storyPanels = sceneInfo.StoryPanel;
-    var i, pos, width, txt, spawnX, spawnY, panel;
-    for (i = 0; i < storyPanels.length; i++) {
-        pos = storyPanels[i].Pos;    
-        width = storyPanels[i].Width;
+    var i, txt, spawnX, spawnY, panel;
+    for (i = 0; i < storyPanels.length; i++) {  
         txt = storyPanels[i].text;
         spawnX = storyPanels[i].stubX;
         spawnY = storyPanels[i].stubY;
         
-        this.mTutoPanel = new StoryPanel(this.kWBPanel,spawnX, spawnY, width, 
+        panel = new StoryPanel(this.kWBPanel,spawnX, spawnY, 70, 
             this.mCamera, this.mKelvin, txt);
+        this.mAllNonPhysObj.addToSet(panel);
+    }
+    
+    //parse green pipes
+    var pipes = sceneInfo.GreenPipe;
+    var i, pos, size, pipe;
+    for (i = 0; i < pipes.length; i++) {
+        pos = pipes[i].Pos;    
+        size = pipes[i].Size;
+        pipe = createPipe(pos[0],pos[1],size[0],size[1]);
     }
     
     //parse platforms
@@ -175,14 +187,14 @@ GameScene.prototype.mainSelect = function(){
     gEngine.GameLoop.stop();
 };
 
-GameScene.prototype.createPipe = function(){
+GameScene.prototype.createPipe = function(posX,posY,sX,sY){
     var g = new TextureRenderable(this.kGreenPipe);
     var xf = g.getXform();
-    xf.setSize(10,20);
-    xf.setPosition(95,-4);
+    xf.setSize(sX,sY);
+    xf.setPosition(posX,posY);
 
     var o = new GameObject(g);
-    var r = new RigidRectangle(xf,10,20);
+    var r = new RigidRectangle(xf,sX,sY);
     o.setRigidBody(r);
 
     r.setMass(0);
@@ -219,15 +231,7 @@ GameScene.prototype.checkWinLose = function(){
 
 GameScene.prototype.drawMain = function() {
     this.mCamera.setupViewProjection();
-    var i;
-    /*
-    var pos = this.mSceneBG.getXform().getPosition();
-    for(i=0; i<4; i++) {
-        this.mSceneBG.draw(this.mCamera);
-        pos[0] += 100;
-    }
-    pos[0] = 0;
-    */
+    
     this.mBG.draw(this.mCamera);
     this.mAllObjs.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
@@ -235,7 +239,6 @@ GameScene.prototype.drawMain = function() {
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
 
-    this.mTutoPanel.draw(this.mCamera);
     this.mCodeBox.draw(this.mCamera);
     
     this.mMsg.draw(this.mCamera);
@@ -252,7 +255,6 @@ GameScene.prototype.drawMap = function() {
     this.mAllNonPhysObj.draw(this.mMinimapCam);
 
     this.mMsg.draw(this.mMinimapCam);
-    
     
 };
 

@@ -1,0 +1,259 @@
+{
+    "_comment": "reference: http://www.json.org/",
+    "_comment": "example JSON files: http://json.org/example.html",
+    "_comment": "simple parsing example: http://www.w3schools.com/json/json_http.asp",
+    
+    "Camera": [{
+        
+        "Center": [50, 36],
+        "Width": 100,
+        "Viewport": [0, 0, 800, 600],
+        "BgColor": [0.8, 0.8, 0.8, 1.0]
+        },
+        {
+        "Center": [50, 26],
+        "Width": 90,
+        "Viewport": [600, 420, 200, 100],
+        "BgColor": [0.8, 0.8, 0.8, 1.0]
+        }
+    ],
+    
+    "Patrol": [
+        {"Pos": [120, 5]},
+        {"Pos": [210, 5]},
+        {"Pos": [230, 5]},
+        {"Pos": [340, 5]},
+        {"Pos": [360, 5]},
+        {"Pos": [440, 5]}
+        
+    ],
+    
+    "Flier": [
+        {
+            "Pos": [210, 45]
+        },
+        {
+            "Pos": [380, 45]
+        },
+        {
+            "Pos": [360, 45]
+        }
+    ],
+    
+    "Smasher": [
+        {
+            "Pos": [260, 45],
+            "topBound": 40,
+            "botBound": 7,
+            "velocityUp": 10,
+            "velocityDown": -60
+        }
+    ],
+    
+    "Coin": [
+        {"Pos": [60,40]},
+        {"Pos": [110,100]},
+        {"Pos": [160,80]},
+        {"Pos": [280,40]},
+        {"Pos": [330,50]},
+        {"Pos": [500,80]}
+    ],
+    
+    "Powerup": [
+        {
+            "Pos": [410, 30]
+        }  
+    ],
+    
+    "Platform": [
+        {   "Pos": [-5, 15],
+            "W": 30,
+            "Rot": 180
+        },
+        {   "Pos": [5, 60],
+            "W": 10,
+            "Rot": 0
+        },
+        {   "Pos": [15, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [40, 30],
+            "W": 20,
+            "Rot": 0
+        },
+        {   "Pos": [45, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [75, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [90, 0],
+            "W": 20,
+            "Rot": 30
+        },
+        {   "Pos": [115, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [135, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [165, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [175, 40],
+            "W": 10,
+            "Rot": 0
+        },
+        {   "Pos": [190, 50],
+            "W": 20,
+            "Rot": 0
+        },
+        {   "Pos": [215, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [235, 35],
+            "W": 30,
+            "Rot": -5
+        },
+        {   "Pos": [245, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [275, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [280, 35],
+            "W": 20,
+            "Rot": -5
+        },
+        {   "Pos": [315, 70],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [335, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [365, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [395, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [420, 50],
+            "W": 30,
+            "Rot": -10
+        },
+        {   "Pos": [425, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [455, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [470, 30],
+            "W": 30,
+            "Rot": 20
+        },
+        {   "Pos": [555, 0],
+            "W": 30,
+            "Rot": 0
+        },
+        {   "Pos": [520, 15],
+            "W": 30,
+            "Rot": 180
+        }
+    ],
+    
+    "SceneBG": [
+        {
+            "filePath": "/assets/..",
+            "Pos": [50, 36],
+            "Size": [100,72]
+        }
+    ],
+    
+    "StoryPanel": [
+        {
+            "stubX": 45,
+            "stubY": 33,
+            "text": [
+                "Story Element Panel Demo",
+                "Space to jump. S to stomp. E to super.", 
+                "Take the health pack above.",
+                "Solve the code and warp down to win."]
+        },
+        {
+            "stubX": 95,
+            "stubY": 3,
+            "text": [
+                "Story Element Panel Demo",
+                "Space to jump. S to stomp. E to super.", 
+                "Take the health pack above.",
+                "Solve the code and warp down to win."]
+        },
+        {
+            "stubX": 175,
+            "stubY": 43,
+            "text": [
+                "Story Element Panel Demo",
+                "Space to jump. S to stomp. E to super.", 
+                "Take the health pack above.",
+                "Solve the code and warp down to win."]
+        },
+        {
+            "stubX": 325,
+            "stubY": 73,
+            "text": [
+                "Story Element Panel Demo",
+                "Space to jump. S to stomp. E to super.", 
+                "Take the health pack above.",
+                "Solve the code and warp down to win."]
+        },
+        {
+            "stubX": 415,
+            "stubY": 3,
+            "text": [
+                "Story Element Panel Demo",
+                "Space to jump. S to stomp. E to super.", 
+                "Take the health pack above.",
+                "Solve the code and warp down to win."]
+        }
+    ],
+    
+    "GreenPipe": [
+        {
+            "Pos": [65,10],
+            "Size": [10,20]
+        },
+        {
+            "Pos": [105,18],
+            "Size": [10,36]
+        },
+        {
+            "Pos": [145,23],
+            "Size": [10,46]
+        },
+        {
+            "Pos": [380,18],
+            "Size": [10,36]
+        },
+        {
+            "Pos": [505,10],
+            "Size": [10,20]
+        }
+        
+    ]
+    
+}

@@ -63,6 +63,13 @@
             "botBound": 6,
             "velocityUp": 10,
             "velocityDown": -50
+        },
+        {
+            "Pos": [35, 12],
+            "topBound": 15,
+            "botBound": 6,
+            "velocityUp": 10,
+            "velocityDown": -50
         }
     ],
     
@@ -166,7 +173,14 @@
                 "Take the health pack above.",
                 "Solve the code and warp down to win."]
         }
-    ]
+    ],
     
+    "GreenPipe": [
+        {
+            "Pos": [],
+            "Size": []
+        }
+    
+    ]
     
 }

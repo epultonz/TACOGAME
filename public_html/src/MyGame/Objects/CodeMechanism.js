@@ -10,7 +10,10 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function CodeMechanism(atX,atY,w,stubX,stubY,code){
+function CodeMechanism(stubX,stubY,code,hero,aCam1){
+    
+    this.mHeroRef = hero;
+    this.mCam = aCam1;
     
     //the text
     this.mText = new FontRenderable("Key in passcode:");
@@ -34,16 +37,26 @@ function CodeMechanism(atX,atY,w,stubX,stubY,code){
     this.mStubBBox.setBounds(this.mStub.getXform().getPosition(),2,2);
     
     //@param [position, textSize, width, color, textColor, callback, context] 
-    this.mUICodeBox = new UITextBox([atX,atY],6,w,[1,1,1,1],[0,0,0,1],this.UICodeText,this);
+    this.mUICodeBox = new UITextBox([280,240],6,40,[1,1,1,1],[0,0,0,1],this.UICodeText,this);
     
 }
 gEngine.Core.inheritPrototype(CodeMechanism, GameObject);
 
-CodeMechanism.prototype.update = function(aCam){
+CodeMechanism.prototype.update = function(){
     GameObject.prototype.update.call(this);
     if(this.mActive && !this.mSolved){
-        this.mUICodeBox.update(aCam);
+        this.mUICodeBox.update(this.mCam);
     };
+    
+    var heroCollision = this.mStubBBox.boundCollideStatus(this.mHeroRef.getBBox());
+    if(heroCollision !== 0){
+        this.mActive = true;
+    }
+    else
+    {
+        this.mActive = false;
+    }
+    
 };
 
 CodeMechanism.prototype.draw = function(aCam){
@@ -52,14 +65,6 @@ CodeMechanism.prototype.draw = function(aCam){
         this.mText.draw(aCam);
         this.mUICodeBox.draw(aCam);
     };
-};
-
-CodeMechanism.prototype.actFlag = function(a){
-    this.mActive = a;
-};
-
-CodeMechanism.prototype.getStubBBox = function(){
-    return this.mStubBBox;
 };
 
 CodeMechanism.prototype.UICodeText = function(){

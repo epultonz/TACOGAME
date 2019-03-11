@@ -47,7 +47,6 @@ function GameScene() {
     this.mPowerup = null;
     this.mSceneBG = null;
 
-    this.mTutoPanel = null;
     this.mCodeBox = null;
     
     this.mTimer = null;
@@ -121,19 +120,15 @@ GameScene.prototype.initialize = function () {
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // make the bounds.. platform etc
-    this.createBounds();
-    this.mPipe = this.createPipe();
-        
-    var smasher = new Smasher(this.kSprites, 35, 12, this.mKelvin, 15, 6);
-    this.mAllObjs.addToSet(smasher);
-    this.mAllPlatform.addToSet(smasher);
+    createBounds();
+    this.mPipe = createPipe(95,-4,10,20);
     
     this.mTimer = Date.now();
     this.mLastPos = this.mKelvin.getXform().getPosition();
     
     // the code box to unlock green pipe
-    //@param [atX,atY,w,stubX,stubY,code]
-    this.mCodeBox = new CodeMechanism(280,240,40,85,3,"1234");
+    //@param [stubX,stubY,code]
+    this.mCodeBox = new CodeMechanism(40,85,"1234",this.mKelvin,this.mCamera);
 
     // For debug
     this.mMsg = new FontRenderable("Status Message");
@@ -169,16 +164,8 @@ GameScene.prototype.update = function () {
     
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
-    
-    // tutorial panel bounding box collision
-    this.mTutoPanel.update();
 
-    // code box stub outside bbox collision
-    var cBB = this.mCodeBox.getStubBBox().boundCollideStatus(this.mKelvin.getBBox());
-    if(cBB){
-        this.mCodeBox.actFlag(true);
-    } else { this.mCodeBox.actFlag(false); }
-    this.mCodeBox.update(this.mCamera);
+    this.mCodeBox.update();
     
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();

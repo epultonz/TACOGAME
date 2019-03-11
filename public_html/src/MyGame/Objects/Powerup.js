@@ -11,7 +11,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Powerup(spriteTexture, atX, atY, heroRef) {
+function Powerup(spriteTexture, atX, atY, heroRef, type) {
     this.kWidth = 3;
     this.kHeight = 3;
     this.mHeroRef = heroRef;
@@ -42,7 +42,7 @@ Powerup.prototype.update = function () {
     var heroBox = this.mHeroRef.getBBox();
     var collideStatus = thisBox.boundCollideStatus(heroBox);
     // Only do collision detection if the powerup isn't still respawning and hero isn't full hp
-    if((!this.mRespawningFlag) && (!this.mHeroRef.isAtFullHP()) && (collideStatus !== 0))
+    if((!this.mRespawningFlag) && (this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
     {
         this.mRespawningFlag = true;
         this.mHeroRef.incHP(30);
