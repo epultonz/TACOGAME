@@ -286,10 +286,6 @@ Hero.prototype.update = function () {
 };
 
 Hero.prototype._updateInterp = function(){
-    /*
-    
-    */
-    
     this.mInterpolatePet.setFinalValue(this.mHeroFollowVector);
     this.mInterpolatePet.updateInterpolation();
 };
