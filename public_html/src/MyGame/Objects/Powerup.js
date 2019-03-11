@@ -21,7 +21,7 @@ function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true,
     this.mRespawnTimerCurr = respawnTimer;
     this.mRespawnTimerMax = respawnTimer;
     this.mWillRespawn = respawnFlag;
-    this.mRespawningFlag = true;
+    this.mRespawningFlag = false;
     this.mSpriteText = spriteTexture;
     this.mPowerType = type;
     this.mPowerupActiveFlag = false;
@@ -60,12 +60,14 @@ Powerup.prototype.update = function () {
     if(this.mPowerupActiveFlag) // If we currently have a powerup running...
     {
         this.mPowerupTimerCurr--;
-        if(this.mPowerupTimerCurr <= 0) // If the powerup's timer is over...
+        if(this.mPowerupTimerCurr === 0) // If the powerup's timer is over...
         {
             if(this.mPowerType === 1) // Invulnerability should be turned off
                 this.mHeroRef.activateSuper();
-            
-            
+            if(this.mPowerType === 2) {
+                this.mHeroRef.setCanDeflect(false);
+            }
+                    
             if(!this.mWillRespawn) // If it shouldn't respawn, delete it after ending its powerup
                 return false;
             else // If it should, then reset the variables for another round to occur
@@ -89,8 +91,9 @@ Powerup.prototype.update = function () {
             if((this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
             {
                 this.mHeroRef.incHP(30);
+               
                 if(!this.mWillRespawn)
-                    return false;
+                    return false; 
                 else
                 {
                     this.mRespawningFlag = true;
@@ -120,13 +123,11 @@ Powerup.prototype.update = function () {
             if((!this.mHeroRef.getCanDeflect()) && (collideStatus !== 0))
             {
                 this.mHeroRef.setCanDeflect(true);
-                if(!this.mWillRespawn)
-                    return false;
-                else
-                {
-                    this.mRespawningFlag = true;
-                    return true;
-                }
+                this.mPowerupActiveFlag = true;
+                // Respawn flag always activated- if unnecessary, it'll never come up
+                // as the powerup will be deleted before respawning calculations take place
+                this.mRespawningFlag = true;
+                return true;
             }
         }
     }
