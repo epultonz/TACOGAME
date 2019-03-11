@@ -111,10 +111,15 @@ Hero.eHeroState = Object.freeze({
 
 Hero.prototype.addEmitterToPet = function() {    
     // create an emitter to start emitting particles
-    this.mParticles.addEmitterAt(
-        this.mPet.getXform().getPosition(), 200, 
-        this.createParticle);
-     // start emit immediately
+    if (this.mCanDeflect) {
+        this.mParticles.addEmitterAt(
+            this.mPet.getXform().getPosition(), 200, 
+            this.createParticleGreen);
+    } else {
+        this.mParticles.addEmitterAt(
+            this.mPet.getXform().getPosition(), 200, 
+            this.createParticleRed);
+    }
     
 };
 
@@ -438,11 +443,11 @@ Hero.prototype.activateSuper = function(){
     }
 };
 
-Hero.prototype.createParticle = function(atX, atY) {
+Hero.prototype.createParticleRed = function(atX, atY) {
     var life = 10 + (Math.random() * (20-10));
     var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
     p.getRenderable().setColor([1, 0, 0, 1]);
-    
+        
     // size of the particle
     var r = .5 + (Math.random() * (1.5-.5));   //(Math.random * (max-min)) + min
     p.getXform().setSize(r, r);
@@ -450,6 +455,34 @@ Hero.prototype.createParticle = function(atX, atY) {
     // final color
     var fr = 3.5 + Math.random();
     var fg = 0.4 + 0.1 * Math.random();
+    var fb = 0.3 + 0.1 * Math.random();
+    p.setFinalColor([fr, fg, fb, 0.1]);
+    
+    // velocity on the particle
+    var fx = -4 + (Math.random() * (8));
+    var fy = -4 + (Math.random() * (8));
+    p.getParticle().setVelocity([fx, fy]);
+    p.getParticle().setAcceleration([fx,fy]);
+    p.getParticle().setDrag(.8);
+
+    // size delta
+    p.setSizeDelta(0.9);
+    
+    return p;
+};
+
+Hero.prototype.createParticleGreen = function(atX, atY) {
+    var life = 10 + (Math.random() * (20-10));
+    var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
+    p.getRenderable().setColor([0, 1, 0, 1]);
+        
+    // size of the particle
+    var r = .5 + (Math.random() * (1.5-.5));   //(Math.random * (max-min)) + min
+    p.getXform().setSize(r, r);
+    
+    // final color
+    var fg = 3.5 + Math.random();
+    var fr = 0.4 + 0.1 * Math.random();
     var fb = 0.3 + 0.1 * Math.random();
     p.setFinalColor([fr, fg, fb, 0.1]);
     

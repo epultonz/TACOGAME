@@ -288,6 +288,7 @@ GameScene.prototype.drawMap = function() {
 GameScene.prototype.createParticle = function(atX, atY) {
     var life = 30 + Math.random() * 200;
     var p = new ParticleGameObject("assets/Taco/particle.png", atX, atY, life);
+    
     p.getRenderable().setColor([1, 0, 0, 1]);
     
     // size of the particle

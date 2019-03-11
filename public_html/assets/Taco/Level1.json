@@ -79,7 +79,7 @@
             "Type": 2,
             "respawnFlag": true,
             "respawnTimer": 300,
-            "powerupTimer": 60
+            "powerupTimer": 300
         }  
     ],
     
