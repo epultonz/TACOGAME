@@ -73,14 +73,9 @@ HomingProjectile.prototype.update = function () {
 };
 
 HomingProjectile.prototype.deflected = function() {
-    //find the vector that points from projectile location to spawnRef
-    var spawnPos = this.mSpawningRef.getXform().getPosition();
-    var curPos = this.getXform().getPosition();
-    var xComp = spawnPos[0] - curPos[0];
-    var yComp = spawnPos[1] - curPos[1];
-    //set projectiles front dir to the above vector
-    this.setCurrentFrontDir(vec2.fromValues(xComp, yComp));
-    //pet starts to move towards projectile
+    //rotate and point to spawnRef
+    this.rotateObjPointTo(this.mSpawningRef.getXform().getPosition(), 1);   
+    
     this.mHeroRef.setPetFollowVect(vec2.clone(this.getXform().getPosition()));
     //lets pet know that an actual deflection occured and to move to the projectile
     this.mHeroRef.wasDeflected();
