@@ -154,13 +154,11 @@ Hero.prototype.update = function () {
         this.mKelvin.updateAnimation();
     } else {
         v[0] = 0;
-        if(this.mCanJump) {
-            v[1] = 0; //prevent from sliding down ramps
-        }
+        
     }
     
     if (this.mCanJump === true) {
-        if (this.mIsMoving === false) {
+        //if (this.mIsMoving === false) {
             /*
             this.mPreviousHeroState = this.mHeroState;
             if (this.mHeroState === Hero.eHeroState.eRunRight || this.mHeroState === Hero.eHeroState.eJumpRight)
@@ -168,8 +166,8 @@ Hero.prototype.update = function () {
             if (this.mHeroState === Hero.eHeroState.eRunLeft || this.mHeroState === Hero.eHeroState.eJumpLeft)
                 this.mHeroState = Hero.eHeroState.eFaceLeft;
             */
-        }
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Space)) {
+        //}
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
             v[1] = 60; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
