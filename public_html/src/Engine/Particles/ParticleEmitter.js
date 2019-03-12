@@ -19,10 +19,10 @@
  * @class ParticleEmitter
  * @type ParticleEmitter
  */
-function ParticleEmitter(pos, num, createrFunc) {
+function ParticleEmitter(pos, num, color, createrFunc) {
     // Smallest number of particle emitted per cycle
     this.kMinToEmit = 5;
-
+    this.mColor = color;
     // Emitter position
     this.mEmitPosition = pos;   // this can be a reference to a xform.mPosition
 
@@ -55,7 +55,8 @@ ParticleEmitter.prototype.emitParticles = function (pSet) {
     this.mNumRemains -= numToEmit;
     var i, p;
     for (i = 0; i < numToEmit; i++) {
-        p = this.mParticleCreator(this.mEmitPosition[0], this.mEmitPosition[1]);
+        p = this.mParticleCreator(this.mEmitPosition[0], this.mEmitPosition[1], 
+        this.mColor);
         pSet.addToSet(p);
     }
 };

@@ -29,8 +29,8 @@ gEngine.Core.inheritPrototype(ParticleGameObjectSet, GameObjectSet);
  * @returns {void}
  * @memberOf ParticleGameObjectSet
  */
-ParticleGameObjectSet.prototype.addEmitterAt = function (p, n, func) {
-    var e = new ParticleEmitter(p, n, func);
+ParticleGameObjectSet.prototype.addEmitterAt = function (p, n, color, func) {
+    var e = new ParticleEmitter(p, n, color, func);
     this.mEmitterSet.push(e);
 };
 
