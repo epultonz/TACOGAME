@@ -124,7 +124,9 @@ Patrol.prototype.update = function () {
         // In case of tie, go for tophit
         
         // Check top hit first
-        if(heroBox.minY() > (thisBox.maxY() - (this.kHeight / 10)))
+        var heroYVelocity = this.mHeroRef.getRigidBody().getVelocity()[1];
+        if(heroYVelocity < 0 && 
+                (heroBox.minY() > (thisBox.maxY() - (this.kHeight / 10))))
         {
             return false; // as the object should be deleted
         }

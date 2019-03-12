@@ -109,7 +109,6 @@ GameScene.prototype.initialize = function () {
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
     // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
     this.mAllObjs.addToSet(this.mKelvin);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
@@ -169,35 +168,29 @@ GameScene.prototype.update = function () {
     
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
-
-    //this.mCodeBox.update();
     
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
-    var collided = false;
+    var collided, collided1 = false;
     for (var i = 0; i < this.mAllPlatform.size(); i++) {
-        var platBox = this.mAllPlatform.getObjectAt(i).getRigidBody();
-        collided = this.mKelvin.getRbox().collisionTest(platBox,collInfo);
-        if (collided) {
+        //fixes jumping on side of pipe bugs
+        var platBox = this.mAllPlatform.getObjectAt(i).getBBox();
+        collided = this.mKelvin.getBBox().intersectsBound(platBox);
+
+        var platBox1 = this.mAllPlatform.getObjectAt(i).getRigidBody();
+        collided1 = this.mKelvin.getRbox().collisionTest(platBox1,collInfo);
+        if (collided || collided1) {
             this.mKelvin.canJump(true);
             break;
         }
     }
+    msg += (collided || collided1) + " | ";
 
-    //press q to simulate attack
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
-        this.mKelvin.tookDamage(15);
-    }
-    this.checkWinLose();
-    
-    // Process collision of all the physic objects
     gEngine.Physics.processCollision(this.mAllObjs,[]);
-    
-    //the update collision
     this.mAllObjs.update();
     this.mAllNonPhysObj.update();
-    
-    //check fall
+
+    this.checkWinLose();
     this.checkFall();
     
     this.MainMenuButton.update();
