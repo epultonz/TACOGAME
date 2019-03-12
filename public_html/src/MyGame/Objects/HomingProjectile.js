@@ -73,6 +73,10 @@ HomingProjectile.prototype.update = function () {
 };
 
 HomingProjectile.prototype.deflected = function() {
+    // give a minimum duration to projectiles about to expire
+    if(this.mTimer < 75)
+        this.mTimer = 75;
+    
     //rotate and point to spawnRef
     this.rotateObjPointTo(this.mSpawningRef.getXform().getPosition(), 1);   
     

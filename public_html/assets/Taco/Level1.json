@@ -33,9 +33,6 @@
             "Pos": [210, 35]
         },
         {
-            "Pos": [380, 35]
-        },
-        {
             "Pos": [360, 35]
         }
     ],
@@ -46,7 +43,14 @@
             "topBound": 40,
             "botBound": 7,
             "velocityUp": 10,
-            "velocityDown": -60
+            "velocityDown": -40
+        }
+    ],
+    
+    "Cannon": [
+        {
+            "Pos": [430, 44],
+            "Facing": true 
         }
     ],
     
@@ -54,33 +58,27 @@
         {"Pos": [60,20]},
         {"Pos": [110,40]},
         {"Pos": [160,40]},
-        {"Pos": [280,30]},
-        {"Pos": [330,30]},
+        {"Pos": [280,40]},
+        {"Pos": [335,30]},
+        {"Pos": [415,47]},
         {"Pos": [500,35]}
     ],
     
     "Powerup": [
         {
-            "Pos": [30, 10],
+            "Pos": [320, 50],
+            "Type": 2,
+            "respawnFlag": false,
+            "respawnTimer": 300,
+            "powerupTimer": null
+        },
+        {
+            "Pos": [415, 10],
             "Type": 0,
             "respawnFlag": false,
             "respawnTimer": 300,
             "powerupTimer": 600
-        },
-        {
-            "Pos": [40, 10],
-            "Type": 1,
-            "respawnFlag": true,
-            "respawnTimer": 300,
-            "powerupTimer": 600
-        },
-        {
-            "Pos": [50, 10],
-            "Type": 2,
-            "respawnFlag": true,
-            "respawnTimer": 300,
-            "powerupTimer": null
-        }  
+        }
     ],
     
     
@@ -171,7 +169,7 @@
         },
         {   "Pos": [420, 40],
             "W": 30,
-            "Rot": -10
+            "Rot": 0
         },
         {   "Pos": [425, 0],
             "W": 30,
@@ -208,46 +206,46 @@
             "stubX": 45,
             "stubY": 33,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "You woke up...feeling lost..",
+                "Use A and D to move. Space to jump.",
+                "A particle floats around you.",
+                "It seems attracted to the shiny coin."]
         },
         {
             "stubX": 95,
             "stubY": 3,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "There seems to be some memory contained",
+                " in these coins...", 
+                "You saw a familiar enemy patrol ahead.",
+                "Jump and stomp them using S."]
         },
         {
             "stubX": 175,
-            "stubY": 43,
+            "stubY": 35,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "Ouch! these red balls hurts.",
+                "Try to avoid them!",
+                "If only you have something to ",
+                "use and deflect them with..."]
         },
         {
-            "stubX": 325,
-            "stubY": 73,
+            "stubX": 304,
+            "stubY": 45,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "'Grab the bubble!' The particle says..",
+                "Now you can deflect projectiles ", 
+                "using I. Use sparingly!",
+                "It has a cooldown~"]
         },
         {
-            "stubX": 415,
+            "stubX": 410,
             "stubY": 3,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "'This one restore health huh?' You watch",
+                "your health rise a bit.", 
+                "You see the last green pipe ahead...",
+                "Press S above it to go to next level"]
         }
     ],
     
@@ -265,8 +263,8 @@
             "Size": [10,25]
         },
         {
-            "Pos": [380,18],
-            "Size": [10,36]
+            "Pos": [380,14],
+            "Size": [10,28]
         }
         
     ]

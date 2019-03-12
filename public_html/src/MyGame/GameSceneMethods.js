@@ -187,6 +187,7 @@ GameScene.prototype.createBounds = function() {
 GameScene.prototype.platformAt = function (x, y, w, rot) {
     var h = w / 8;
     var p = new TextureRenderable(this.kPlatformTexture);
+    p.setColor([1, 1, 1, 0.2]);
     var xf = p.getXform();
 
     var g = new GameObject(p);
@@ -243,13 +244,14 @@ GameScene.prototype.checkWinLose = function(){
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
     }
+    /*
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.O)) {
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
-    }
+    }*/
     //lose conditions
     var hp = this.mKelvin.getHP();
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L ) || hp <= 0 ) {
+    if (hp <= 0 ) {
         this.LevelSelect = "Lose";
         gEngine.GameLoop.stop();
     }
@@ -319,12 +321,13 @@ GameScene.prototype.checkFall = function() {
     if(this.mKelvin.getXform().getYPos() < -5){
         this.mKelvin.tookDamage(10);
         // check if xPos is the same as fall xPos to avoid constant fall
-        if(this.mLastPos[0] === this.mKelvin.getXform().getXPos()){
+        var pos = this.mKelvin.getXform().getXPos();
+        if(this.mLastPos[0] === pos){
             this.mKelvin.getXform().setPosition(this.mLastPos[0]-20,this.mLastPos[1]+5);
         } else {
             this.mKelvin.getXform().setPosition(this.mLastPos[0],this.mLastPos[1]+5);
-        }
-        
+    }
+    
     } else {
         var t2 = this.mTimer + 2000;
         if(t > t2){

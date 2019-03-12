@@ -67,27 +67,27 @@
         {
             "Pos": [395, 42],
             "topBound": 48,
-            "botBound": 33,
+            "botBound": 14,
             "velocityUp": 10,
-            "velocityDown": -20
+            "velocityDown": -25
         }
     ],
     
     "Cannon":[
         {
-            "Pos": [105, 30],
+            "Pos": [105, 28],
             "Facing": true 
         },
         {
-            "Pos": [175, 6],
+            "Pos": [175, 5],
             "Facing": true 
         },
         {
-            "Pos": [275, 16],
+            "Pos": [275, 15],
             "Facing": false 
         },
         {
-            "Pos": [425, 18],
+            "Pos": [425, 16],
             "Facing": true 
         }
     ],
@@ -105,11 +105,11 @@
     
     "Powerup": [
         {
-            "Pos": [105, 12],
-            "Type": 2,
-            "respawnFlag": true,
+            "Pos": [105, 18],
+            "Type": 1,
+            "respawnFlag": false,
             "respawnTimer": 600,
-            "powerupTimer": 400
+            "powerupTimer": 800
         },
         {
             "Pos": [345, 12],
@@ -119,12 +119,19 @@
             "powerupTimer": 600
         },
         {
-            "Pos": [475, 42],
+            "Pos": [475, 45],
             "Type": 1,
             "respawnFlag": false,
             "respawnTimer": 300,
             "powerupTimer": 800
-        }  
+        },
+        {
+            "Pos": [5, 10],
+            "Type": 2,
+            "respawnFlag": false,
+            "respawnTimer": 600,
+            "powerupTimer": null
+        }
     ],
     
     
@@ -165,8 +172,8 @@
             "W": 30,
             "Rot": 0
         },
-        {   "Pos": [220, 24],
-            "W": 20,
+        {   "Pos": [225, 27],
+            "W": 25,
             "Rot": 0
         },
         {   "Pos": [240, 0],
@@ -181,7 +188,15 @@
             "W": 10,
             "Rot": 0
         },
-        {   "Pos": [325, 48],
+        {   "Pos": [305, 30],
+            "W": 10,
+            "Rot": 0
+        },
+        {   "Pos": [315, 20],
+            "W": 10,
+            "Rot": 0
+        },
+        {   "Pos": [315, 48],
             "W": 10,
             "Rot": 0
         },
@@ -208,6 +223,14 @@
         {   "Pos": [470, 36],
             "W": 20,
             "Rot": 0
+        },
+        {   "Pos": [485, 45],
+            "W": 30,
+            "Rot": 90
+        },
+        {   "Pos": [485, 15],
+            "W": 30,
+            "Rot": 90
         }
     ],
     
@@ -224,46 +247,37 @@
             "stubX": 25,
             "stubY": 3,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "You arrive at a dark cavern...",
+                "Enemies seem to swarm this place", 
+                "You see a new power bubble ahead",
+                "it screams 'SUPER SAIYANNNN!!!'"]
         },
         {
-            "stubX": 85,
-            "stubY": 39,
+            "stubX": 227,
+            "stubY": 30,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
-        },
-        {
-            "stubX": 225,
-            "stubY": 27,
-            "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "You sweat as you finally found a",
+                "safe place. You survey around you...", 
+                "There's something eerie about it...",
+                "Like a monster approaching..."]
         },
         {
             "stubX": 295,
             "stubY": 50,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "You see a BIG red tech infront",
+                "It seems to need passcode to activate", 
+                "Better explore ahead.",
+                "There's a life bubble down there."]
         },
         {
             "stubX": 475,
             "stubY": 39,
             "text": [
-                "Story Element Panel Demo",
-                "Space to jump. S to stomp. E to super.", 
-                "Take the health pack above.",
-                "Solve the code and warp down to win."]
+                "You reach the end.. Theres void ahead..",
+                "You noticed a small scribble...", 
+                "'0311' - p*ssc*d*",
+                "Then dive down on the pipe below..."]
         }
     ],
     
@@ -279,10 +293,6 @@
         {
             "Pos": [275,6],
             "Size": [10,12]
-        },
-        {
-            "Pos": [325,9],
-            "Size": [10,18]
         },
         {
             "Pos": [355,12],

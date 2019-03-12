@@ -92,6 +92,13 @@ StoryPanel.prototype.update = function(){
         this.mText3.getXform().setPosition(camX-21,this.mMidScreenY+11);
         this.mText4.getXform().setPosition(camX-21,this.mMidScreenY+8);
     }
+    
+    var c = this.mStub.getColor()[1];
+    var d = 0.01;
+    if(c < 1){
+        this.mStub.setColor([0.5,c+d,0.5,1]);
+    }else{ this.mStub.setColor([0.5,0,0.5,1]);}
+    
 };
 
 StoryPanel.prototype.draw = function(aCam){

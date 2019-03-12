@@ -68,7 +68,7 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kParticleTexture);
     gEngine.Textures.loadTexture(this.kCoin);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
-    //document.getElementById("particle").style.display="block"; //display the instruction below
+    document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
 Level1Scene.prototype.unloadScene = function () {
@@ -84,7 +84,7 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.Textures.unloadTexture(this.kCoin);
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
-    //document.getElementById("particle").style.display="none";
+    document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back"){
         gScore = 0;
         gEngine.Core.startScene(new MyGame());
@@ -134,8 +134,8 @@ Level1Scene.prototype.initialize = function () {
     
     this.mScore = new FontRenderable("Score");
     this.mScore.setColor([0, 0, 0, 1]);
-    this.mScore.getXform().setPosition(5, 63);
-    this.mScore.setTextHeight(2);
+    this.mScore.getXform().setPosition(5, 62);
+    this.mScore.setTextHeight(3);
     
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);

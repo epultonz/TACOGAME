@@ -45,7 +45,7 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     
     // sprite renderable 
     this.mCannon = new SpriteRenderable(spriteTexture);
-    this.mCannon.setColor([1, 1, 1, 0]);
+    this.mCannon.setColor([1, 1, 1, .1]);
     this.mCannon.getXform().setPosition(spawnX, spawnY);
     this.mCannon.getXform().setSize(this.kWidth, this.kHeight);
     if(facingLeft){
