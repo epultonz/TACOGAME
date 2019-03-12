@@ -171,20 +171,18 @@ GameScene.prototype.update = function () {
     
     // check if kelvin is on ground. If yes, can jump.
     var collInfo = new CollisionInfo();
-    var collided, collided1 = false;
-    for (var i = 0; i < this.mAllPlatform.size(); i++) {
-        //fixes jumping on side of pipe bugs
-        var platBox = this.mAllPlatform.getObjectAt(i).getBBox();
-        collided = this.mKelvin.getBBox().intersectsBound(platBox);
+    var collided = false;
+    var kelvinRbox = this.mKelvin.getRbox();
 
+    for (var i = 0; i < this.mAllPlatform.size(); i++) {
         var platBox1 = this.mAllPlatform.getObjectAt(i).getRigidBody();
-        collided1 = this.mKelvin.getRbox().collisionTest(platBox1,collInfo);
-        if (collided || collided1) {
+        collided = kelvinRbox.boundTest(platBox1,collInfo);
+        if (collided) {
             this.mKelvin.canJump(true);
             break;
         }
     }
-    msg += (collided || collided1) + " | ";
+    msg += (collided) + " | ";
 
     gEngine.Physics.processCollision(this.mAllObjs,[]);
     this.mAllObjs.update();
