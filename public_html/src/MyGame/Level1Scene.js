@@ -144,11 +144,8 @@ Level1Scene.prototype.initialize = function () {
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
 Level1Scene.prototype.draw = function () {
-    // Step A: clear the canvas
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
-    
-    this.drawMain();
-    this.drawMap();
+    GameScene.prototype.draw.call(this);
+
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw

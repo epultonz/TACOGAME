@@ -68,20 +68,30 @@ Camera.prototype.panWith = function (aXform, zone) {
 };
 
 Camera.prototype.panXWith = function (aXform, zone) {
-    var status = this.collideWCBound(aXform, zone);
-    //if (status !== BoundingBox.eboundCollideStatus.eInside) {
-        var pos = aXform.getPosition();
-        var newC = vec2.clone(this.getWCCenter());
-        if(pos[0] >= 50) {
-            if ((BoundingBox.eboundCollideStatus.eCollideRight) !== 0) {
-                newC[0] = pos[0] + (aXform.getWidth() / 2) - (zone * this.getWCWidth() / 2);
-            }
-            if ((BoundingBox.eboundCollideStatus.eCollideLeft) !== 0) {
-                newC[0] = pos[0] - (aXform.getWidth() / 2) + (zone * this.getWCWidth() / 2);
-            }
-            this.mCameraState.setCenter(newC);
-        }
-    //}
+    var posKelvin = aXform.getPosition();
+    var posCam = this.getWCCenter();
+
+    if(posKelvin[0] >= 50) {
+        posCam[0] = posKelvin[0];
+        this.panTo(posKelvin[0], posCam[1]);
+        //this.setWCCenter(xposKelvin[0], yPosCam);
+        
+    }
+    
+    //uncomment this to add panning in the y direction
+    //will start panning when kelvin reaches height of 50
+    /*
+    if(posKelvin[1]>50) {
+        this.panTo(posCam[0], posKelvin[1]);
+    }
+        
+    if(posKelvin[1]<=50) {
+        this.panTo(posCam[0], 36);
+    }
+    */
+        
+    
+    
 };
 
 /**

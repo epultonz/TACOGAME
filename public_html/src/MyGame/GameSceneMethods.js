@@ -129,8 +129,6 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
     var size = background.Size;
     
     this.mSceneBG = new LightRenderable(this.kBG);
-    this.mSceneBG.getXform().setSize(size[0],size[1]);
-    this.mSceneBG.getXform().setPosition(pos[0],pos[1]);
     this.mSceneBG.addLight(this.mKelvin.getSuperLight());
     this.mBG = new TiledGameObject(this.mSceneBG);
     
@@ -281,7 +279,8 @@ GameScene.prototype.drawMap = function() {
 
     //this.mSceneBG.draw(this.mMinimapCam);
     this.mBG.draw(this.mMinimapCam);
-    this.mAllObjs.draw(this.mMinimapCam);
+    this.mKelvin.draw(this.mMinimapCam);
+    this.mAllPlatform.draw(this.mMinimapCam);
     this.mAllNonPhysObj.draw(this.mMinimapCam);
 
     this.mMsg.draw(this.mMinimapCam);
