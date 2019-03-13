@@ -18,6 +18,7 @@ function Level2Scene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
     this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
+    this.kBG = "assets/Taco/cavern.png";
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
     this.kSprites2 = "assets/Taco/spritesheet2.png";
@@ -115,6 +116,7 @@ Level2Scene.prototype.initialize = function () {
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
 
+    gEngine.DefaultResources.setGlobalAmbientIntensity(2.5); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
