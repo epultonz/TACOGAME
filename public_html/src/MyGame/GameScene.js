@@ -171,7 +171,7 @@ GameScene.prototype.update = function () {
     var collInfo = new CollisionInfo();
     var collided = false;
     var kelvinRbox = this.mKelvin.getRbox();
-
+    
     for (var i = 0; i < this.mAllPlatform.size(); i++) {
         var platBox1 = this.mAllPlatform.getObjectAt(i).getRigidBody();
         collided = kelvinRbox.collisionTest(platBox1,collInfo);
@@ -180,12 +180,27 @@ GameScene.prototype.update = function () {
             break;
         }
     }
-    msg += (collided) + " | ";
-
+    
+    
     this.mKelvin.update();
     this.mAllNonPhysObj.update();
     this.mAllPlatform.update();
-    gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), this.mAllPlatform);
+    
+    var objNearKelvin = new GameObjectSet();
+    var i;
+    
+    //only do collision processing with objects near kelvin
+    //reduces the amount of collision processing from 40+ obj to <5
+    for (i =0; i<this.mAllPlatform.size(); i++) {
+        var obj = this.mAllPlatform.getObjectAt(i);
+        var xPosObj = obj.getXform().getPosition()[0];
+        var xPosKelvin = this.mKelvin.getXform().getPosition()[0];
+        if(Math.abs(xPosObj - xPosKelvin) < 30) {
+            objNearKelvin.addToSet(obj);
+        }
+    }
+
+    gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
     
 
     this.checkWinLose();
@@ -195,7 +210,8 @@ GameScene.prototype.update = function () {
     this.backButton.update();
 
     // nice for debugging
-    msg += " Health: " + this.mKelvin.getHP() + " |";
+    msg += " Health: " + this.mKelvin.getHP() + " |" + " CanJump " + (collided) + " | ";
+;
     //msg += " Q (damage), O (Win), L (Lose)";
     msg += "x " + this.mLastPos[0].toPrecision(4) + " " + this.mLastPos[1].toPrecision(4);
     this.mMsg.setText(msg);
