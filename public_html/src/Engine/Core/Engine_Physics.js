@@ -238,6 +238,33 @@ gEngine.Physics = (function () {
         }
     };
     
+    var processObjSet = function(objI, set, mCollisionInfo) {
+        var iToj = [0, 0];
+        var info = new CollisionInfo();
+        var r=0;
+        var j=0;
+        //while (r < mRelaxationCount) {
+          //  r++;
+            for (j = 0; j<set.size(); j++) {
+                var objJ = set.getObjectAt(j).getRigidBody();
+                if ( (objI.getInvMass() !== 0) || (objJ.getInvMass() !== 0) ) {
+                    if (objI.boundTest(objJ)) {
+                        if (objI.collisionTest(objJ, info)) {
+                            // make sure info is always from i towards j
+                            vec2.subtract(iToj, objJ.getCenter(), objI.getCenter());
+                            if (vec2.dot(iToj, info.getNormal()) < 0)
+                                info.changeDir();
+                            // infoSet.push(info);
+                            positionalCorrection(objI, objJ, info);
+                            resolveCollision(objI, objJ, info);
+                            // info = new CollisionInfo();
+                        }
+                    }
+                }
+            }
+        //}
+    };
+    
     
     var mPublic = {
         getSystemAcceleration: getSystemtAcceleration,
@@ -247,7 +274,8 @@ gEngine.Physics = (function () {
         incRelaxationCount: incRelaxationCount,
         getRelaxationCount: getRelaxationCount,
         getHasMotion: getHasMotion,
-        toggleHasMotion: toggleHasMotion
+        toggleHasMotion: toggleHasMotion,
+        processObjSet: processObjSet
     };
     return mPublic;
 }());
