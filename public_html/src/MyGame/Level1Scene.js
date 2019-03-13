@@ -106,7 +106,6 @@ Level1Scene.prototype.initialize = function () {
     
     // kelvin with set animation
     this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
-    this.mAllObjs.addToSet(this.mKelvin);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 

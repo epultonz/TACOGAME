@@ -106,11 +106,9 @@ GameScene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
-    this.mAllPlatform = new GameObjectSet(); //store all platform
-    
-    // kelvin with set animation
-    this.mAllObjs.addToSet(this.mKelvin);
-    
+    this.mAllPlatform = new GameObjectSet(); //store all platform    
+    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
+
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 
     
@@ -176,7 +174,7 @@ GameScene.prototype.update = function () {
 
     for (var i = 0; i < this.mAllPlatform.size(); i++) {
         var platBox1 = this.mAllPlatform.getObjectAt(i).getRigidBody();
-        collided = kelvinRbox.boundTest(platBox1,collInfo);
+        collided = kelvinRbox.collisionTest(platBox1,collInfo);
         if (collided) {
             this.mKelvin.canJump(true);
             break;
@@ -184,9 +182,11 @@ GameScene.prototype.update = function () {
     }
     msg += (collided) + " | ";
 
-    gEngine.Physics.processCollision(this.mAllObjs,[]);
-    this.mAllObjs.update();
+    this.mKelvin.update();
     this.mAllNonPhysObj.update();
+    this.mAllPlatform.update();
+    gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), this.mAllPlatform);
+    
 
     this.checkWinLose();
     this.checkFall();

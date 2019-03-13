@@ -41,8 +41,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         for (i = 0; i < patrols.length; i++) {
             pos = patrols[i].Pos;
             patrol = new Patrol(this.kSprites, pos[0], pos[1], this.mKelvin);
-            this.mAllObjs.addToSet(patrol);
-            //this.mAllPlatform.addToSet(patrol);
+            //this.mAllObjs.addToSet(patrol);
+            this.mAllPlatform.addToSet(patrol);
 
         }
     }
@@ -56,7 +56,6 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             facing = cannons[i].Facing;
             // init cannon
             cannon = new Cannon(this.kSprites2, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
-            this.mAllObjs.addToSet(cannon);
             this.mAllPlatform.addToSet(cannon);
         }
     }
@@ -68,7 +67,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         for (i = 0; i < fliers.length; i++) {
             pos = fliers[i].Pos;    
             flier = new Flier(this.kSprites2,this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
-            this.mAllObjs.addToSet(flier);  
+            this.mAllPlatform.addToSet(flier);  
         }
     }
     
@@ -87,7 +86,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             // init smashers
             smasher = new Smasher(this.kSprites2, pos[0], pos[1], this.mKelvin, 
                 tBound, bBound, uVelocity, dVelocity);
-            this.mAllObjs.addToSet(smasher);
+            //this.mAllObjs.addToSet(smasher);
             this.mAllPlatform.addToSet(smasher);
         }
     }
@@ -201,7 +200,7 @@ GameScene.prototype.platformAt = function (x, y, w, rot) {
     xf.setPosition(x, y);
     xf.setRotationInDegree(rot);
 
-    this.mAllObjs.addToSet(g);
+    //this.mAllObjs.addToSet(g);
     this.mAllPlatform.addToSet(g);
 };
 // back button UI
@@ -227,7 +226,7 @@ GameScene.prototype.createPipe = function(posX,posY,sX,sY){
 
     r.setMass(0);
 
-    this.mAllObjs.addToSet(o);
+    //this.mAllObjs.addToSet(o);
     this.mAllPlatform.addToSet(o);
 
     return o;
@@ -261,7 +260,9 @@ GameScene.prototype.drawMain = function() {
     this.mCamera.setupViewProjection();
     
     this.mBG.draw(this.mCamera);
-    this.mAllObjs.draw(this.mCamera);
+    //this.mAllObjs.draw(this.mCamera);
+    this.mKelvin.draw(this.mCamera);
+    this.mAllPlatform.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
 
     this.MainMenuButton.draw(this.mCamera);
