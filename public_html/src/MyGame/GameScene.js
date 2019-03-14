@@ -201,8 +201,6 @@ GameScene.prototype.update = function () {
         // check if kelvin is on ground. If yes, can jump.
         this.mAllNonPhysObj.update();
         this.mAllPlatform.update();
-        gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
-
 
         this.checkWinLose();
         this.checkFall();
