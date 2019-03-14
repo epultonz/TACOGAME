@@ -154,5 +154,6 @@ GameObject.prototype.draw = function (aCamera) {
 };
 
 GameObject.prototype.drawMini = function (aCamera){
-    
+    // Intentionally does nothing. Useful for not crashing when doing drawMini
+    // on a set of objs that might not all be custom-coded to HAVE a drawMini.
 };

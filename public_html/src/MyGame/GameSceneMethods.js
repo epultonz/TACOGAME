@@ -145,7 +145,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             spawnX = storyPanels[i].stubX;
             spawnY = storyPanels[i].stubY;
 
-            panel = new StoryPanel(this.kWBPanel,spawnX, spawnY, 70, 
+            panel = new StoryPanel(this.kWBPanel,spawnX, spawnY, 80, 
                 this.mCamera, this.mKelvin, txt);
             this.mAllStoryPanels.addToSet(panel);
         }
@@ -299,6 +299,7 @@ GameScene.prototype.drawMap = function() {
     //this.mBG.draw(this.mMinimapCam);
     this.mKelvin.drawMini(this.mMinimapCam);
     this.mAllPlatform.drawMini(this.mMinimapCam);
+    this.mAllStoryPanels.drawMini(this.mMinimapCam);
     this.mAllNonPhysObj.drawMini(this.mMinimapCam);
     var i;
     for (i = 0; i < this.mAllTerrainSimple.length; i++) {

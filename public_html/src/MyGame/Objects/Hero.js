@@ -11,7 +11,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Hero(spriteTexture, atX, atY, lgtSet) {
+function Hero(spriteTexture, atX, atY, camRef = null, lgtSet) {
     this.kDelta = 0.25;
     this.kWidth = 6;
     this.kHeight = 6;
@@ -29,6 +29,7 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     
     this.mIsMoving = false;
     this.mCanJump = false;
+    this.mCamRef = camRef;
 
     this.mKelvin.setSpriteSequence(512,0,128,256,8,0);
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
@@ -155,6 +156,16 @@ Hero.prototype.update = function () {
     } else {
         v[0] = 0;
         
+    }
+    
+    //Testing Purposes Only
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Q)) {
+    if (gEngine.Input.isButtonClicked(gEngine.Input.mouseButton.Left))
+    {
+        var mouseX = this.mCamRef.mouseWCX();
+        var mouseY = this.mCamRef.mouseWCY();
+        xform.setPosition(mouseX, mouseY);
+    }
     }
     
     if (this.mCanJump === true) {

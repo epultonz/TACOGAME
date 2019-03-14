@@ -245,7 +245,7 @@
     "StoryPanel": [
         {
             "stubX": 25,
-            "stubY": 3,
+            "stubY": 3.9,
             "text": [
                 "You arrive at a dark cavern...",
                 "Enemies seem to swarm this place", 
@@ -254,7 +254,7 @@
         },
         {
             "stubX": 227,
-            "stubY": 30,
+            "stubY": 30.6,
             "text": [
                 "You sweat as you finally found a",
                 "safe place. You survey around you...", 
@@ -263,7 +263,7 @@
         },
         {
             "stubX": 295,
-            "stubY": 50,
+            "stubY": 50.6,
             "text": [
                 "You see a BIG red tech infront",
                 "It seems to need passcode to activate", 
@@ -272,7 +272,7 @@
         },
         {
             "stubX": 475,
-            "stubY": 39,
+            "stubY": 39.3,
             "text": [
                 "You reach the end.. Theres void ahead..",
                 "You noticed a small scribble...", 

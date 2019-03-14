@@ -19,7 +19,7 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     
     // the board as background of txt
     this.mPanel = new TextureRenderable(texture);
-    this.mPanel.getXform().setSize(width, width);
+    this.mPanel.getXform().setSize(width, width/2);
     
     this.mText1 = new FontRenderable(" ");
     this.mText2 = new FontRenderable(" ");
@@ -31,36 +31,37 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     if(lineAry.length >= 4)
     {
         this.mText4.setText(lineAry[3]);
-        this.mText4.setTextHeight(2);
+        this.mText4.setTextHeight(2.2);
     }
     
     if(lineAry.length >= 3)
     {
         this.mText3.setText(lineAry[2]);
-        this.mText3.setTextHeight(2);
+        this.mText3.setTextHeight(2.2);
     }
     
     if(lineAry.length >= 2)
     {
         this.mText2.setText(lineAry[1]);
-        this.mText2.setTextHeight(2);
+        this.mText2.setTextHeight(2.2);
     }
     
     if(lineAry.length >= 1)
     {
         this.mText1.setText(lineAry[0]);
-        this.mText1.setTextHeight(2);
+        this.mText1.setTextHeight(2.2);
     }
     
     //stub in game
-    this.mStub = new Renderable();
-    this.mStub.setColor([0.5,0,0.5,1]);
+    this.mStub = new TextureRenderable(texture);
+    this.mStub.getXform().setSize(5.5, 4);
+    this.mStub.setColor([1,1,1,0]);
     this.mStub.getXform().setPosition(spawnX, spawnY);
-    this.mStub.getXform().setSize(2,2);
+    //this.mStub.getXform().setSize(2,2);
     
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.3, .9, .9, 1]);
-    this.mMinimapObj.getXform().setPosition(spawnX, spawnY + 5);
+    this.mMinimapObj.getXform().setPosition(spawnX, spawnY+1);
     this.mMinimapObj.getXform().setSize(3, 3);
     
     GameObject.call(this,this.mPanel);
@@ -88,20 +89,32 @@ StoryPanel.prototype.update = function(){
     }
 
     if(this.mActive){
-        this.mPanel.getXform().setPosition(camX, this.mMidScreenY);
+        this.mPanel.getXform().setPosition(camX, this.mMidScreenY+6.25);
    
         //the text
-        this.mText1.getXform().setPosition(camX-21,this.mMidScreenY+17);   
-        this.mText2.getXform().setPosition(camX-21,this.mMidScreenY+14);  
-        this.mText3.getXform().setPosition(camX-21,this.mMidScreenY+11);
-        this.mText4.getXform().setPosition(camX-21,this.mMidScreenY+8);
+        this.mText1.getXform().setPosition(camX-23,this.mMidScreenY+17);   
+        this.mText2.getXform().setPosition(camX-23,this.mMidScreenY+14);  
+        this.mText3.getXform().setPosition(camX-23,this.mMidScreenY+11);
+        this.mText4.getXform().setPosition(camX-23,this.mMidScreenY+8);
     }
     
+    /*
+    // Color Flashing
     var c = this.mStub.getColor()[1];
     var d = 0.01;
     if(c < 1){
         this.mStub.setColor([0.5,c+d,0.5,1]);
     }else{ this.mStub.setColor([0.5,0,0.5,1]);}
+    */
+    /*
+    // Alpha Flashing (for Textured version)
+    // Makes it brighter (lets more white show)
+    var a = this.mStub.getColor()[3];
+    var d = 0.005;
+    if(a < .3){
+        this.mStub.setColor([1,1,1,a+d]);
+    }else{ this.mStub.setColor([1,1,1,0]);}
+    */
     
     return true;
 };

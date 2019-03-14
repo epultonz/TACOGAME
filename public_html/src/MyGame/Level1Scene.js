@@ -109,14 +109,16 @@ Level1Scene.prototype.initialize = function () {
     this.mAllStoryPanels  = new GameObjectSet();  
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
-    // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 
     
     var cams = sceneInfo.Camera;   
     this.mCamera = this.parseCamera(cams[0]); 
+    
+    // kelvin with set animation
+    this.mKelvin = new Hero(this.kKelvin, 10, 10, this.mCamera, null);
+    
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
 

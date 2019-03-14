@@ -83,10 +83,6 @@
     
     
     "Platform": [
-        {   "Pos": [-5, 15],
-            "W": 30,
-            "Rot": 90
-        },
         {   "Pos": [5, 40],
             "W": 10,
             "Rot": 0
@@ -208,7 +204,7 @@
     "StoryPanel": [
         {
             "stubX": 45,
-            "stubY": 33,
+            "stubY": 33.3,
             "text": [
                 "You woke up...feeling lost..",
                 "Use A and D to move. Space to jump.",
@@ -217,16 +213,16 @@
         },
         {
             "stubX": 95,
-            "stubY": 3,
+            "stubY": 3.9,
             "text": [
-                "There seems to be some memory contained",
-                " in these coins...", 
+                "There seems to be some memory",
+                "contained in these coins...", 
                 "You saw a familiar enemy patrol ahead.",
                 "Jump and stomp them using S."]
         },
         {
             "stubX": 175,
-            "stubY": 35,
+            "stubY": 32.7,
             "text": [
                 "Ouch! these red balls hurts.",
                 "Try to avoid them!",
@@ -235,7 +231,7 @@
         },
         {
             "stubX": 304,
-            "stubY": 45,
+            "stubY": 43.9,
             "text": [
                 "'Grab the bubble!' The particle says..",
                 "Now you can deflect projectiles ", 
@@ -244,10 +240,10 @@
         },
         {
             "stubX": 410,
-            "stubY": 3,
+            "stubY": 3.9,
             "text": [
-                "'This one restore health huh?' You watch",
-                "your health rise a bit.", 
+                "'This one restore health huh?' You",
+                "watch your health rise a bit.", 
                 "You see the last green pipe ahead...",
                 "Press S above it to go to next level"]
         }

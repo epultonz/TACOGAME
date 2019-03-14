@@ -109,14 +109,16 @@ Level2Scene.prototype.initialize = function () {
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
     this.mAllMinimapPlatform = new GameObjectSet();  
-    // kelvin with set animation
-    this.mKelvin = new Hero(this.kKelvin, 15, 15, null);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 
     
     var cams = sceneInfo.Camera;   
-    this.mCamera = this.parseCamera(cams[0]); 
+    this.mCamera = this.parseCamera(cams[0]);
+    
+    // kelvin with set animation
+    this.mKelvin = new Hero(this.kKelvin, 15, 15, this.mCamera, null);
+    
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
 
@@ -193,5 +195,10 @@ Level2Scene.prototype.checkWinLose = function(){
 Level2Scene.prototype.drawMain = function() {
     GameScene.prototype.drawMain.call(this);
     this.mCodeBox.draw(this.mCamera);
+};
+
+Level2Scene.prototype.drawMini = function() {
+    GameScene.prototype.drawMini.call(this);
+    this.mCodeBox.drawMini(this.mMinimapCam);
 };
 
