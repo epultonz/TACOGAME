@@ -167,11 +167,14 @@ GameScene.prototype.draw = function () {
 GameScene.prototype.update = function () {
     //get only objects near kelvin
     var objNearKelvin = this._getObjectsNearKelvin();
+    
     //check if a story panel is being touched
     var i;
     var pause = false;
     for (i=0; i < this.mAllStoryPanels.size(); i++) {
-        if(this.mAllStoryPanels.getObjectAt(i).update()) {
+        var currPanel = this.mAllStoryPanels.getObjectAt(i);
+        currPanel.update();
+        if(currPanel.isActive()) {
             pause = true;
             break;
         }
@@ -189,7 +192,19 @@ GameScene.prototype.update = function () {
                 break;
             }
     }
+    // Update the hero so Kelvin can move during pause
     this.mKelvin.update();
+    
+    // Update buttons and camera, as they should still work during pause    
+    this.MainMenuButton.update();
+    this.backButton.update();
+    
+    this.mCamera.panXWith(this.mKelvin.getXform(), 0);
+    this.mCamera.update();
+
+    this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
+    this.mMinimapCam.update();
+    
     //if the game is not paused
     if(!pause) {
         var msg = "";
@@ -205,9 +220,6 @@ GameScene.prototype.update = function () {
         this.checkWinLose();
         this.checkFall();
 
-        this.MainMenuButton.update();
-        this.backButton.update();
-
         // nice for debugging
         msg += " Health: " + this.mKelvin.getHP() + " |" + " CanJump " + (collided) + " | ";
     ;
@@ -217,12 +229,6 @@ GameScene.prototype.update = function () {
 
         sc += "Score :" + gScore;
         this.mScore.setText(sc);
-
-        this.mCamera.panXWith(this.mKelvin.getXform(), 0);
-        this.mCamera.update();
-
-        this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
-        this.mMinimapCam.update();
     }
 
     gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
