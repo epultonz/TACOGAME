@@ -152,3 +152,7 @@ GameObject.prototype.draw = function (aCamera) {
             this.mRigidBody.draw(aCamera);
     }
 };
+
+GameObject.prototype.drawMini = function (aCamera){
+    
+};

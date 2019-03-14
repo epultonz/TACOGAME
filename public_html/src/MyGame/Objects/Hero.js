@@ -39,9 +39,9 @@ function Hero(spriteTexture, atX, atY, lgtSet) {
     //this.mKelvin.addLight(lgtSet.getLightAt(2);
     
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([.2, 1, .2, 0]);
+    this.mMinimapObj.setColor([.2, 1, .2, 1]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
-    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
+    this.mMinimapObj.getXform().setSize(this.kWidth*1.15, this.kHeight*1.15);
 
     GameObject.call(this, this.mKelvin);
 

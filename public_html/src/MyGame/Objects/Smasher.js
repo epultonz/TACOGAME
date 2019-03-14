@@ -47,7 +47,7 @@ function Smasher(spriteTexture, spawnX, spawnY, heroRef, topBound = (spawnY + 7.
     this.mSmasher.setElementPixelPositions(0,64,64,128);
     
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.setColor([1, .2, .2, 1]);
     this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     GameObject.call(this, this.mSmasher);
@@ -77,6 +77,9 @@ Smasher.prototype.update = function () {
     this.getRigidBody().setVelocity(0,this.mVelocity);
     GameObject.prototype.update.call(this);    
     
+    // Update the minimap obj's position to match the current one
+    var smasherPos = this.getXform().getPosition();
+    this.mMinimapObj.getXform().setPosition(smasherPos[0], smasherPos[1]);
 };
 
 Smasher.prototype._smashHero = function() {

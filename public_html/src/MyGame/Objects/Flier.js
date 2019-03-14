@@ -71,7 +71,7 @@ function Flier(projTexture,spriteTexture, spawnX, spawnY, heroRef, setRef, shoot
     this.mTargetPos = [spawnX, spawnY];
     
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.setColor([1, .2, .2, 1]);
     this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     
@@ -122,8 +122,11 @@ Flier.prototype.update = function () {
         this.mInterpolatePos.setFinalValue(targetVect);
     }
     
-    // Finally, update the interpolation
+    // Finally, update the interpolation + minimap obj
     this.mInterpolatePos.updateInterpolation();
+    // Technically newPos is the same as currPos, but for code clarity we make another var
+    var newPos = this.getXform().getPosition();
+    this.mMinimapObj.getXform().setPosition(newPos[0], newPos[1]);
     
     /*
     //bobbing up/down 

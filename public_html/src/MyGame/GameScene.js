@@ -35,6 +35,7 @@ function GameScene() {
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
     this.mAllPlatform = null;
+    this.mAllMinimapPlatform = null;
     this.mPipe = null;
     this.LevelSelect = null;
     
@@ -105,8 +106,10 @@ GameScene.prototype.unloadScene = function () {
 GameScene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
-    this.mAllObjs = new GameObjectSet();    // store all physics object
-    this.mAllPlatform = new GameObjectSet(); //store all platform    
+    this.mAllObjs = new GameObjectSet();    // store all physics objects
+    this.mAllPlatform = new GameObjectSet(); //store all platform
+    this.mAllTerrainSimple = []; // Used to store simple renderables that represent terrain (not enemies)
+    this.mAllMinimapPlatform = new GameObjectSet(); // store minimap versions of all platforms
     this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
 
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);

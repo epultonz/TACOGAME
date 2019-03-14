@@ -26,6 +26,11 @@ function CodeMechanism(stubX,stubY,code,hero,aCam1){
     this.mStub.getXform().setPosition(stubX,stubY);
     this.mStub.getXform().setSize(4,4);
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.3, .9, .9, 1]);
+    this.mMinimapObj.getXform().setPosition(stubX, stubY);
+    this.mMinimapObj.getXform().setSize(6, 6);
+    
     this.mActive = false;
     this.mSolved = false;
     this.mCode = code;
@@ -65,6 +70,11 @@ CodeMechanism.prototype.draw = function(aCam){
         this.mText.draw(aCam);
         this.mUICodeBox.draw(aCam);
     };
+};
+
+CodeMechanism.prototype.drawMini = function(aCam)
+{
+    this.mMinimapObj.draw(aCam);
 };
 
 CodeMechanism.prototype.UICodeText = function(){

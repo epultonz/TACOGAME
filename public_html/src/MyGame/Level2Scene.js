@@ -35,6 +35,7 @@ function Level2Scene() {
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
     this.mAllPlatform = null;
+    this.mAllTerrainSimple = [];
     this.mPipe = null;
     this.LevelSelect = null;
     

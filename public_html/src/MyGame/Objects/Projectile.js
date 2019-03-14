@@ -55,10 +55,10 @@ function Projectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta =
     
     // Simplified minimap renderable
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([.8, .8, .2, 0]);
+    this.mMinimapObj.setColor([1, .6, 1, 1]);
     this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
-    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
-    this.mMinimapObj.getXform().incRotationByDegree(90);
+    this.mMinimapObj.getXform().setSize(this.mWidth, this.mHeight);
+    //this.mMinimapObj.getXform().incRotationByDegree(90);
     
     GameObject.call(this, this.mProjectile); // call GameObj constructor to finish construction
 }

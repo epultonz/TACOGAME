@@ -58,6 +58,10 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     this.mStub.getXform().setPosition(spawnX, spawnY);
     this.mStub.getXform().setSize(2,2);
     
+    this.mMinimapObj = new Renderable();
+    this.mMinimapObj.setColor([.3, .9, .9, 1]);
+    this.mMinimapObj.getXform().setPosition(spawnX, spawnY + 5);
+    this.mMinimapObj.getXform().setSize(3, 3);
     
     GameObject.call(this,this.mPanel);
     
@@ -110,4 +114,9 @@ StoryPanel.prototype.draw = function(aCam){
         this.mText3.draw(aCam);
         this.mText4.draw(aCam);
     };
+};
+
+StoryPanel.prototype.drawMini = function(aCam)
+{
+    this.mMinimapObj.draw(aCam);
 };

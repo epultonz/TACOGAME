@@ -58,7 +58,7 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     
     // simplified minimap renderable
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([1, .2, .2, 0]);
+    this.mMinimapObj.setColor([1, .2, .2, 1]);
     this.mMinimapObj.getXform().setPosition(spawnX, spawnY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     

@@ -19,6 +19,7 @@
  * @param {float} spawnX The X coord to start the object at
  * @param {float} spawnY The Y coord to start the object at
  * @param {Hero} heroRef A reference to the Hero obj
+ * @param {Obj} spawningRef A reference to the enemy that shot this projectile (a flier)
  * @param {float} delta The speed at which the obj moves- should ALWAYS be positive
  *      since that'll determine its chase speed
  * @param {int} timer How many update ticks the projectile should last for.
@@ -69,7 +70,10 @@ function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, d
 gEngine.Core.inheritPrototype(HomingProjectile, Projectile);
 
 HomingProjectile.prototype.update = function () {
+    //var returnBool =
     return Projectile.prototype.update.call(this);
+    //this.mMinimapObj.rotateObjPointTo(this.mSpawningRef.getXform().getPosition(), 1);
+    //return returnBool;
 };
 
 HomingProjectile.prototype.deflected = function() {

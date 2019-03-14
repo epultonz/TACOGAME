@@ -31,7 +31,7 @@ function Coin(spriteTexture, atX, atY, heroRef) {
     GameObject.call(this, this.mCoin);
     
     this.mMinimapObj = new Renderable();
-    this.mMinimapObj.setColor([.2, .8, .8, 0]);
+    this.mMinimapObj.setColor([.9, .9, .3, 1]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     

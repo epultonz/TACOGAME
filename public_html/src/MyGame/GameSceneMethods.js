@@ -57,6 +57,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             // init cannon
             cannon = new Cannon(this.kSprites2, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
             this.mAllPlatform.addToSet(cannon);
+            //this.mAllObjs.addToSet(cannon);
         }
     }
 
@@ -67,7 +68,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         for (i = 0; i < fliers.length; i++) {
             pos = fliers[i].Pos;    
             flier = new Flier(this.kSprites2,this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
-            this.mAllPlatform.addToSet(flier);  
+            this.mAllPlatform.addToSet(flier);
+            //this.mAllObjs.addToSet(flier);
         }
     }
     
@@ -199,9 +201,16 @@ GameScene.prototype.platformAt = function (x, y, w, rot) {
     xf.setSize(w, h);
     xf.setPosition(x, y);
     xf.setRotationInDegree(rot);
+    
+    var simplePlat = new Renderable();
+    var simpleXf = simplePlat.getXform();
+    simpleXf.setSize(w, h);
+    simpleXf.setPosition(x, y);
+    simpleXf.setRotationInDegree(rot);
 
     //this.mAllObjs.addToSet(g);
     this.mAllPlatform.addToSet(g);
+    this.mAllTerrainSimple.push(simplePlat);
 };
 // back button UI
 GameScene.prototype.backSelect = function(){
@@ -219,6 +228,11 @@ GameScene.prototype.createPipe = function(posX,posY,sX,sY){
     var xf = g.getXform();
     xf.setSize(sX,sY);
     xf.setPosition(posX,posY);
+    
+    var simplePipe = new Renderable();
+    var simpleXf = simplePipe.getXform();
+    simpleXf.setSize(sX,sY);
+    simpleXf.setPosition(posX,posY);
 
     var o = new GameObject(g);
     var r = new RigidRectangle(xf,sX,sY);
@@ -228,6 +242,7 @@ GameScene.prototype.createPipe = function(posX,posY,sX,sY){
 
     //this.mAllObjs.addToSet(o);
     this.mAllPlatform.addToSet(o);
+    this.mAllTerrainSimple.push(simplePipe);
 
     return o;
 };
@@ -280,13 +295,14 @@ GameScene.prototype.drawMap = function() {
     this.mMinimapCam.setupViewProjection();
 
     //this.mSceneBG.draw(this.mMinimapCam);
-    this.mBG.draw(this.mMinimapCam);
-    this.mKelvin.draw(this.mMinimapCam);
-    this.mAllPlatform.draw(this.mMinimapCam);
-    this.mAllNonPhysObj.draw(this.mMinimapCam);
-
-    this.mMsg.draw(this.mMinimapCam);
-    
+    //this.mBG.draw(this.mMinimapCam);
+    this.mKelvin.drawMini(this.mMinimapCam);
+    this.mAllPlatform.drawMini(this.mMinimapCam);
+    this.mAllNonPhysObj.drawMini(this.mMinimapCam);
+    var i;
+    for (i = 0; i < this.mAllTerrainSimple.length; i++) {
+        this.mAllTerrainSimple[i].draw(this.mMinimapCam);
+    }
 };
 
 GameScene.prototype.createParticle = function(atX, atY) {
