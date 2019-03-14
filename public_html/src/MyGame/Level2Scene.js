@@ -149,8 +149,6 @@ Level2Scene.prototype.initialize = function () {
 Level2Scene.prototype.draw = function () {
     // Step A: clear the canvas
     GameScene.prototype.draw.call(this);
-    this.mCodeBox.draw(this.mCamera);
-    
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
@@ -183,3 +181,9 @@ Level2Scene.prototype.checkWinLose = function(){
         gEngine.GameLoop.stop();
     }
 };
+
+Level2Scene.prototype.drawMain = function() {
+    GameScene.prototype.drawMain.call(this);
+    this.mCodeBox.draw(this.mCamera);
+};
+
