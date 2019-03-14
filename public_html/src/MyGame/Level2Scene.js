@@ -35,6 +35,7 @@ function Level2Scene() {
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
     this.mAllPlatform = null;
+    this.mAllStoryPanels  = null;
     this.mAllTerrainSimple = [];
     this.mPipe = null;
     this.LevelSelect = null;
@@ -102,12 +103,12 @@ Level2Scene.prototype.unloadScene = function () {
 Level2Scene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
-    this.mAllObjs = new GameObjectSet();    // store all physics object
+    this.mAllStoryPanels = new GameObjectSet();    // store all physics object
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
+    this.mAllMinimapPlatform = new GameObjectSet();  
     // kelvin with set animation
     this.mKelvin = new Hero(this.kKelvin, 15, 15, null);
-    this.mAllObjs.addToSet(this.mKelvin);
     
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
     var sceneInfo = JSON.parse(jsonString); 

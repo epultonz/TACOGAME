@@ -34,6 +34,7 @@ function GameScene() {
 
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
+    this.mAllStoryPanels = null;
     this.mAllPlatform = null;
     this.mAllMinimapPlatform = null;
     this.mPipe = null;
@@ -106,7 +107,7 @@ GameScene.prototype.unloadScene = function () {
 GameScene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
-    this.mAllObjs = new GameObjectSet();    // store all physics objects
+    this.mAllStoryPanels  = new GameObjectSet();    // store all physics objects
     this.mAllPlatform = new GameObjectSet(); //store all platform
     this.mAllTerrainSimple = []; // Used to store simple renderables that represent terrain (not enemies)
     this.mAllMinimapPlatform = new GameObjectSet(); // store minimap versions of all platforms
@@ -164,34 +165,77 @@ GameScene.prototype.draw = function () {
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 GameScene.prototype.update = function () {
-    var msg = "";
-    var sc = "";
-    
-    this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
-    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
-    
-    // check if kelvin is on ground. If yes, can jump.
-    var collInfo = new CollisionInfo();
-    var collided = false;
-    var kelvinRbox = this.mKelvin.getRbox();
-    
-    for (var i = 0; i < this.mAllPlatform.size(); i++) {
-        var platBox1 = this.mAllPlatform.getObjectAt(i).getRigidBody();
-        collided = kelvinRbox.collisionTest(platBox1,collInfo);
-        if (collided) {
-            this.mKelvin.canJump(true);
+    //get only objects near kelvin
+    var objNearKelvin = this._getObjectsNearKelvin();
+    //check if a story panel is being touched
+    var i;
+    var pause = false;
+    for (i=0; i < this.mAllStoryPanels.size(); i++) {
+        if(this.mAllStoryPanels.getObjectAt(i).update()) {
+            pause = true;
             break;
         }
     }
-    
-    
+    //check if kelvin can jump
+    var collInfo = new CollisionInfo();
+        var collided = false;
+        var kelvinRbox = this.mKelvin.getRbox();
+
+        for (var i = 0; i < objNearKelvin.size(); i++) {
+            var platBox1 = objNearKelvin.getObjectAt(i).getRigidBody();
+            collided = kelvinRbox.collisionTest(platBox1,collInfo);
+            if (collided) {
+                this.mKelvin.canJump(true);
+                break;
+            }
+    }
     this.mKelvin.update();
-    this.mAllNonPhysObj.update();
-    this.mAllPlatform.update();
-    
-    var objNearKelvin = new GameObjectSet();
+    //if the game is not paused
+    if(!pause) {
+        var msg = "";
+        var sc = "";
+
+        this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
+        this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
+
+        // check if kelvin is on ground. If yes, can jump.
+        this.mAllNonPhysObj.update();
+        this.mAllPlatform.update();
+        gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
+
+
+        this.checkWinLose();
+        this.checkFall();
+
+        this.MainMenuButton.update();
+        this.backButton.update();
+
+        // nice for debugging
+        msg += " Health: " + this.mKelvin.getHP() + " |" + " CanJump " + (collided) + " | ";
+    ;
+        //msg += " Q (damage), O (Win), L (Lose)";
+        msg += "x " + this.mLastPos[0].toPrecision(4) + " " + this.mLastPos[1].toPrecision(4);
+        this.mMsg.setText(msg);
+
+        sc += "Score :" + gScore;
+        this.mScore.setText(sc);
+
+        this.mCamera.panXWith(this.mKelvin.getXform(), 0);
+        this.mCamera.update();
+
+        this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
+        this.mMinimapCam.update();
+    }
+
+    gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
+
+
+};
+
+GameScene.prototype._getObjectsNearKelvin = function() {
     var i;
-    
+    var objNearKelvin = new GameObjectSet();
+
     //only do collision processing with objects near kelvin
     //reduces the amount of collision processing from 40+ obj to <5
     for (i =0; i<this.mAllPlatform.size(); i++) {
@@ -202,30 +246,5 @@ GameScene.prototype.update = function () {
             objNearKelvin.addToSet(obj);
         }
     }
-
-    gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
-    
-
-    this.checkWinLose();
-    this.checkFall();
-    
-    this.MainMenuButton.update();
-    this.backButton.update();
-
-    // nice for debugging
-    msg += " Health: " + this.mKelvin.getHP() + " |" + " CanJump " + (collided) + " | ";
-;
-    //msg += " Q (damage), O (Win), L (Lose)";
-    msg += "x " + this.mLastPos[0].toPrecision(4) + " " + this.mLastPos[1].toPrecision(4);
-    this.mMsg.setText(msg);
-    
-    sc += "Score :" + gScore;
-    this.mScore.setText(sc);
-    
-    this.mCamera.panXWith(this.mKelvin.getXform(), 0);
-    this.mCamera.update();
-    
-    this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
-    this.mMinimapCam.update();
-
-};
+    return objNearKelvin;
+}

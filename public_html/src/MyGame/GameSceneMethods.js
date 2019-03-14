@@ -147,7 +147,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
 
             panel = new StoryPanel(this.kWBPanel,spawnX, spawnY, 70, 
                 this.mCamera, this.mKelvin, txt);
-            this.mAllNonPhysObj.addToSet(panel);
+            this.mAllStoryPanels.addToSet(panel);
         }
     }
 
@@ -279,6 +279,7 @@ GameScene.prototype.drawMain = function() {
     this.mKelvin.draw(this.mCamera);
     this.mAllPlatform.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
+    this.mAllStoryPanels.draw(this.mCamera);
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);

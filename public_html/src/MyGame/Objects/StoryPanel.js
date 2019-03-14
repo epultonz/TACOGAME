@@ -102,6 +102,9 @@ StoryPanel.prototype.update = function(){
     if(c < 1){
         this.mStub.setColor([0.5,c+d,0.5,1]);
     }else{ this.mStub.setColor([0.5,0,0.5,1]);}
+    return this.mActive;
+    
+    
     
 };
 

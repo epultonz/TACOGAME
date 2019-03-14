@@ -35,6 +35,7 @@ function Level1Scene() {
     this.mAllObjs = null;
     this.mAllNonPhysObj = null;
     this.mAllPlatform = null;
+    this.mAllStoryPanels = null;
     this.mAllTerrainSimple = [];
     this.mPipe = null;
     this.LevelSelect = null;
@@ -103,6 +104,7 @@ Level1Scene.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mAllNonPhysObj = new GameObjectSet(); // contains all non-physics objects (bullets)
     this.mAllObjs = new GameObjectSet();    // store all physics object
+    this.mAllStoryPanels  = new GameObjectSet();  
     this.mAllPlatform = new GameObjectSet(); //store all platform
     
     // kelvin with set animation
