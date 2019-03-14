@@ -36,12 +36,13 @@ function GameScene() {
     this.mAllNonPhysObj = null;
     this.mAllStoryPanels = null;
     this.mAllPlatform = null;
-    this.mAllMinimapPlatform = null;
+    this.mAllTerrainSimple = [];
     this.mPipe = null;
     this.LevelSelect = null;
     
     this.mMsg = null;
     this.mScore = null;
+    this.mPauseMsg = null;
     
     this.mKelvin = null;
     this.mPatrol = null;
@@ -53,6 +54,7 @@ function GameScene() {
     this.mCodeBox = null;
     
     this.mTimer = null;
+    this.mPause = false;
     this.mLastPos = null;
 
     this.backButton = null;
@@ -110,7 +112,6 @@ GameScene.prototype.initialize = function () {
     this.mAllStoryPanels  = new GameObjectSet();    // store all physics objects
     this.mAllPlatform = new GameObjectSet(); //store all platform
     this.mAllTerrainSimple = []; // Used to store simple renderables that represent terrain (not enemies)
-    this.mAllMinimapPlatform = new GameObjectSet(); // store minimap versions of all platforms
     this.mKelvin = new Hero(this.kKelvin, 10, 10, null);
 
     var jsonString = gEngine.ResourceMap.retrieveAsset(this.kSceneFile);
@@ -142,9 +143,14 @@ GameScene.prototype.initialize = function () {
     this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
     
+    this.mPauseMsg = new FontRenderable("Game Paused");
+    this.mPauseMsg.setColor([.6, .6, .6, 1]);
+    this.mPauseMsg.getXform().setPosition(25, 36);
+    this.mPauseMsg.setTextHeight(10);
+    
     this.mScore = new FontRenderable("Score");
     this.mScore.setColor([0, 0, 0, 1]);
-    this.mScore.getXform().setPosition(5, 63);
+    this.mScore.getXform().setPosition(5, 62);
     this.mScore.setTextHeight(2);
     
     //UI button
@@ -159,12 +165,39 @@ GameScene.prototype.draw = function () {
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
     this.drawMain();
+    if(this.mPause)
+    {
+        this.mPauseMsg.draw(this.mCamera);
+    }
     this.drawMap();
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 GameScene.prototype.update = function () {
+    
+    // Pause if we hit the Esc key, then unpause if we hit it again
+    if(this.mPause)
+    {
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Escape))
+        {
+            this.mPause = false;
+        }
+    }
+    else
+    {
+        if((gEngine.Input.isKeyClicked(gEngine.Input.keys.Escape)))
+        {
+            this.mPause = true;
+            this.mPauseMsg.getXform().setPosition(this.mCamera.getWCCenter()[0]-30, 36);
+            //alert(this.mPauseMsg.getXform().getSize());
+        }
+    }
+    if(this.mPause)
+    {
+        return;
+    }
+    
     //get only objects near kelvin
     var objNearKelvin = this._getObjectsNearKelvin();
     

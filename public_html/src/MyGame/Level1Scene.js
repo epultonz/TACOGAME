@@ -41,6 +41,7 @@ function Level1Scene() {
     this.LevelSelect = null;
     
     this.mMsg = null;
+    this.mPauseMsg = null;
     this.mScore = null;
     
     this.mKelvin = null;
@@ -49,6 +50,7 @@ function Level1Scene() {
     this.mCodeBox = null;
     
     this.mTimer = null;
+    this.mPause = false;
     this.mLastPos = null;
 
     this.backButton = null;
@@ -133,6 +135,11 @@ Level1Scene.prototype.initialize = function () {
     this.mMsg.setColor([0, 0, 0, 1]);
     this.mMsg.getXform().setPosition(5, 66);
     this.mMsg.setTextHeight(2);
+    
+    this.mPauseMsg = new FontRenderable("Game Paused");
+    this.mPauseMsg.setColor([0, 0, 0, 1]);
+    this.mPauseMsg.getXform().setPosition(20, 36);
+    this.mPauseMsg.setTextHeight(10);
     
     this.mScore = new FontRenderable("Score");
     this.mScore.setColor([0, 0, 0, 1]);

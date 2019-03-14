@@ -29,6 +29,7 @@ gEngine.Input = (function () {
     var kKeys = {
         Backspace: 8,
         Enter: 13,
+        Escape: 27,
         
         // arrows
         Left: 37,
