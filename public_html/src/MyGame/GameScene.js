@@ -168,17 +168,6 @@ GameScene.prototype.update = function () {
     //get only objects near kelvin
     var objNearKelvin = this._getObjectsNearKelvin();
     
-    //check if a story panel is being touched
-    var i;
-    var pause = false;
-    for (i=0; i < this.mAllStoryPanels.size(); i++) {
-        var currPanel = this.mAllStoryPanels.getObjectAt(i);
-        currPanel.update();
-        if(currPanel.isActive()) {
-            pause = true;
-            break;
-        }
-    }
     //check if kelvin can jump
     var collInfo = new CollisionInfo();
         var collided = false;
@@ -195,7 +184,7 @@ GameScene.prototype.update = function () {
     // Update the hero so Kelvin can move during pause
     this.mKelvin.update();
     
-    // Update buttons and camera, as they should still work during pause    
+    // Update UI and camera, as they should still work during pause    
     this.MainMenuButton.update();
     this.backButton.update();
     
@@ -205,13 +194,25 @@ GameScene.prototype.update = function () {
     this.mMinimapCam.panXWith(this.mKelvin.getXform(), 0);
     this.mMinimapCam.update();
     
+    this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
+    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
+    
+    //check if a story panel is being touched, if so, we are paused
+    var i;
+    var pause = false;
+    for (i=0; i < this.mAllStoryPanels.size(); i++) {
+        var currPanel = this.mAllStoryPanels.getObjectAt(i);
+        currPanel.update();
+        if(currPanel.isActive()) {
+            pause = true;
+            break;
+        }
+    }
+    
     //if the game is not paused
     if(!pause) {
         var msg = "";
         var sc = "";
-
-        this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
-        this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
 
         // check if kelvin is on ground. If yes, can jump.
         this.mAllNonPhysObj.update();
