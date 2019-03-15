@@ -181,8 +181,8 @@ Hero.prototype.update = function () {
             */
         //}
         if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) || 
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) || 
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.W))) {
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) || 
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.W))) {
             v[1] = 60; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -458,11 +458,11 @@ Hero.prototype._updatePetAndReflect = function() {
  
         // only check I input if not currently deflecting and deflect power on
         if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) || 
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.NumpadZero)) ||
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Control)) ||
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Q)) ||
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.E)) ||
-                (gEngine.Input.isKeyPressed(gEngine.Input.keys.R))) {
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.NumpadZero)) ||
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.Control)) ||
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) ||
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) ||
+                (gEngine.Input.isKeyClicked(gEngine.Input.keys.R))) {
             //check if cooldown done, if so start reflect
             if(this.mIsDeflectDown
                 && (Date.now() - this.mLastDeflectTime >= this.mDeflectCD)) 
