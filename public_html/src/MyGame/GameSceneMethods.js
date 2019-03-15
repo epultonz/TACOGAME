@@ -173,6 +173,24 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         this.platformAt(pos[0],pos[1],w,rot);
     }
     
+    //parse spawnpoints
+    var spawnPoints = sceneInfo.SpawnPoint;
+    var i;
+    for (i = 0; i < spawnPoints.length; i++)
+    {
+        
+        var spawnPoint = new Renderable();
+        var spawnXf = spawnPoint.getXform();
+        var spawnPos = spawnPoints[i].Pos;
+        spawnPoint.setColor([1, .2, 1, 1]);
+        spawnXf.setSize(6, 6);
+        spawnXf.setPosition(spawnPos[0], spawnPos[1]);
+        this.mAllTerrainSimple.push(spawnPoint);
+        
+        this.mSpawnPoints.push(spawnPoints[i].Pos);
+    }
+    //alert(this.mSpawnPoints);
+    
 };
 
 
@@ -344,6 +362,31 @@ GameScene.prototype.createParticle = function(atX, atY) {
 };
 
 GameScene.prototype.checkFall = function() {
+    // Check if kelvin falls below the level. If yes, deal some damage to him and
+    // teleport him to the nearest spawnpoint he's to the right of (or the first
+    // if he's jumped off the left side of the map
+    var heroXf = this.mKelvin.getXform();
+    if(heroXf.getYPos() < -6)
+    {
+        this.mKelvin.tookDamage(10);
+        
+        var heroXPos = heroXf.getXPos();
+        var targetPoint = 0;
+        var i;
+        for(i = this.mSpawnPoints.length - 1; i >= 0; i--)
+        {
+            //alert(i + "  " + this.mSpawnPoints[i]);
+            if(heroXPos > this.mSpawnPoints[i][0])
+            {
+                targetPoint = i;
+                break;
+            }
+        }
+        heroXf.setPosition(this.mSpawnPoints[targetPoint][0],
+            this.mSpawnPoints[targetPoint][1]);
+    }
+    
+    /*
     //check if kelvin falls. If yes, take damage and spawn at location 2sec b4
     //else, update the last spawn pos
     var t = Date.now();
@@ -365,6 +408,7 @@ GameScene.prototype.checkFall = function() {
             this.mTimer = Date.now();
         }
     }
+    */
     
 };
 

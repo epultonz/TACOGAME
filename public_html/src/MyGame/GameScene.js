@@ -37,6 +37,7 @@ function GameScene() {
     this.mAllStoryPanels = null;
     this.mAllPlatform = null;
     this.mAllTerrainSimple = [];
+    this.mSpawnPoints = [];
     this.mPipe = null;
     this.LevelSelect = null;
     

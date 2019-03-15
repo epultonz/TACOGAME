@@ -37,6 +37,7 @@ function Level1Scene() {
     this.mAllPlatform = null;
     this.mAllStoryPanels = null;
     this.mAllTerrainSimple = [];
+    this.mSpawnPoints = [];
     this.mPipe = null;
     this.LevelSelect = null;
     
