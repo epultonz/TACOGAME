@@ -135,7 +135,7 @@ Patrol.prototype.update = function () {
         else if ( (heroBox.maxX() < (thisBox.minX() + (this.kWidth / 10))) || 
                   (heroBox.minX() > (thisBox.maxX() - (this.kWidth / 10)))   )
         {
-            this.mHeroRef.tookDamage(20);
+            this.mHeroRef.tookDamage(10);
             gScore += 30;
         }
     }

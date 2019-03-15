@@ -253,7 +253,8 @@ GameScene.prototype.checkWinLose = function(){
     if(this.mKelvin.getXform().getXPos() >= 503 && this.mKelvin.getXform().getXPos() <= 507){
         canWarp = true;
     }
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.S) && canWarp) {
+    if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.S) ||
+            (gEngine.Input.isKeyClicked(gEngine.Input.keys.Down))) && canWarp) {
         //this.mKelvin.getXform().setPosition(95,5);
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
@@ -280,6 +281,10 @@ GameScene.prototype.drawMain = function() {
     this.mAllPlatform.draw(this.mCamera);
     this.mAllNonPhysObj.draw(this.mCamera);
     this.mAllStoryPanels.draw(this.mCamera);
+    if(this.mCodeBox !== null)
+    {
+        this.mCodeBox.draw(this.mCamera);
+    }
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);
@@ -304,6 +309,10 @@ GameScene.prototype.drawMap = function() {
     var i;
     for (i = 0; i < this.mAllTerrainSimple.length; i++) {
         this.mAllTerrainSimple[i].draw(this.mMinimapCam);
+    }
+    if(this.mCodeBox !== null)
+    {
+        this.mCodeBox.drawMini(this.mMinimapCam);
     }
 };
 

@@ -30,7 +30,7 @@
  * @returns {Cannon}
  */
 function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, shootTimer = 210,
-        projectileTimer = 300, projectileDelta = 0.4) {
+        projectileTimer = 180, projectileDelta = 0.5) {
     this.kWidth = 7;
     this.kHeight = 7;
     this.mHeroRef = heroRef;

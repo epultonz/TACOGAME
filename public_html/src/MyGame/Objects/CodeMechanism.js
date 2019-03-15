@@ -90,3 +90,7 @@ CodeMechanism.prototype.UICodeText = function(){
 CodeMechanism.prototype.getSolve = function() {
     return this.mSolved;
 };
+
+CodeMechanism.prototype.isActive = function() {
+    return this.mActive;
+};

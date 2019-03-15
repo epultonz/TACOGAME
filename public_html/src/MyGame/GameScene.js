@@ -230,7 +230,7 @@ GameScene.prototype.update = function () {
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
     
-    //check if a story panel is being touched, if so, we are paused
+    //check if a story panel or codeblock is being touched, if so, we are paused
     var i;
     var pause = false;
     for (i=0; i < this.mAllStoryPanels.size(); i++) {
@@ -239,6 +239,14 @@ GameScene.prototype.update = function () {
         if(currPanel.isActive()) {
             pause = true;
             break;
+        }
+    }
+    if(this.mCodeBox !== null)
+    {
+        this.mCodeBox.update();
+        if(this.mCodeBox.isActive())
+        {
+            pause = true;
         }
     }
     

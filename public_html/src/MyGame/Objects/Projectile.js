@@ -47,7 +47,7 @@ function Projectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta =
     
     // sprite renderable 
     this.mProjectile = new SpriteRenderable(spriteTexture);
-    this.mProjectile.setColor([1, 1, 1, 0]);
+    this.mProjectile.setColor([1, 1, 1, .1]);
     this.mProjectile.getXform().setPosition(spawnX, spawnY);
     this.mProjectile.getXform().setSize(this.mWidth, this.mHeight);
     this.mProjectile.setElementPixelPositions(0, 64, 0, 64);

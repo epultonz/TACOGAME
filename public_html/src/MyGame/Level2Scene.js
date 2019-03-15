@@ -165,7 +165,7 @@ Level2Scene.prototype.draw = function () {
 // anything from this function!
 Level2Scene.prototype.update = function () {
    GameScene.prototype.update.call(this);
-   this.mCodeBox.update();
+   //this.mCodeBox.update();
 };
 
 Level2Scene.prototype.checkWinLose = function(){
@@ -174,8 +174,9 @@ Level2Scene.prototype.checkWinLose = function(){
     if(this.mKelvin.getXform().getXPos() >= 323 && this.mKelvin.getXform().getXPos() <= 327){
         canWarp = true;
     }
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.S) && canWarp &&
-            this.mCodeBox.getSolve()) {
+    if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.S) ||
+            (gEngine.Input.isKeyClicked(gEngine.Input.keys.Down))) &&
+            canWarp && this.mCodeBox.getSolve()) {
         this.LevelSelect = "Win";
         gEngine.GameLoop.stop();
     }
@@ -194,11 +195,11 @@ Level2Scene.prototype.checkWinLose = function(){
 
 Level2Scene.prototype.drawMain = function() {
     GameScene.prototype.drawMain.call(this);
-    this.mCodeBox.draw(this.mCamera);
+    //this.mCodeBox.draw(this.mCamera);
 };
 
 Level2Scene.prototype.drawMini = function() {
     GameScene.prototype.drawMini.call(this);
-    this.mCodeBox.drawMini(this.mMinimapCam);
+    //this.mCodeBox.drawMini(this.mMinimapCam);
 };
 

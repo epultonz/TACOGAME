@@ -22,10 +22,11 @@
  * @param {Obj} spawningRef A reference to the enemy that shot this projectile (a flier)
  * @param {float} delta The speed at which the obj moves- should ALWAYS be positive
  *      since that'll determine its chase speed
+ * @param {vec2} facingVect a vector to determine where the projectile spawns facing.
  * @param {int} timer How many update ticks the projectile should last for.
  * @returns {HomingProjectile}
  */
-function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta = 0.4, timer = 140) {
+function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta = 0.4, timer = 140, facingVect = vec2.fromValues(0, 1)) {
     /*
      * this.mWidth = 1.25;
     this.mHeight = 2;
@@ -60,7 +61,7 @@ function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, d
     this.mDamage = 5; // How much damage the pack deals
     this.mProjectile.getXform().incRotationByDegree(-90); // Turn it back so that the projectile is top-bottom facing
     this.mMinimapObj.getXform().incRotationByDegree(-90);
-    this.setCurrentFrontDir(vec2.fromValues(0, 1)); // set "forward" to be up
+    this.setCurrentFrontDir(facingVect); // set "forward" to be up
     
     this.mRigdRect = new RigidRectangle(this.mProjectile.getXform(), this.mWidth , this.mHeight);
     this.mRigdRect.setMass(0);

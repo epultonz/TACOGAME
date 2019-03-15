@@ -14,7 +14,7 @@
 // type is the type of powerup this is: 0 for healing, 1 for super saiyan, 2 for deflection
 // respawnFlag and Timer is for respawning powerups - set it to false to delete it once picked up
 // powerupTimer is how long a powerup (i.e. invuln) should last - Flag is if it's active
-function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true, respawnTimer = 300, powerupTimer = 600) {
+function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true, respawnTimer = 300, powerupTimer = 480) {
     this.kWidth = 3;
     this.kHeight = 3;
     this.mHeroRef = heroRef;
@@ -92,7 +92,7 @@ Powerup.prototype.update = function () {
             // If the hero isn't at full, and the hero's colliding with pack
             if((this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
             {
-                this.mHeroRef.incHP(30);
+                this.mHeroRef.incHP(40);
                
                 if(!this.mWillRespawn)
                     return false; 

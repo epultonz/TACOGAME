@@ -12,7 +12,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 /**
- * 
+ * @param {TextureInfo} projTexture The texturesheet for the flier's projectiles.
  * @param {TextureInfo} spriteTexture The texturesheet for the flier's sprite. Should be extended to have
  *     a "mirrored" sprite version as well so the flier can flip between left/right facing.
  * @param {float} spawnX The X coord to start the object at
@@ -28,8 +28,8 @@
  * @param {int} patrolTimer the amount of time between switching patrol target locations
  * @returns {Flier}
  */
-function Flier(projTexture,spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 500,
-        projectileTimer = 180, projectileDelta = 0.4, patrolDelta = 0.025,
+function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 480,
+        projectileTimer = 145, projectileDelta = 0.4, patrolDelta = 0.025,
         patrolDist = 15, patrolTimer = 400) {
     // Renderable Vars
     this.mSpriteText = spriteTexture;
@@ -100,9 +100,13 @@ Flier.prototype.update = function () {
     this.mShootTimerCurr--;
     if(this.mShootTimerCurr <= 0)
     {
+        // Add some randomness to when the next projectile will appear
         var timerVariation = (this.mShootTimerMax / 10) * (Math.random() - 0.5);
         this.mShootTimerCurr = this.mShootTimerMax + timerVariation;
-        var bullet = new HomingProjectile(this.mProjText, currPos[0], currPos[1], this.mHeroRef, this, this.mProjectileDelta, this.mProjectileTimer);
+        
+        var directionVariation = vec2.fromValues((Math.random() - 0.5), (Math.random() - 0.5));
+        var bullet = new HomingProjectile(this.mProjText, currPos[0], currPos[1], this.mHeroRef, this,
+                this.mProjectileDelta, this.mProjectileTimer, directionVariation);
         this.mSetRef.addToSet(bullet);
     }
     
