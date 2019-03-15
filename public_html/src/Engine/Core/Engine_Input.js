@@ -29,6 +29,7 @@ gEngine.Input = (function () {
     var kKeys = {
         Backspace: 8,
         Enter: 13,
+        Control: 17,
         Escape: 27,
         
         // arrows
@@ -79,6 +80,19 @@ gEngine.Input = (function () {
         X : 88,
         Y : 89,
         Z : 90,
+        
+        //Numpad
+        NumpadZero: 96,
+        NumpadOne: 97,
+        NumpadTwo: 98,
+        NumpadThree: 99,
+        NumpadFour: 100,
+        NumpadFive: 101,
+        NumpadSix: 102,
+        NumpadSeven: 103,
+        NumpadEight: 104,
+        NumpadNine: 105,
+        NumpadDecimal: 110,
 
         LastKeyCode: 222
     };

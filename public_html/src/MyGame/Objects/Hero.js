@@ -140,14 +140,16 @@ Hero.prototype.update = function () {
     this.mIsMoving = false;
     var v = this.getRigidBody().getVelocity();
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
+    if ((gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) || 
+            (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left))){
         this.mPreviousHeroState = this.mHeroState;
         this.mHeroState = Hero.eHeroState.eRunLeft;
         this.mIsMoving = true;
         v[0] = -20;
         this.mKelvin.updateAnimation();
     }
-    else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
+    else if ((gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) || 
+            (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right))){
         this.mPreviousHeroState = this.mHeroState;
         this.mHeroState = Hero.eHeroState.eRunRight;
         this.mIsMoving = true;
@@ -178,7 +180,9 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eFaceLeft;
             */
         //}
-        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
+        if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) || 
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) || 
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.W))) {
             v[1] = 60; // Jump velocity
             /*
             this.mPreviousHeroState = this.mHeroState;
@@ -192,7 +196,8 @@ Hero.prototype.update = function () {
             this.mIsMoving = true;
         }
     } else {
-        if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
+        if ((gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) || 
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down))){
             v[1] = -75;
             this.mIsMoving = true;
         }
@@ -452,7 +457,12 @@ Hero.prototype._updatePetAndReflect = function() {
     if(this.mCanDeflect && !this.mDeflecting){
  
         // only check I input if not currently deflecting and deflect power on
-        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) {
+        if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.I)) || 
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.NumpadZero)) ||
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Control)) ||
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.Q)) ||
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.E)) ||
+                (gEngine.Input.isKeyPressed(gEngine.Input.keys.R))) {
             //check if cooldown done, if so start reflect
             if(this.mIsDeflectDown
                 && (Date.now() - this.mLastDeflectTime >= this.mDeflectCD)) 
