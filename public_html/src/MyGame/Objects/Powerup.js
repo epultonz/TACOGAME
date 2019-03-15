@@ -92,7 +92,7 @@ Powerup.prototype.update = function () {
             // If the hero isn't at full, and the hero's colliding with pack
             if((this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
             {
-                this.mHeroRef.incHP(40);
+                this.mHeroRef.incHP(45);
                
                 if(!this.mWillRespawn)
                     return false; 

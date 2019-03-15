@@ -58,7 +58,7 @@ function HomingProjectile(spriteTexture, spawnX, spawnY, heroRef, spawningRef, d
      */
     // Projectile Constructor call + Homing-Specific stuff
     Projectile.call(this, spriteTexture, spawnX, spawnY, heroRef, spawningRef, delta, timer);
-    this.mDamage = 5; // How much damage the pack deals
+    this.mDamage = 6; // How much damage the pack deals
     this.mProjectile.getXform().incRotationByDegree(-90); // Turn it back so that the projectile is top-bottom facing
     this.mMinimapObj.getXform().incRotationByDegree(-90);
     this.setCurrentFrontDir(facingVect); // set "forward" to be up

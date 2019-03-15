@@ -90,7 +90,7 @@ Smasher.prototype._smashHero = function() {
     if(!this.mHeroRef.isHurt() && this.mVelocity < 0 && 
         (collideStatus === 8 || collideStatus === 9 || collideStatus === 10)) {
             this.mVelocity = this.mVelocityUp;
-            this.mHeroRef.tookDamage(15);
+            this.mHeroRef.tookDamage(17.5);
         
     }
 };

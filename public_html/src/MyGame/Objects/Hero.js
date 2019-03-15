@@ -78,7 +78,7 @@ function Hero(spriteTexture, atX, atY, camRef = null, lgtSet) {
     this.xDelta = .7;
     this.yDelta = .25;
     this.freq = 1;
-    this.duration = 45;
+    this.duration = 50;
     this.mShakeStarted = false;
     this.mShake = null;
     
