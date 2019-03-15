@@ -70,16 +70,14 @@ Camera.prototype.panWith = function (aXform, zone) {
 Camera.prototype.panXWith = function (aXform, zone) {
     var posKelvin = aXform.getPosition();
     var posCam = this.getWCCenter();
-    
-    if(posKelvin[0] >= 50) {
-        posCam[0] = posKelvin[0];
-        this.panTo(posKelvin[0], posCam[1]);
-        //this.setWCCenter(xposKelvin[0], yPosCam);
-        
-    } else {
-       this.panTo(50,32);
+    if (posKelvin[0] < 50) {
+        this.panTo(50,36);
+    }else if(Math.abs(posKelvin[0] - posCam[0]) > .5) {
+            this.panTo(posKelvin[0], posCam[1]);
+            //mess with interpolation speed here
+            this.configInterpolation(.05,100);
     }
-    
+     
     //uncomment this to add panning in the y direction
     //will start panning when kelvin reaches height of 50
     /*
