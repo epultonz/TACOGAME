@@ -74,7 +74,7 @@ Camera.prototype.panXWith = function (aXform, zone) {
             //pan to 50 if kelvin hasnt passed 50
             this.panTo(Math.max(50,posKelvin[0]), posCam[1]);
             //mess with interpolation speed here
-            this.configInterpolation(.05,100);
+            this.mCameraState.configInterpolation(.05,100);
     }
      
     /*
