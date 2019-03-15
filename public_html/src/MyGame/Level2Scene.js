@@ -99,7 +99,7 @@ Level2Scene.prototype.unloadScene = function () {
     }else if(this.LevelSelect==="Win")
         gEngine.Core.startScene(new WinScene());
     else if(this.LevelSelect==="Lose")
-        gEngine.Core.startScene(new LoseScene());
+        gEngine.Core.startScene(new LoseScene2());
     
 };
 

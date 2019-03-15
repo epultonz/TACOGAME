@@ -160,14 +160,26 @@ Hero.prototype.update = function () {
         
     }
     
-    //Testing Purposes Only
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Q)) {
-    if (gEngine.Input.isButtonClicked(gEngine.Input.mouseButton.Left))
-    {
-        var mouseX = this.mCamRef.mouseWCX();
-        var mouseY = this.mCamRef.mouseWCY();
-        xform.setPosition(mouseX, mouseY);
-    }
+    /**
+     * Cheating Bonuses for Testing/Easter Eggs
+     * All should require C is held down to prevent accidental use
+     */
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.C)) {
+        // Teleport Kelvin to mouse clicks on the world
+        if (gEngine.Input.isButtonClicked(gEngine.Input.mouseButton.Left))
+        {
+            var mouseX = this.mCamRef.mouseWCX();
+            var mouseY = this.mCamRef.mouseWCY();
+            xform.setPosition(mouseX, mouseY);
+        }
+        // Activate chaos mode, which causes random things to happen to Kelvin
+        if (gEngine.Input.isKeyClicked(gEngine.Input.keys.M))
+        {
+            this.mRbox.setInertia(5);
+            this.mRbox.setFriction(-.1);
+            this.mRbox.setRestitution(0);
+            this.mKelvin.setColor([Math.random(), Math.random(), Math.random(), .2]);
+        }
     }
     
     if (this.mCanJump === true) {

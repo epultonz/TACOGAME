@@ -128,6 +128,7 @@ Patrol.prototype.update = function () {
         if(heroYVelocity < 0 && 
                 (heroBox.minY() > (thisBox.maxY() - (this.kHeight / 10))))
         {
+            gScore += 30;
             return false; // as the object should be deleted
         }
         
@@ -136,7 +137,6 @@ Patrol.prototype.update = function () {
                   (heroBox.minX() > (thisBox.maxX() - (this.kWidth / 10)))   )
         {
             this.mHeroRef.tookDamage(12.5);
-            gScore += 30;
         }
     }
 
