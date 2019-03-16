@@ -203,12 +203,12 @@ GameScene.prototype.createBounds = function() {
 };
 
 // Make the platforms
-GameScene.prototype.platformAt = function (x, y, w, rot) {
+GameScene.prototype.platformAt = function (origX, y, w, rot) {
     //did this so i didnt have to redo the json file
-    x = (x-(w/2.0))+2.5;
+    var x = (origX -(w/2.0))+2.5;
     var h = 5;
     var width = 5;
-    var i;
+    var i, deltaY;
     //every block is width of 5 so for w of 30 need 6 blocks
     for(i =0; i < w/5.0; i++) {
         var p = new TextureRenderable(this.kPlatformTexture);
@@ -219,9 +219,10 @@ GameScene.prototype.platformAt = function (x, y, w, rot) {
         //take into account rotation (shift block in the x and y)
         var rot_rad = rot * (Math.PI/180);
         var deltaX = 5.0*Math.cos(rot_rad);
-        var deltaY = 5.0*Math.sin(rot_rad);
+        deltaY = 5.0*Math.sin(rot_rad);
+        var antiWidth = 0; //width/8 - 1;
         xf.setPosition(x+(i*deltaX), 
-            y+(i*deltaY));
+            y+(i*deltaY)+antiWidth);
         xf.setRotationInDegree(rot);
         var g = new GameObject(p);
         var r = new RigidRectangle(xf, width, h);
@@ -230,18 +231,18 @@ GameScene.prototype.platformAt = function (x, y, w, rot) {
         //g.toggleDrawRigidShape();
 
         r.setMass(0);
-        
-
-        var simplePlat = new Renderable();
-        var simpleXf = simplePlat.getXform();
-        simpleXf.setSize(w, h);
-        simpleXf.setPosition(x, y);
-        simpleXf.setRotationInDegree(rot);
 
         //this.mAllObjs.addToSet(g);
         this.mAllPlatform.addToSet(g);
-        this.mAllTerrainSimple.push(simplePlat);
     }
+    
+    var simplePlat = new Renderable();
+    var simpleXf = simplePlat.getXform();
+    simpleXf.setSize(w, h);
+    simpleXf.setPosition(origX, y+deltaY);
+    simpleXf.setRotationInDegree(rot);
+        
+    this.mAllTerrainSimple.push(simplePlat);
 };
 // back button UI
 GameScene.prototype.backSelect = function(){
