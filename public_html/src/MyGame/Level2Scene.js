@@ -151,7 +151,7 @@ Level2Scene.prototype.initialize = function () {
     
     this._makeBackground();
 
-    gEngine.DefaultResources.setGlobalAmbientIntensity(2.5); // game brightness
+    gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
@@ -259,38 +259,39 @@ Level2Scene.prototype.drawMini = function() {
 
 Level2Scene.prototype._makeBackground = function() {
     //added tint as projectiles were hard to see (red on red)
+    var size = 150;
     var color = [0,1,1,.2];
     var bgR1 = new TextureRenderable(this.kBg1);
-    bgR1.getXform().setSize(100, 75);
+    bgR1.getXform().setSize(size, 75);
     bgR1.getXform().setPosition(50, 36);
     bgR1.getXform().setZPos(-10);
     bgR1.setColor(color);
-    this.mBg1 = new  ParallaxGameObject(bgR1, 9, this.mCamera);
+    this.mBg1 = new  ParallaxGameObject(bgR1, 15, this.mCamera);
     
     
     var bgR2 = new TextureRenderable(this.kBg2);
-    bgR2.getXform().setSize(100, 75);
+    bgR2.getXform().setSize(size, 75);
     bgR2.getXform().setPosition(50, 36);
     bgR2.getXform().setZPos(-9);
     bgR2.setColor(color);
-    this.mBg2 = new ParallaxGameObject(bgR2, 7, this.mCamera);
+    this.mBg2 = new ParallaxGameObject(bgR2, 9, this.mCamera);
     
     var bgR3 = new TextureRenderable(this.kBg3);
-    bgR3.getXform().setSize(100, 75);
+    bgR3.getXform().setSize(size, 75);
     bgR3.getXform().setPosition(50, 36);
     bgR3.getXform().setZPos(-1);
     bgR3.setColor(color);
     this.mBg3 = new ParallaxGameObject(bgR3, 5, this.mCamera);
     
     var bgR4 = new TextureRenderable(this.kBg4);
-    bgR4.getXform().setSize(100, 75);
+    bgR4.getXform().setSize(size, 75);
     bgR4.getXform().setPosition(50, 36);
     bgR4.getXform().setZPos(-1);
     bgR4.setColor(color);
-    this.mBg4 = new ParallaxGameObject(bgR4, 3, this.mCamera);
+    this.mBg4 = new ParallaxGameObject(bgR4, 4, this.mCamera);
     
     var bgR5 = new TextureRenderable(this.kBg5);
-    bgR5.getXform().setSize(100, 75);
+    bgR5.getXform().setSize(size, 75);
     bgR5.getXform().setPosition(50, 36);
     bgR5.getXform().setZPos(0);
     bgR5.setColor(color);
