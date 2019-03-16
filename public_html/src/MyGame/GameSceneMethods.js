@@ -26,7 +26,8 @@ GameScene.prototype.parseCamera = function (camInfo) {
     var cam = new Camera(
         vec2.fromValues(cx, cy),  // position of the camera
         w,                        // width of camera
-        viewport                  // viewport (orgX, orgY, width, height)
+        viewport                  // viewport (orgX, orgY, width, height
+    )
     cam.setBackgroundColor(bgColor);
     return cam;
 };
