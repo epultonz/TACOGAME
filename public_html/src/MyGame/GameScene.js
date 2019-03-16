@@ -275,7 +275,11 @@ GameScene.prototype.update = function () {
     }
 
     gEngine.Physics.processObjSet(this.mKelvin.getRigidBody(), objNearKelvin);
-
+    this.mBg1.update();
+    this.mBg2.update();
+    this.mBg3.update();
+    this.mBg4.update();
+    this.mBg5.update();
 
 };
 

@@ -28,6 +28,21 @@ function Level1Scene() {
     this.kSceneFile = "assets/Taco/Level1.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
+    
+    var layersFolder = "lakeMountains"
+    //background layers
+    this.kBg1 = "assets/Taco/" + layersFolder + "/1_1.png";
+    this.kBg2 = "assets/Taco/" + layersFolder + "/1_2.png";
+    this.kBg3 = "assets/Taco/" + layersFolder + "/1_3.png";
+    this.kBg4 = "assets/Taco/" + layersFolder + "/1_4.png";
+    this.kBg5 = "assets/Taco/" + layersFolder + "/1_5.png";
+    
+    this.mBg1 = null;
+    this.mBg2 = null;
+    this.mBg3 = null;
+    this.mBg4 = null;
+    this.mBg5 = null;
+    
     // The camera to view the scene
     this.mCamera = null;
     this.mMinimapCam = null;
@@ -72,6 +87,11 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kGreenPipe);
     gEngine.Textures.loadTexture(this.kParticleTexture);
     gEngine.Textures.loadTexture(this.kCoin);
+    gEngine.Textures.loadTexture(this.kBg1);
+    gEngine.Textures.loadTexture(this.kBg2);
+    gEngine.Textures.loadTexture(this.kBg3);
+    gEngine.Textures.loadTexture(this.kBg4);
+    gEngine.Textures.loadTexture(this.kBg5);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -88,6 +108,12 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kGreenPipe);
     gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.Textures.unloadTexture(this.kCoin);
+    gEngine.Textures.unloadTexture(this.kBg1);
+    gEngine.Textures.unloadTexture(this.kBg2);
+    gEngine.Textures.unloadTexture(this.kBg3);
+    gEngine.Textures.unloadTexture(this.kBg4);
+    gEngine.Textures.unloadTexture(this.kBg5);
+    
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back"){
@@ -122,7 +148,9 @@ Level1Scene.prototype.initialize = function () {
     
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
-
+    
+    //make the parallax background
+    this._makeBackground();
 
     gEngine.DefaultResources.setGlobalAmbientIntensity(3); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
@@ -157,15 +185,7 @@ Level1Scene.prototype.initialize = function () {
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
 Level1Scene.prototype.draw = function () {
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
-    this.mCamera.setupViewProjection();
-    this.mBG.draw(this.mCamera);
-    this.drawMain();
-    if(this.mPause)
-    {
-        this.mPauseMsg.draw(this.mCamera);
-    }
-    this.drawMap();
+    GameScene.prototype.draw.call(this);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
