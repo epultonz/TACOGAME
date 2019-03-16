@@ -28,6 +28,21 @@ function Level2Scene() {
     this.kSceneFile = "assets/Taco/Level2.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
+    
+    //background layers
+    this.kBg1 = "assets/Taco/caveBackgrounds/1_1.png";
+    this.kBg2 = "assets/Taco/caveBackgrounds/1_2.png";
+    this.kBg3 = "assets/Taco/caveBackgrounds/1_3.png";
+    this.kBg4 = "assets/Taco/caveBackgrounds/1_4.png";
+    this.kBg5 = "assets/Taco/caveBackgrounds/1_5.png";
+    
+    this.mBg1 = null;
+    this.mBg2 = null;
+    this.mBg3 = null;
+    this.mBg4 = null;
+    this.mBg5 = null;
+    
+    
     // The camera to view the scene
     this.mCamera = null;
     this.mMinimapCam = null;
@@ -72,6 +87,11 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kGreenPipe);
     gEngine.Textures.loadTexture(this.kParticleTexture);
     gEngine.Textures.loadTexture(this.kCoin);
+    gEngine.Textures.loadTexture(this.kBg1);
+    gEngine.Textures.loadTexture(this.kBg2);
+    gEngine.Textures.loadTexture(this.kBg3);
+    gEngine.Textures.loadTexture(this.kBg4);
+    gEngine.Textures.loadTexture(this.kBg5);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -88,6 +108,12 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kGreenPipe);
     gEngine.Textures.unloadTexture(this.kParticleTexture);
     gEngine.Textures.unloadTexture(this.kCoin);
+    gEngine.Textures.unloadTexture(this.kBg1);
+    gEngine.Textures.unloadTexture(this.kBg2);
+    gEngine.Textures.unloadTexture(this.kBg3);
+    gEngine.Textures.unloadTexture(this.kBg4);
+    gEngine.Textures.unloadTexture(this.kBg5);
+    
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";
     if(this.LevelSelect==="Back"){
@@ -122,6 +148,8 @@ Level2Scene.prototype.initialize = function () {
     
     this.parseObjects(sceneInfo);
     this.mMinimapCam = this.parseCamera(cams[1]);
+    
+    this._makeBackground();
 
     gEngine.DefaultResources.setGlobalAmbientIntensity(2.5); // game brightness
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
@@ -159,13 +187,36 @@ Level2Scene.prototype.initialize = function () {
 // importantly, make sure to _NOT_ change any state.
 Level2Scene.prototype.draw = function () {
     // Step A: clear the canvas
-    GameScene.prototype.draw.call(this);
+    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
+    this.mCamera.setupViewProjection();
+
+    this.mBg1.draw(this.mCamera);
+    this.mBg2.draw(this.mCamera);
+    this.mBg3.draw(this.mCamera);
+    this.mBg4.draw(this.mCamera);
+    this.mBg5.draw(this.mCamera);
+    
+    this.drawMain();
+    if(this.mPause)
+    {
+        this.mPauseMsg.draw(this.mCamera);
+    }
+    this.drawMap();
+
+    
+    
+    
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 Level2Scene.prototype.update = function () {
    GameScene.prototype.update.call(this);
+   this.mBg1.update();
+   this.mBg2.update();
+   this.mBg3.update();
+   this.mBg4.update();
+   this.mBg5.update();
    //this.mCodeBox.update();
 };
 
@@ -195,12 +246,54 @@ Level2Scene.prototype.checkWinLose = function(){
 };
 
 Level2Scene.prototype.drawMain = function() {
+    
     GameScene.prototype.drawMain.call(this);
+    
     //this.mCodeBox.draw(this.mCamera);
 };
 
 Level2Scene.prototype.drawMini = function() {
     GameScene.prototype.drawMini.call(this);
     //this.mCodeBox.drawMini(this.mMinimapCam);
+};
+
+Level2Scene.prototype._makeBackground = function() {
+    //added tint as projectiles were hard to see (red on red)
+    var color = [0,1,1,.2];
+    var bgR1 = new TextureRenderable(this.kBg1);
+    bgR1.getXform().setSize(100, 75);
+    bgR1.getXform().setPosition(50, 36);
+    bgR1.getXform().setZPos(-10);
+    bgR1.setColor(color);
+    this.mBg1 = new  ParallaxGameObject(bgR1, 9, this.mCamera);
+    
+    
+    var bgR2 = new TextureRenderable(this.kBg2);
+    bgR2.getXform().setSize(100, 75);
+    bgR2.getXform().setPosition(50, 36);
+    bgR2.getXform().setZPos(-9);
+    bgR2.setColor(color);
+    this.mBg2 = new ParallaxGameObject(bgR2, 7, this.mCamera);
+    
+    var bgR3 = new TextureRenderable(this.kBg3);
+    bgR3.getXform().setSize(100, 75);
+    bgR3.getXform().setPosition(50, 36);
+    bgR3.getXform().setZPos(-1);
+    bgR3.setColor(color);
+    this.mBg3 = new ParallaxGameObject(bgR3, 5, this.mCamera);
+    
+    var bgR4 = new TextureRenderable(this.kBg4);
+    bgR4.getXform().setSize(100, 75);
+    bgR4.getXform().setPosition(50, 36);
+    bgR4.getXform().setZPos(-1);
+    bgR4.setColor(color);
+    this.mBg4 = new ParallaxGameObject(bgR4, 3, this.mCamera);
+    
+    var bgR5 = new TextureRenderable(this.kBg5);
+    bgR5.getXform().setSize(100, 75);
+    bgR5.getXform().setPosition(50, 36);
+    bgR5.getXform().setZPos(0);
+    bgR5.setColor(color);
+    this.mBg5 = new ParallaxGameObject(bgR5, 0, this.mCamera);
 };
 

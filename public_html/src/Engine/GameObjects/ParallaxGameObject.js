@@ -48,7 +48,7 @@ ParallaxGameObject.prototype.update = function () {
     // simple default behavior
     this._refPosUpdate(); // check to see if the camera has moved
     var pos = this.getXform().getPosition();  // our own xform
-    vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed() * this.mParallaxScale);
+    vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), 0 * this.mParallaxScale);
 };
 
 ParallaxGameObject.prototype._refPosUpdate = function () {

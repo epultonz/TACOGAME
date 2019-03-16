@@ -27,7 +27,6 @@ GameScene.prototype.parseCamera = function (camInfo) {
         vec2.fromValues(cx, cy),  // position of the camera
         w,                        // width of camera
         viewport                  // viewport (orgX, orgY, width, height)
-        );
     cam.setBackgroundColor(bgColor);
     return cam;
 };
@@ -291,9 +290,7 @@ GameScene.prototype.checkWinLose = function(){
 };
 
 GameScene.prototype.drawMain = function() {
-    this.mCamera.setupViewProjection();
     
-    this.mBG.draw(this.mCamera);
     //this.mAllObjs.draw(this.mCamera);
     this.mKelvin.draw(this.mCamera);
     this.mAllPlatform.draw(this.mCamera);
