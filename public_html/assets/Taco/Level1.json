@@ -49,7 +49,7 @@
     
     "Cannon": [
         {
-            "Pos": [430, 44],
+            "Pos": [430, 45],
             "Facing": true 
         }
     ],
@@ -115,15 +115,15 @@
             "W": 30,
             "Rot": 0
         },
-        {   "Pos": [165, 0],
-            "W": 30,
+        {   "Pos": [160, 0],
+            "W": 25,
             "Rot": 0
         },
         {   "Pos": [175, 30],
             "W": 10,
             "Rot": 0
         },
-        {   "Pos": [190, 40],
+        {   "Pos": [190, 45],
             "W": 20,
             "Rot": 0
         },
@@ -211,7 +211,7 @@
     "StoryPanel": [
         {
             "stubX": 45,
-            "stubY": 33.3,
+            "stubY": 34.5,
             "text": [
                 "You woke up...feeling lost..",
                 "Use A and D to move. Space to jump.",
@@ -220,7 +220,7 @@
         },
         {
             "stubX": 95,
-            "stubY": 3.9,
+            "stubY": 4.5,
             "text": [
                 "There seems to be some memory",
                 "contained in these coins...", 
@@ -229,7 +229,7 @@
         },
         {
             "stubX": 175,
-            "stubY": 32.7,
+            "stubY": 34.5,
             "text": [
                 "Ouch! these red balls hurts.",
                 "Try to avoid them!",
@@ -238,7 +238,7 @@
         },
         {
             "stubX": 304,
-            "stubY": 43.9,
+            "stubY": 44.7,
             "text": [
                 "'Grab the bubble!' The particle says..",
                 "Now you can deflect projectiles ", 
@@ -247,7 +247,7 @@
         },
         {
             "stubX": 410,
-            "stubY": 3.9,
+            "stubY": 4.8,
             "text": [
                 "'This one restore health huh?' You",
                 "watch your health rise a bit.", 

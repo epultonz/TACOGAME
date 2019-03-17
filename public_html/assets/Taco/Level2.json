@@ -67,7 +67,7 @@
         {
             "Pos": [395, 42],
             "topBound": 48,
-            "botBound": 14,
+            "botBound": 12,
             "velocityUp": 10,
             "velocityDown": -25
         }
@@ -75,11 +75,11 @@
     
     "Cannon":[
         {
-            "Pos": [105, 28],
+            "Pos": [105, 30],
             "Facing": true 
         },
         {
-            "Pos": [175, 5],
+            "Pos": [175, 6],
             "Facing": true 
         },
         {
@@ -87,7 +87,7 @@
             "Facing": false 
         },
         {
-            "Pos": [425, 16],
+            "Pos": [425, 18],
             "Facing": true 
         }
     ],
@@ -98,7 +98,7 @@
         {"Pos": [165,36]},
         {"Pos": [195,6]},
         {"Pos": [255,36]},
-        {"Pos": [295,55]},
+        {"Pos": [295,60]},
         {"Pos": [355,48]},
         {"Pos": [475,48]}
     ],
@@ -172,8 +172,8 @@
             "W": 30,
             "Rot": 0
         },
-        {   "Pos": [225, 27],
-            "W": 25,
+        {   "Pos": [220, 26],
+            "W": 30,
             "Rot": 0
         },
         {   "Pos": [240, 0],
@@ -257,7 +257,7 @@
     "StoryPanel": [
         {
             "stubX": 25,
-            "stubY": 3.9,
+            "stubY": 5,
             "text": [
                 "You arrive at a dark cavern...",
                 "Enemies seem to swarm this place", 
@@ -266,7 +266,7 @@
         },
         {
             "stubX": 227,
-            "stubY": 30.6,
+            "stubY": 31,
             "text": [
                 "You sweat as you finally found a",
                 "safe place. You survey around you...", 
@@ -275,7 +275,7 @@
         },
         {
             "stubX": 295,
-            "stubY": 50.6,
+            "stubY": 53,
             "text": [
                 "You see a BIG red tech infront",
                 "It seems to need passcode to activate", 
@@ -284,7 +284,7 @@
         },
         {
             "stubX": 475,
-            "stubY": 39.3,
+            "stubY": 41,
             "text": [
                 "You reach the end.. Theres void ahead..",
                 "You noticed a small scribble...", 

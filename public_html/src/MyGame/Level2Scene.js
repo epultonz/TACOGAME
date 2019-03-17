@@ -164,7 +164,7 @@ Level2Scene.prototype.initialize = function () {
     this.mTimer = Date.now();
     this.mLastPos = this.mKelvin.getXform().getPosition();
     
-    this.mCodeBox = new CodeMechanism(315,51,"0311",this.mKelvin,this.mCamera);
+    this.mCodeBox = new CodeMechanism(315,53,"0311",this.mKelvin,this.mCamera);
     
     // For debug
     this.mMsg = new FontRenderable("Status Message");

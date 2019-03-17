@@ -27,7 +27,7 @@ GameScene.prototype.parseCamera = function (camInfo) {
         vec2.fromValues(cx, cy),  // position of the camera
         w,                        // width of camera
         viewport                  // viewport (orgX, orgY, width, height
-    )
+    );
     cam.setBackgroundColor(bgColor);
     return cam;
 };
@@ -185,7 +185,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         spawnPoint.setColor([1, .2, 1, 1]);
         spawnXf.setSize(6, 6);
         spawnXf.setPosition(spawnPos[0], spawnPos[1]);
-        this.mAllTerrainSimple.push(spawnPoint);
+        //this.mAllTerrainSimple.push(spawnPoint);
         
         this.mSpawnPoints.push(spawnPoints[i].Pos);
     }
