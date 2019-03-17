@@ -28,6 +28,7 @@ function Level2Scene() {
     this.kSceneFile = "assets/Taco/Level2.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
+    this.kAlert = "assets/Taco/alert.png";
     
     //keep naming consistnet farthest layer to the back 1_1, closest to front 1_5
     // set layers folder to name of folder that contains layers
@@ -95,6 +96,7 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBg3);
     gEngine.Textures.loadTexture(this.kBg4);
     gEngine.Textures.loadTexture(this.kBg5);
+    gEngine.Textures.loadTexture(this.kAlert);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -116,6 +118,7 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBg3);
     gEngine.Textures.unloadTexture(this.kBg4);
     gEngine.Textures.unloadTexture(this.kBg5);
+    gEngine.Textures.unloadTexture(this.kAlert);
     
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";

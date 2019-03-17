@@ -16,6 +16,15 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     this.mMidScreenY = midScreenY;
     this.mActive = false; // If the panel should be shown or not
     
+    this.kAlert = "assets/Taco/alert.png";
+    this.mDoneRead = false;
+    
+    this.mAlert = new SpriteAnimateRenderable(this.kAlert);
+    this.mAlert.getXform().setPosition(spawnX,spawnY+7);
+    this.mAlert.getXform().setSize(4,8);
+    this.mAlert.setColor([1,1,1,0]);
+    this.mAlert.setSpriteSequence(32,0,32,32,2,0);
+    this.mAlert.setAnimationSpeed(20);
     
     // the board as background of txt
     this.mPanel = new TextureRenderable(texture);
@@ -82,6 +91,7 @@ StoryPanel.prototype.update = function(){
     var heroCollision = this.mPanelBBox.boundCollideStatus(this.mHeroRef.getBBox());
     if(heroCollision !== 0){
         this.mActive = true;
+        this.mDoneRead = true;
     }
     else
     {
@@ -116,6 +126,11 @@ StoryPanel.prototype.update = function(){
     }else{ this.mStub.setColor([1,1,1,0]);}
     */
     
+    // Exclamation mark appear for unread panel
+    if(!this.mDoneRead){
+        this.mAlert.updateAnimation();
+    }
+    
     return true;
 };
 
@@ -132,6 +147,9 @@ StoryPanel.prototype.draw = function(aCam){
         this.mText3.draw(aCam);
         this.mText4.draw(aCam);
     };
+    if(!this.mDoneRead){
+        this.mAlert.draw(aCam);
+    }
 };
 
 StoryPanel.prototype.drawMini = function(aCam)

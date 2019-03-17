@@ -28,8 +28,9 @@ function Level1Scene() {
     this.kSceneFile = "assets/Taco/Level1.json";
     this.kParticleTexture = "assets/Taco/particle.png";
     this.kCoin = "assets/Taco/coin.png";
+    this.kAlert = "assets/Taco/alert.png";
     
-    var layersFolder = "lakeMountains"
+    var layersFolder = "lakeMountains";
     //background layers
     this.kBg1 = "assets/Taco/" + layersFolder + "/1_1.png";
     this.kBg2 = "assets/Taco/" + layersFolder + "/1_2.png";
@@ -92,6 +93,7 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBg3);
     gEngine.Textures.loadTexture(this.kBg4);
     gEngine.Textures.loadTexture(this.kBg5);
+    gEngine.Textures.loadTexture(this.kAlert);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -113,6 +115,7 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBg3);
     gEngine.Textures.unloadTexture(this.kBg4);
     gEngine.Textures.unloadTexture(this.kBg5);
+    gEngine.Textures.unloadTexture(this.kAlert);
     
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";
