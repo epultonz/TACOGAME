@@ -208,7 +208,7 @@ Level2Scene.prototype.initialize = function () {
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
-    this.mPipe = this.createPipe(325,5,10,10);
+    this.mPipe = this.createPipe(325,7.2,10,10);
     
     this.mCodeBox = new CodeMechanism(315,53,"0311",this.mKelvin,this.mCamera);
     
