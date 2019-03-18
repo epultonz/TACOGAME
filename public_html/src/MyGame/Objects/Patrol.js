@@ -16,8 +16,7 @@
  * + knocks back the hero if it runs into him with its left or right sides, and dies if
  * the hero "stomps" on it by landing on top of it.
  * 
- * @param {TextureInfo} spriteTexture The texturesheet for the patrol's sprite. Should be extended to have
- *     a "mirrored" sprite version as well so the patrol can flip between left/right facing.
+ * 
  * @param {float} spawnX The X coord to start the object at
  * @param {float} spawnY The Y coord to start the object at
  * @param {Hero} heroRef A reference to the Hero obj
@@ -27,7 +26,7 @@
  * @param {boolean} moveLeft Boolean stating if the patrol starts off going left (true) or right (false)
  * @returns {Patrol} The completed object, ready to be called via update() and draw()
  */
-function Patrol(spriteTexture, spawnX, spawnY, heroRef, patrolDelta = 0.225,
+function Patrol(spawnX, spawnY, heroRef, patrolDelta = 0.225,
         leftBound = (spawnX - 10), rightBound = (spawnX + 10), moveLeft = true) {
     this.kWidth = 6;
     this.kHeight = 6;
@@ -41,12 +40,15 @@ function Patrol(spriteTexture, spawnX, spawnY, heroRef, patrolDelta = 0.225,
     this.mMoveLeft = moveLeft;
     this.mVelocity = 12.5;
     
+    this.kGoomba = "assets/Taco/goomba.png";
+    
     // sprite renderable 
-    this.mPatrol = new SpriteRenderable(spriteTexture);
+    this.mPatrol = new SpriteAnimateRenderable(this.kGoomba);
     this.mPatrol.setColor([1, 1, 1, 0]);
     this.mPatrol.getXform().setPosition(spawnX, spawnY);
     this.mPatrol.getXform().setSize(this.kWidth, this.kHeight);
-    this.mPatrol.setElementPixelPositions(130,130+180,0,0+180);
+    this.mPatrol.setSpriteSequence(64,0,64,64,2,0);
+    this.mPatrol.setAnimationSpeed(20);
     
     // simplified minimap renderable
     this.mMinimapObj = new Renderable();
@@ -98,6 +100,7 @@ Patrol.prototype.update = function () {
             this.mMoveLeft = true;
         }
     }
+    this.mPatrol.updateAnimation();
     
     // Update the game object after moving
     GameObject.prototype.update.call(this);

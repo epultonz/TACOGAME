@@ -40,7 +40,7 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         var i, pos, patrol;
         for (i = 0; i < patrols.length; i++) {
             pos = patrols[i].Pos;
-            patrol = new Patrol(this.kSprites, pos[0], pos[1], this.mKelvin);
+            patrol = new Patrol(pos[0], pos[1]+0.5, this.mKelvin);
             //this.mAllObjs.addToSet(patrol);
             this.mAllPlatform.addToSet(patrol);
 
