@@ -83,9 +83,9 @@ MyGame.prototype.initialize = function () {
     this.tacoHelpButton = new UIButton(this.kUIButton,this.tacoHelpSelect,this,[400,200],[350,100],"Help",8,[1,1,1,1],[0,0,0,1]);
 
     this.tacoDifSelectLine = new LineRenderable(30,7,40,7);
-    this.tacoDifEasy = new UIButton(this.kUIButton,this.difEasySelect,this,[280,100],[100,100],"Easy",4,[1,1,1,1],[0,0,0,1]);
-    this.tacoDifMed = new UIButton(this.kUIButton,this.difMedSelect,this,[400,100],[100,100],"Medium",3,[1,1,1,1],[0,0,0,1]);
-    this.tacoDifHard = new UIButton(this.kUIButton,this.difHardSelect,this,[520,100],[100,100],"Hard",3.9,[1,1,1,1],[0,0,0,1]);
+    this.tacoDifEasy = new UIButton(this.kUIButton,this.difEasySelect,this,[280,100],[100,100],"Easy",4,[0,1,0,1],[0,0,0,1]);
+    this.tacoDifMed = new UIButton(this.kUIButton,this.difMedSelect,this,[400,100],[100,100],"Medium",3,[0,1,1,1],[0,0,0,1]);
+    this.tacoDifHard = new UIButton(this.kUIButton,this.difHardSelect,this,[520,100],[100,100],"Hard",3.9,[1,0,0,1],[0,0,0,1]);
 
     //this.tacoDifSelectLine.setColor([1,1,1,0]);
 };
