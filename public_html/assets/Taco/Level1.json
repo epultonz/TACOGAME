@@ -214,46 +214,46 @@
             "stubX": 45,
             "stubY": 34.5,
             "text": [
-                "You woke up...feeling lost..",
-                "Use A and D to move. Space to jump.",
-                "A particle floats around you.",
-                "It seems attracted to the shiny coin."]
+                "You woke up...feeling lost... Use",
+                "A/D or Left/Right to move, Space/W.",
+                "to jump. A particle floats around",
+                "you; it seems to like the coins..."]
         },
         {
             "stubX": 95,
             "stubY": 4.5,
             "text": [
-                "There seems to be some memory",
-                "contained in these coins...", 
-                "You saw a familiar enemy patrol ahead.",
-                "Jump and stomp them using S."]
+                "There's a strangely familiar mushroom",
+                "ahead, which hurts if it runs into", 
+                "you. However, if you land on or stomp",
+                "it with Down/S, then it'll go away."]
         },
         {
             "stubX": 175,
             "stubY": 34.5,
             "text": [
-                "Ouch! these red balls hurts.",
-                "Try to avoid them!",
-                "If only you have something to ",
-                "use and deflect them with..."]
+                "That floating wisp shoots homing",
+                "spiky balls! You wish you could",
+                "deflect them, but at least you can",
+                "jump off the leaf like a platform."]
         },
         {
             "stubX": 304,
             "stubY": 44.7,
             "text": [
-                "'Grab the bubble!' The particle says..",
-                "Now you can deflect projectiles ", 
-                "using I. Use sparingly!",
-                "It has a cooldown~"]
+                "That floating rock only hurts if it",
+                "crushes you. More importantly, this", 
+                "powerup lets you deflect any close-by",
+                "projectiles with Q/E/Ctrl."]
         },
         {
             "stubX": 410,
             "stubY": 4.8,
             "text": [
-                "'This one restore health huh?' You",
-                "watch your health rise a bit.", 
-                "You see the last green pipe ahead...",
-                "Press S above it to go to next level"]
+                "The particle flies around the nearby",
+                "powerup, which seems calming. The", 
+                "flashing pipe ahead of you looks like",
+                "the way out. Stomp on it leave!"]
         }
     ],
     
