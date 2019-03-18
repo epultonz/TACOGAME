@@ -52,6 +52,11 @@ function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true,
     this.mMinimapObj.getXform().setPosition(atX, atY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     
+    this.kAudPow0 = "Assets/Taco/Audio/AhMuchBetter.wav";
+    this.kAudPow1 = "Assets/Taco/Audio/IFeelPowerful.wav";
+    this.kAudPow2 = "Assets/Taco/Audio/WhereIsMyPointerThinging.wav";
+    
+    
     GameObject.call(this, this.mPowerup);   
 }
 gEngine.Core.inheritPrototype(Powerup, GameObject);
@@ -93,7 +98,7 @@ Powerup.prototype.update = function () {
             if((this.mHeroRef.getHP() !== 100) && (collideStatus !== 0))
             {
                 this.mHeroRef.incHP(45);
-               
+                gEngine.AudioClips.playACue(this.kAudPow0);
                 if(!this.mWillRespawn)
                     return false; 
                 else
@@ -115,6 +120,7 @@ Powerup.prototype.update = function () {
                 // Respawn flag always activated- if unnecessary, it'll never come up
                 // as the powerup will be deleted before respawning calculations take place
                 this.mRespawningFlag = true;
+                gEngine.AudioClips.playACue(this.kAudPow1);
                 return true;
             }
         }
@@ -129,6 +135,7 @@ Powerup.prototype.update = function () {
                 // Respawn flag always activated- if unnecessary, it'll never come up
                 // as the powerup will be deleted before respawning calculations take place
                 this.mRespawningFlag = true;
+                gEngine.AudioClips.playACue(this.kAudPow2);
                 return true;
             }
         }

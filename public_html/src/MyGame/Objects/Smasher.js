@@ -37,7 +37,7 @@ function Smasher(spriteTexture, spawnX, spawnY, heroRef, topBound = (spawnY + 7.
     this.mVelocityUp = velocityUp;
     this.mVelocityDown = velocityDown;
     this.mVelocity = velocityUp;
-
+    
     
     // sprite renderable 
     this.mSmasher = new SpriteRenderable(spriteTexture);

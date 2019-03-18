@@ -100,6 +100,9 @@ function Hero(spriteTexture, atX, atY, camRef = null, lgtSet) {
     this.mDeflectCD = 500;         //cooldown time for deflect
     this.mIsDeflectDown = true;     //is deflect currently cooling down
     this.mParticles = new ParticleGameObjectSet();
+    
+    this.kAudHurt1 = "Assets/Taco/Audio/Ouch.wav";
+    this.kAudHurt2 = "Assets/Taco/Audio/ThatHurt.wav";
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
@@ -390,7 +393,14 @@ Hero.prototype.tookDamage = function (damage) {
                 this.yDelta,this.freq,this.duration);
 
         this.mShakeStarted = true;
-    }  
+        
+        if(Math.random()*10 < 5){
+            gEngine.AudioClips.playACue(this.kAudHurt1);
+        } else {
+            gEngine.AudioClips.playACue(this.kAudHurt2);
+        }
+    } 
+
 };
 
 Hero.prototype.getHP = function () {
@@ -536,4 +546,4 @@ Hero.prototype._updatePetAndReflect = function() {
 
     }
     //-------------------end of pet code-------------------
-}
+};

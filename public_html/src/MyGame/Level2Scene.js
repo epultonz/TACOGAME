@@ -46,6 +46,13 @@ function Level2Scene() {
     this.mBg4 = null;
     this.mBg5 = null;
     
+    // Audio 
+    this.kAudIntro = "Assets/Taco/Audio/WhatIsThisPlace.wav";
+    this.kAudHurt1 = "Assets/Taco/Audio/Ouch.wav";
+    this.kAudHurt2 = "Assets/Taco/Audio/ThatHurt.wav";
+    this.kAudPow0 = "Assets/Taco/Audio/AhMuchBetter.wav";
+    this.kAudPow1 = "Assets/Taco/Audio/IFeelPowerful.wav";
+    this.kAudPow2 = "Assets/Taco/Audio/WhereIsMyPointerThinging.wav";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -69,10 +76,6 @@ function Level2Scene() {
 
     this.mCodeBox = null;
     
-    this.mTimer = null;
-    this.mPause = false;
-    this.mLastPos = null;
-
     this.backButton = null;
     this.MainMenuButton = null;
     
@@ -97,6 +100,12 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBg4);
     gEngine.Textures.loadTexture(this.kBg5);
     gEngine.Textures.loadTexture(this.kAlert);
+    gEngine.AudioClips.loadAudio(this.kAudIntro);
+    gEngine.AudioClips.loadAudio(this.kAudHurt1);
+    gEngine.AudioClips.loadAudio(this.kAudHurt2);
+    gEngine.AudioClips.loadAudio(this.kAudPow0);
+    gEngine.AudioClips.loadAudio(this.kAudPow1);
+    gEngine.AudioClips.loadAudio(this.kAudPow2);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -119,6 +128,12 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBg4);
     gEngine.Textures.unloadTexture(this.kBg5);
     gEngine.Textures.unloadTexture(this.kAlert);
+    gEngine.AudioClips.unloadAudio(this.kAudIntro);
+    gEngine.AudioClips.unloadAudio(this.kAudHurt1);
+    gEngine.AudioClips.unloadAudio(this.kAudHurt2);
+    gEngine.AudioClips.unloadAudio(this.kAudPow0);
+    gEngine.AudioClips.unloadAudio(this.kAudPow1);
+    gEngine.AudioClips.unloadAudio(this.kAudPow2);
     
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";
@@ -163,9 +178,6 @@ Level2Scene.prototype.initialize = function () {
 
     // the last pipe, for warping to next level
     this.mPipe = this.createPipe(325,5,10,10);
-    
-    this.mTimer = Date.now();
-    this.mLastPos = this.mKelvin.getXform().getPosition();
     
     this.mCodeBox = new CodeMechanism(315,53,"0311",this.mKelvin,this.mCamera);
     

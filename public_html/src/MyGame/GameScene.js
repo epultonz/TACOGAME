@@ -264,11 +264,7 @@ GameScene.prototype.update = function () {
         this.checkFall();
 
         // nice for debugging
-        msg += " Health: " + Math.ceil(this.mKelvin.getHP()) + " |" + " CanJump " + (collided) + " | ";
-    ;
-        //msg += " Q (damage), O (Win), L (Lose)";
-        msg += "x " + this.mLastPos[0].toPrecision(4) + " " + this.mLastPos[1].toPrecision(4);
-        this.mMsg.setText(msg);
+        msg += " Health: " + Math.ceil(this.mKelvin.getHP()) + " |" + " CanJump " + (collided);
 
         sc += "Score :" + gScore;
         this.mScore.setText(sc);
