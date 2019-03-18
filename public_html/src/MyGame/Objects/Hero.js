@@ -319,7 +319,7 @@ Hero.prototype.changeAnimation = function () {
                 //this.mKelvin.setAnimationType(this);
                 break;
             case Hero.eHeroState.eFaceRight:
-                this.mKelvin.setSpriteSequence(502, 20, wi, 118, 4, 40);
+                this.mKelvin.setSpriteSequence(502, 20, wi, 118, 1, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(5);
                 break;
@@ -335,16 +335,7 @@ Hero.prototype.changeAnimation = function () {
                 this.mKelvin.setAnimationSpeed(5);
                 break;
             
-            case Hero.eHeroState.eJumpLeft:
-                this.mKelvin.setSpriteSequence(246, 20, wi, 118, 2, 40);
-                this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(30);
-                break;
-            case Hero.eHeroState.eJumpRight:
-                this.mKelvin.setSpriteSequence(502, wi*4 + 160, wi, 118, 2, 40);
-                this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(30);
-                break;
+         
             
         }
     }
