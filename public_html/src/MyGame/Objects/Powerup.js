@@ -52,9 +52,9 @@ function Powerup(spriteTexture, atX, atY, heroRef, type = 0, respawnFlag = true,
     this.mMinimapObj.getXform().setPosition(atX, atY);
     this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
     
-    this.kAudPow0 = "Assets/Taco/Audio/AhMuchBetter.wav";
-    this.kAudPow1 = "Assets/Taco/Audio/IFeelPowerful.wav";
-    this.kAudPow2 = "Assets/Taco/Audio/WhereIsMyPointerThinging.wav";
+    this.kAudPow0 = "assets/Taco/Audio/AhMuchBetter.wav";
+    this.kAudPow1 = "assets/Taco/Audio/IFeelPowerful.wav";
+    this.kAudPow2 = "assets/Taco/Audio/WhereIsMyPointerThinging.wav";
     
     
     GameObject.call(this, this.mPowerup);   

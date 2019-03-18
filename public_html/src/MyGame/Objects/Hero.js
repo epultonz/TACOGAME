@@ -101,8 +101,8 @@ function Hero(spriteTexture, atX, atY, camRef = null, lgtSet) {
     this.mIsDeflectDown = true;     //is deflect currently cooling down
     this.mParticles = new ParticleGameObjectSet();
     
-    this.kAudHurt1 = "Assets/Taco/Audio/Ouch.wav";
-    this.kAudHurt2 = "Assets/Taco/Audio/ThatHurt.wav";
+    this.kAudHurt1 = "assets/Taco/Audio/Ouch.wav";
+    this.kAudHurt2 = "assets/Taco/Audio/ThatHurt.wav";
 
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
