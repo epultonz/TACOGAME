@@ -10,7 +10,7 @@
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
-
+var gDifficulty = 0;
 function MyGame() {
     this.kUIButton = "assets/UI/button.png";
     this.kBG = "assets/Taco/lakeMountains/1_1.png";
@@ -26,6 +26,11 @@ function MyGame() {
     this.tacoLevel2Button = null;
     this.tacoLevel1Button = null;
     this.tacoHelpButton = null;
+    
+    this.tacoDifEasy = null;
+    this.tacoDifMed = null;
+    this.tacoDifHard = null;
+    this.tacoDifSelectLine = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -75,6 +80,12 @@ MyGame.prototype.initialize = function () {
     this.tacoLevel1Button = new UIButton(this.kUIButton,this.tacoLevel1Select,this,[400,400],[350,100],"Level 1",8,[1,1,1,1],[0,0,0,1]);
     this.tacoLevel2Button = new UIButton(this.kUIButton,this.tacoLevel2Select,this,[400,300],[350,100],"Level 2",8,[1,1,1,1],[0,0,0,1]);
     this.tacoHelpButton = new UIButton(this.kUIButton,this.tacoHelpSelect,this,[400,200],[350,100],"Help",8,[1,1,1,1],[0,0,0,1]);
+    
+    this.tacoDifEasy = new UIButton(this.kUIButton,this.difEasySelect,this,[280,100],[100,100],"Easy",4,[1,1,1,1],[0,0,0,1]);
+    this.tacoDifMed = new UIButton(this.kUIButton,this.difMedSelect,this,[400,100],[100,100],"Medium",3,[1,1,1,1],[0,0,0,1]);
+    this.tacoDifHard = new UIButton(this.kUIButton,this.difHardSelect,this,[520,100],[100,100],"Hard",3.9,[1,1,1,1],[0,0,0,1]);
+    this.tacoDifSelectLine = new LineRenderable(30,7,40,7);
+    //this.tacoDifSelectLine.setColor([1,1,1,0]);
 };  
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -91,6 +102,10 @@ MyGame.prototype.draw = function () {
     this.tacoLevel1Button.draw(this.mCamera);
     this.tacoLevel2Button.draw(this.mCamera);
     this.tacoHelpButton.draw(this.mCamera);
+    this.tacoDifEasy.draw(this.mCamera);
+    this.tacoDifMed.draw(this.mCamera);
+    this.tacoDifHard.draw(this.mCamera);
+    this.tacoDifSelectLine.draw(this.mCamera);
 };
 
 MyGame.prototype.update = function () {
@@ -100,6 +115,11 @@ MyGame.prototype.update = function () {
     this.tacoLevel1Button.update();
     this.tacoLevel2Button.update();
     this.tacoHelpButton.update();
+    this.tacoDifEasy.update();
+    this.tacoDifMed.update();
+    this.tacoDifHard.update();
+    this.tacoDifSelectLine.update();
+
 };
 
 MyGame.prototype.tacoLevel1Select= function(){
@@ -115,4 +135,19 @@ MyGame.prototype.tacoLevel2Select= function(){
 MyGame.prototype.tacoHelpSelect= function(){
     this.LevelSelect="tacoHelp";
     gEngine.GameLoop.stop();
+};
+
+MyGame.prototype.difEasySelect= function(){
+    this.tacoDifSelectLine.setVertices(30,7,40,7);
+    gDifficulty = 0;
+};
+
+MyGame.prototype.difMedSelect =function(){
+    this.tacoDifSelectLine.setVertices(45,7,55,7);
+    gDifficulty = 1;
+};
+
+MyGame.prototype.difHardSelect= function(){
+    this.tacoDifSelectLine.setVertices(60,7,70,7);
+    gDifficulty = 2;
 };

@@ -6,16 +6,20 @@
 
 "use strict";
 
-
-function UIHealthBar(sprite, pos) {
+//difficulty 0 for easy, 1 for medium and 2 for hard
+function UIHealthBar(sprite, pos, difficulty) {
     this.mHearts = new SpriteRenderable(sprite);
-    this.mHearts.setElementPixelPositions(0,270, 0, 64);
+    //3 for easy, 2 for medium, 1 for hard
+    var numberOfHearts = [270.0, 180.0, 90.0];
+    this.mNumHearts = numberOfHearts[difficulty]; //1:90 2:180 3:270
+    this.mHearts.setElementPixelPositions(0,this.mNumHearts, 0, 64);
     this.mHearts.setColor([1, 1, 1, 0]);
     this.mHearts.getXform().setPosition(pos[0], pos[1]);
     this.mWidth = 15;
     this.mPos = [pos[0] - 50, pos[1]];
     this.mHearts.getXform().setSize(this.mWidth, 5);
-    this.mMaxHP = 100;
+    var health = [100,60,1]; //easy medium hard
+    this.mMaxHP = health[difficulty];
     this.mCurHP = this.mMaxHP;
     this.mPositionChange = null;
 };
@@ -88,7 +92,7 @@ UIHealthBar.prototype.incCurrentHP = function(hp) {
         this.mCurHP = this.mCurHP + hp;
     
     var heartPercentage = this.mCurHP / this.mMaxHP;
-    var newWidth = 270.0 * heartPercentage;
+    var newWidth = this.mNumHearts * heartPercentage;
     this.mHearts.setElementPixelPositions(0,newWidth, 0, 64);
     
     var oldWidth = this.mHearts.getXform().getSize()[0];

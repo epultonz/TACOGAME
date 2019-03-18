@@ -55,7 +55,8 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     //this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
     this.kHealthBar = "assets/UI/lives.png";
-    this.UIHealth = new UIHealthBar(this.kHealthBar,[39,70]);
+    //pass 0,1,2 for easy,medium,hard respectively
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[39,70],gDifficulty);
     
     //Light settings
     this.mLight = new Light();

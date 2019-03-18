@@ -1,4 +1,4 @@
-Green Pipe - http://pixelartmaker.com/art/a2b3c80af4d45b6
+﻿Green Pipe - http://pixelartmaker.com/art/a2b3c80af4d45b6
 KelvinSpriteRun - source from https://lionheart963.itch.io/axe-bandit, resprite by saiful
 Scene_example - https://foxlybr.itch.io/23421124244
 taco - discord
@@ -6,6 +6,7 @@ WornWhiteboard - saiful
 spritesheet2 - saiful
 cavern - https://yesevil22.itch.io/retro-tile-set-2
 desertMountains/lakeMountains/nightForest - https://opengameart.org/content/horizontal-2d-backgrounds
+platform dirt blocks - https://opengameart.org/content/jungle-dirt-background-connecting-tileset-16x16
 alert - saiful
 safe - saiful
 Background musics - https://opengameart.org/content/platformer-game-music-pack
