@@ -40,15 +40,21 @@ function Patrol(spawnX, spawnY, heroRef, patrolDelta = 0.225,
     this.mMoveLeft = moveLeft;
     this.mVelocity = 12.5;
     
-    this.kGoomba = "assets/Taco/goomba.png";
+    //this.kGoomba = "assets/Taco/goomba.png";
+    this.kGoomba = "assets/Taco/NewMobs/Patrol.png";
     
     // sprite renderable 
-    this.mPatrol = new SpriteAnimateRenderable(this.kGoomba);
+    //this.mPatrol = new SpriteAnimateRenderable(this.kGoomba);
+    this.mPatrol = new SpriteRenderable(this.kGoomba);
     this.mPatrol.setColor([1, 1, 1, 0]);
     this.mPatrol.getXform().setPosition(spawnX, spawnY);
     this.mPatrol.getXform().setSize(this.kWidth, this.kHeight);
-    this.mPatrol.setSpriteSequence(64,0,64,64,2,0);
-    this.mPatrol.setAnimationSpeed(20);
+    if(this.mMoveLeft)
+        this.mPatrol.setElementPixelPositions(0,100,0,85);
+    else
+        this.mPatrol.setElementPixelPositions(101,201,0,85);
+    //this.mPatrol.setSpriteSequence(64,0,64,64,2,0);
+    //this.mPatrol.setAnimationSpeed(20);
     
     // simplified minimap renderable
     this.mMinimapObj = new Renderable();
@@ -89,6 +95,7 @@ Patrol.prototype.update = function () {
         {
             this.mRigdRect.setVelocity(this.mVelocity, 0);
             this.mMoveLeft = false;
+            this.mPatrol.setElementPixelPositions(101,201,0,85);
         }
     }
     else // Otherwise, we're moving right
@@ -98,9 +105,10 @@ Patrol.prototype.update = function () {
         {
             this.mRigdRect.setVelocity(-this.mVelocity, 0);
             this.mMoveLeft = true;
+            this.mPatrol.setElementPixelPositions(0,100,0,85);
         }
     }
-    this.mPatrol.updateAnimation();
+    //this.mPatrol.updateAnimation();
     
     // Update the game object after moving
     GameObject.prototype.update.call(this);

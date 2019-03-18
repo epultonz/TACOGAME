@@ -31,6 +31,12 @@ function Level1Scene() {
     this.kAlert = "assets/Taco/alert.png";
     this.kGoomba = "assets/Taco/goomba.png";
     
+    // NewMobs
+    this.kPatrol = "assets/Taco/NewMobs/Patrol.png";
+    this.kCannon = "assets/Taco/NewMobs/Cannon.png";
+    this.kFlier = "assets/Taco/NewMobs/Flier.png";
+    this.kSmasher = "assets/Taco/NewMobs/Smasher.png";
+    
     var layersFolder = "lakeMountains";
     //background layers
     this.kBg1 = "assets/Taco/" + layersFolder + "/1_1.png";
@@ -103,6 +109,11 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBg5);
     gEngine.Textures.loadTexture(this.kAlert);
     gEngine.Textures.loadTexture(this.kGoomba);
+    gEngine.Textures.loadTexture(this.kPatrol);
+    gEngine.Textures.loadTexture(this.kCannon);
+    gEngine.Textures.loadTexture(this.kFlier);
+    gEngine.Textures.loadTexture(this.kSmasher);
+    
     gEngine.AudioClips.loadAudio(this.kAudIntro);
     gEngine.AudioClips.loadAudio(this.kAudHurt1);
     gEngine.AudioClips.loadAudio(this.kAudHurt2);
@@ -136,6 +147,10 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBg5);
     gEngine.Textures.unloadTexture(this.kAlert);
     gEngine.Textures.unloadTexture(this.kGoomba);
+    gEngine.Textures.unloadTexture(this.kPatrol);
+    gEngine.Textures.unloadTexture(this.kCannon);
+    gEngine.Textures.unloadTexture(this.kFlier);
+    gEngine.Textures.unloadTexture(this.kSmasher);
     gEngine.AudioClips.unloadAudio(this.kAudIntro);
     gEngine.AudioClips.unloadAudio(this.kAudHurt1);
     gEngine.AudioClips.unloadAudio(this.kAudHurt2);
