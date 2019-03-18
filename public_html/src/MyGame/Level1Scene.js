@@ -76,6 +76,7 @@ function Level1Scene() {
     this.mSceneBG = null;
 
     this.mCodeBox = null;
+    this.mPauseBackground = null;
 
     this.backButton = null;
     this.MainMenuButton = null;
@@ -195,7 +196,7 @@ Level1Scene.prototype.initialize = function () {
     this.mMsg.setTextHeight(2);
     
     this.mPauseMsg = new FontRenderable("Game Paused");
-    this.mPauseMsg.setColor([0, 0, 0, 1]);
+    this.mPauseMsg.setColor([.8, .8, .8, 1]);
     this.mPauseMsg.getXform().setPosition(20, 36);
     this.mPauseMsg.setTextHeight(10);
     
@@ -208,7 +209,13 @@ Level1Scene.prototype.initialize = function () {
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
     
-    //gEngine.AudioClips.playACue(this.mAudIntro);
+    // Dimming background to cue the player that the game is paused
+    this.mPauseBackground = new Renderable();
+    this.mPauseBackground.getXform().setPosition(250, 50);
+    this.mPauseBackground.getXform().setSize(5000,2500);
+    this.mPauseBackground.setColor([0,0,0,0.175]);
+    
+    //gEngine.AudioClips.playACue(this.kAudIntro);
     gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
 };
 

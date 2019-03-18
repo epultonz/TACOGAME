@@ -79,6 +79,7 @@ function Level2Scene() {
     this.mSceneBG = null;
 
     this.mCodeBox = null;
+    this.mPauseBackground = null;
     
     this.backButton = null;
     this.MainMenuButton = null;
@@ -214,6 +215,12 @@ Level2Scene.prototype.initialize = function () {
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
+    
+    // Dimming background to cue the player that the game is paused
+    this.mPauseBackground = new Renderable();
+    this.mPauseBackground.getXform().setPosition(250, 50);
+    this.mPauseBackground.getXform().setSize(5000,2500);
+    this.mPauseBackground.setColor([0,0,0,0.175]);
     
     gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
 };

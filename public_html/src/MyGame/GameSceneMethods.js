@@ -320,6 +320,10 @@ GameScene.prototype.drawMain = function() {
     {
         this.mCodeBox.draw(this.mCamera);
     }
+    if(this.mPause)
+    {
+        this.mPauseBackground.draw(this.mCamera);
+    }
 
     this.MainMenuButton.draw(this.mCamera);
     this.backButton.draw(this.mCamera);

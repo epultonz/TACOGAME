@@ -30,6 +30,12 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     this.mPanel = new TextureRenderable(texture);
     this.mPanel.getXform().setSize(width, width/2);
     
+    // Dimming background to cue the player that the game is paused
+    this.mBackground = new Renderable();
+    this.mBackground.getXform().setPosition(spawnX,spawnY);
+    this.mBackground.getXform().setSize(5000,2500);
+    this.mBackground.setColor([0,0,0,0.175]);
+    
     this.mText1 = new FontRenderable(" ");
     this.mText2 = new FontRenderable(" ");
     this.mText3 = new FontRenderable(" ");
@@ -141,6 +147,7 @@ StoryPanel.prototype.isActive = function(){
 StoryPanel.prototype.draw = function(aCam){
     this.mStub.draw(aCam);
     if(this.mActive){
+        this.mBackground.draw(aCam);
         GameObject.prototype.draw.call(this,aCam);
         this.mText1.draw(aCam);
         this.mText2.draw(aCam);
