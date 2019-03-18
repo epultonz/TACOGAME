@@ -38,17 +38,17 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.2, 1, .2, 1]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
-    this.mMinimapObj.getXform().setSize(this.kWidth*1.15, this.kHeight*1.15);
+    this.mMinimapObj.getXform().setSize(this.kWidth, this.kHeight);
 
     GameObject.call(this, this.mKelvin);
 
-    var r = new RigidRectangle(this.getXform(), this.kWidth/1.8 , this.kHeight/1.1 );
+    var r = new RigidRectangle(this.getXform(), this.kWidth , this.kHeight );
     this.setRigidBody(r);
     r.setMass(40);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
     r.setFriction(0);   //how much it slides with other object
     r.setInertia(0);    
-    
+        
     this.mRbox = r;
 
     //this.toggleDrawRenderable();
@@ -307,20 +307,21 @@ Hero.prototype.setCanDeflect = function(bool) {
 };
 
 Hero.prototype.changeAnimation = function () {
+    
     if (this.mHeroState !== this.mPreviousHeroState) {
         var wi = 130.67; // +20 on left, 40 offset
         switch (this.mHeroState) {
             // top, left, width, height, num, pad
             case Hero.eHeroState.eFaceLeft:
-                this.mKelvin.setSpriteSequence(246, wi*2 + 80, wi, 118, 4, 40);
+                this.mKelvin.setSpriteSequence(118, 20, wi, 118, 1, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(10);
+                this.mKelvin.setAnimationSpeed(1);
                 //this.mKelvin.setAnimationType(this);
                 break;
             case Hero.eHeroState.eFaceRight:
                 this.mKelvin.setSpriteSequence(502, 20, wi, 118, 4, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
-                this.mKelvin.setAnimationSpeed(10);
+                this.mKelvin.setAnimationSpeed(5);
                 break;
             
             case Hero.eHeroState.eRunLeft:
@@ -347,6 +348,7 @@ Hero.prototype.changeAnimation = function () {
             
         }
     }
+    
 };
 
 
@@ -357,6 +359,8 @@ Hero.prototype.draw = function (aCamera) {
     if(this.mIsSuper){
         this.mSuper.draw(aCamera);
     }
+        this.mRbox.draw(aCamera);
+
     this.mKelvin.draw(aCamera);
     //this.mRbox.draw(aCamera);
 };
