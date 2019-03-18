@@ -305,39 +305,39 @@ Hero.prototype.setCanDeflect = function(bool) {
 
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {
-        var wi = 170.67;
+        var wi = 130.67; // +20 on left, 40 offset
         switch (this.mHeroState) {
             // top, left, width, height, num, pad
             case Hero.eHeroState.eFaceLeft:
-                this.mKelvin.setSpriteSequence(256, wi*2 , wi, 128, 4, 0);
+                this.mKelvin.setSpriteSequence(246, wi*2 + 80, wi, 118, 4, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(10);
                 //this.mKelvin.setAnimationType(this);
                 break;
             case Hero.eHeroState.eFaceRight:
-                this.mKelvin.setSpriteSequence(512, 0 , wi, 128, 4, 0);
+                this.mKelvin.setSpriteSequence(502, 20, wi, 118, 4, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(10);
                 break;
             
             case Hero.eHeroState.eRunLeft:
-                this.mKelvin.setSpriteSequence(128, 0 , wi, 128, 6, 0);
+                this.mKelvin.setSpriteSequence(118, 20, wi, 118, 6, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(5);
                 break;
             case Hero.eHeroState.eRunRight:
-                this.mKelvin.setSpriteSequence(384, 0 , wi, 128, 6, 0);
+                this.mKelvin.setSpriteSequence(374, 20, wi, 118, 6, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(5);
                 break;
             
             case Hero.eHeroState.eJumpLeft:
-                this.mKelvin.setSpriteSequence(256, 0, wi, 128, 2, 0);
+                this.mKelvin.setSpriteSequence(246, 20, wi, 118, 2, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(30);
                 break;
             case Hero.eHeroState.eJumpRight:
-                this.mKelvin.setSpriteSequence(512, wi*4, wi, 128, 2, 0);
+                this.mKelvin.setSpriteSequence(502, wi*4 + 160, wi, 118, 2, 40);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(30);
                 break;
@@ -353,6 +353,7 @@ Hero.prototype.draw = function (aCamera) {
     }
     this.mSuper.draw(aCamera);
     this.mKelvin.draw(aCamera);
+    //this.mRbox.draw(aCamera);
 };
 
 Hero.prototype.drawHP = function (aCamera) {
