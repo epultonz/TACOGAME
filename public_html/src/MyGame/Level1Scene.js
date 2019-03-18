@@ -52,6 +52,7 @@ function Level1Scene() {
     this.kAudPow0 = "assets/Taco/Audio/AhMuchBetter.wav";
     this.kAudPow1 = "assets/Taco/Audio/IFeelPowerful.wav";
     this.kAudPow2 = "assets/Taco/Audio/WhereIsMyPointerThinging.wav";
+    this.kAudBG = "assets/Taco/Audio/Worldmap.mp3";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -106,11 +107,14 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.AudioClips.loadAudio(this.kAudPow0);
     gEngine.AudioClips.loadAudio(this.kAudPow1);
     gEngine.AudioClips.loadAudio(this.kAudPow2);
+    gEngine.AudioClips.loadAudio(this.kAudBG);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
 
 Level1Scene.prototype.unloadScene = function () {
+    gEngine.AudioClips.stopBackgroundAudio();
+    
     gEngine.Textures.unloadTexture(this.kPlatformTexture);
     gEngine.Textures.unloadTexture(this.kKelvin);
     gEngine.Textures.unloadTexture(this.kBG);
@@ -135,6 +139,7 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.AudioClips.unloadAudio(this.kAudPow0);
     gEngine.AudioClips.unloadAudio(this.kAudPow1);
     gEngine.AudioClips.unloadAudio(this.kAudPow2);
+    gEngine.AudioClips.unloadAudio(this.kAudBG);
     
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";
@@ -201,7 +206,7 @@ Level1Scene.prototype.initialize = function () {
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
     
     //gEngine.AudioClips.playACue(this.mAudIntro);
-    
+    gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
