@@ -103,7 +103,7 @@ function Hero(spriteTexture, atX, atY, camRef = null, lgtSet) {
     
     this.kAudHurt1 = "assets/Taco/Audio/Ouch.wav";
     this.kAudHurt2 = "assets/Taco/Audio/ThatHurt.wav";
-
+    this.kAudJump = "assets/Taco/Audio/jump.wav";
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -209,6 +209,7 @@ Hero.prototype.update = function () {
                 this.mHeroState = Hero.eHeroState.eJumpLeft;
             */
             this.mIsMoving = true;
+            gEngine.AudioClips.playACue(this.kAudJump);
         }
     } else {
         if ((gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) || 

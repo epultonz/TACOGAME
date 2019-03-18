@@ -53,6 +53,7 @@ function Level1Scene() {
     this.kAudPow1 = "assets/Taco/Audio/IFeelPowerful.wav";
     this.kAudPow2 = "assets/Taco/Audio/WhereIsMyPointerThinging.wav";
     this.kAudBG = "assets/Taco/Audio/Worldmap.mp3";
+    this.kAudJump = "assets/Taco/Audio/jump.wav";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -108,6 +109,7 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.AudioClips.loadAudio(this.kAudPow1);
     gEngine.AudioClips.loadAudio(this.kAudPow2);
     gEngine.AudioClips.loadAudio(this.kAudBG);
+    gEngine.AudioClips.loadAudio(this.kAudJump);
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eTextFile);
     document.getElementById("particle").style.display="block"; //display the instruction below
 };
@@ -140,6 +142,7 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.AudioClips.unloadAudio(this.kAudPow1);
     gEngine.AudioClips.unloadAudio(this.kAudPow2);
     gEngine.AudioClips.unloadAudio(this.kAudBG);
+    gEngine.AudioClips.unloadAudio(this.kAudJump);
     
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
     document.getElementById("particle").style.display="none";

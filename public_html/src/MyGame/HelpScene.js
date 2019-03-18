@@ -21,6 +21,8 @@ function HelpScene() {
     this.UIText = null;
     this.LevelSelect = null;
     
+    this.mline = null;
+    
     //Our game test scene
     this.backButton = null;
     this.startLevelButton = null;
@@ -53,6 +55,7 @@ HelpScene.prototype.initialize = function () {
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
     
+    this.mline = new LineRenderable(5,40,95,40);
     
     //this.ParticleButton = new UIButton(this.kUIButton,this.particleSelect,this,[400,400],[600,100],"Particle Demos",8,[1,1,1,1],[0,0,0,1]);
     //this.PhysicsButton = new UIButton(this.kUIButton,this.physicsSelect,this,[400,300],[500,100],"Physics Demo",8,[1,1,1,1],[0,0,0,1]);
@@ -60,8 +63,26 @@ HelpScene.prototype.initialize = function () {
     this.UIText = new UIText("HELP PAGE",[400,600],8,1,0,[0,0,0,1]);
     
     //param: sprite, run when click, return contect to, buttonPos, buttonSize, text, textSize, textColor, textColorClicked
-    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[400,400],[350,100],"BACK",8,[1,1,1,1],[0,0,0,1]);
-    this.startLevelButton = new UIButton(this.kUIButton,this.startGameSelect,this,[400,200],[350,100],"START GAME",8,[1,1,1,1],[0,0,0,1]);
+    this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"BACK",4,[1,1,1,1],[0,0,0,1]);
+    this.startLevelButton = new UIButton(this.kUIButton,this.startGameSelect,this,[700,576],[200,40],"START GAME",4,[1,1,1,1],[0,0,0,1]);
+    
+    this.storyText = new UIText("Help Kelvin go through the levels while beating the enemies."
+        ,[400,450],2,1,1,[0,0,0,1]);
+    this.storyText2 = new UIText("Stomp down enemies and deflect back their projectiles!"
+        ,[400,400],2,1,1,[0,0,0,1]);
+    this.storyText3 = new UIText("Read the panels throughout the levels and go through (certain) pipes to win!"
+        ,[400,350],2,1,1,[0,0,0,1]);
+    
+    this.helpText = new UIText("Use (A/D) | (Left/Right Arrows)  to move left and right"
+        ,[20,250],2,null,null,[0,0,0,1]);
+    this.helpText2 = new UIText("Use (Space/W/Up Arrow)  to jump!"
+        ,[20,200],2,null,null,[0,0,0,1]);
+    this.helpText3 = new UIText("Use (S/Down Arrow)  to stomp or go through pipes!"
+        ,[20,150],2,null,null,[0,0,0,1]);
+    this.helpText4 = new UIText("Use (Q/E/R)  to deflect projectiles if active"
+        ,[20,100],2,null,null,[0,0,0,1]);
+    this.helpText5 = new UIText("Use (Esc)  to toggle game pause"
+        ,[20,50],2,null,null,[0,0,0,1]);
 };  
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -76,6 +97,19 @@ HelpScene.prototype.draw = function () {
     //this.PhysicsButton.draw(this.mCamera);
     //this.UIButton.draw(this.mCamera);
     this.UIText.draw(this.mCamera);
+    
+    this.mline.draw(this.mCamera);
+    
+    this.storyText.draw(this.mCamera);
+    this.storyText2.draw(this.mCamera);
+    this.storyText3.draw(this.mCamera);
+    
+    this.helpText.draw(this.mCamera);
+    this.helpText2.draw(this.mCamera);
+    this.helpText3.draw(this.mCamera);
+    this.helpText4.draw(this.mCamera);
+    this.helpText5.draw(this.mCamera);
+    
     this.backButton.draw(this.mCamera);
     this.startLevelButton.draw(this.mCamera);
 };
