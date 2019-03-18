@@ -53,6 +53,7 @@ function GameScene() {
     this.mSceneBG = null;
 
     this.mCodeBox = null;
+    this.mPauseBackground = null;
     
     this.mTimer = null;
     this.mPause = false;
@@ -154,6 +155,12 @@ GameScene.prototype.initialize = function () {
     this.mScore.getXform().setPosition(5, 62);
     this.mScore.setTextHeight(2);
     
+    // Dimming background to cue the player that the game is paused
+    this.mPauseBackground = new Renderable();
+    this.mPauseBackground.getXform().setPosition(250, 50);
+    this.mPauseBackground.getXform().setSize(5000,2500);
+    this.mPauseBackground.setColor([0,0,0,0.175]);
+    
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
@@ -168,6 +175,7 @@ GameScene.prototype.draw = function () {
     this.drawMain();
     if(this.mPause)
     {
+        //this.mPauseBackground.draw(this.mCamera);
         this.mPauseMsg.draw(this.mCamera);
     }
     this.drawMap();
@@ -176,6 +184,9 @@ GameScene.prototype.draw = function () {
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 GameScene.prototype.update = function () {
+    // UI Buttons should still work even with ESC pause
+    this.MainMenuButton.update();
+    this.backButton.update();
     
     // Pause if we hit the Esc key, then unpause if we hit it again
     if(this.mPause)
@@ -219,8 +230,8 @@ GameScene.prototype.update = function () {
     this.mKelvin.update();
     
     // Update UI and camera, as they should still work during pause    
-    this.MainMenuButton.update();
-    this.backButton.update();
+    //this.MainMenuButton.update();
+    //this.backButton.update();
     
     this.mCamera.panXWith(this.mKelvin.getXform(), 0);
     this.mCamera.update();
@@ -229,7 +240,7 @@ GameScene.prototype.update = function () {
     this.mMinimapCam.update();
     
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
-    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
+    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0]-2, 71);
     
     // Update the flashing on the exit pipe
     if(this.mPipe !== null)
@@ -248,9 +259,9 @@ GameScene.prototype.update = function () {
         {
             var pipeRend = this.mPipe.getRenderable();
             var oldColor = pipeRend.getColor();
-            if(oldColor[3] > .3)
-                oldColor[3] = -0.003;
-            pipeRend.setColor([1, 1, 1, oldColor[3] +0.003]);
+            if(oldColor[3] > .35)
+                oldColor[3] = -0.004;
+            pipeRend.setColor([1, 1, 1, oldColor[3] +0.004]);
         }
     }
     
@@ -289,7 +300,7 @@ GameScene.prototype.update = function () {
         // nice for debugging
         msg += " Health: " + Math.ceil(this.mKelvin.getHP()) + " |" + " CanJump " + (collided);
         this.mMsg.setText(msg);
-        sc += "Score :" + gScore;
+        sc += "Score: " + gScore;
         this.mScore.setText(sc);
     }
 

@@ -32,6 +32,12 @@ function Level2Scene() {
     this.kSafe = "assets/Taco/safe.png";
     this.kGoomba = "assets/Taco/goomba.png";
     
+    // NewMobs
+    this.kPatrol = "assets/Taco/NewMobs/Patrol.png";
+    this.kCannon = "assets/Taco/NewMobs/Cannon.png";
+    this.kFlier = "assets/Taco/NewMobs/Flier.png";
+    this.kSmasher = "assets/Taco/NewMobs/Smasher.png";
+    
     //keep naming consistnet farthest layer to the back 1_1, closest to front 1_5
     // set layers folder to name of folder that contains layers
     var layersFolder = "nightForest";
@@ -79,6 +85,7 @@ function Level2Scene() {
     this.mSceneBG = null;
 
     this.mCodeBox = null;
+    this.mPauseBackground = null;
     
     this.backButton = null;
     this.MainMenuButton = null;
@@ -106,6 +113,11 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kAlert);
     gEngine.Textures.loadTexture(this.kSafe);
     gEngine.Textures.loadTexture(this.kGoomba);
+    gEngine.Textures.loadTexture(this.kPatrol);
+    gEngine.Textures.loadTexture(this.kCannon);
+    gEngine.Textures.loadTexture(this.kFlier);
+    gEngine.Textures.loadTexture(this.kSmasher);
+    
     gEngine.AudioClips.loadAudio(this.kAudIntro);
     gEngine.AudioClips.loadAudio(this.kAudHurt1);
     gEngine.AudioClips.loadAudio(this.kAudHurt2);
@@ -140,6 +152,11 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kAlert);
     gEngine.Textures.unloadTexture(this.kSafe);
     gEngine.Textures.unloadTexture(this.kGoomba);
+    gEngine.Textures.unloadTexture(this.kPatrol);
+    gEngine.Textures.unloadTexture(this.kCannon);
+    gEngine.Textures.unloadTexture(this.kFlier);
+    gEngine.Textures.unloadTexture(this.kSmasher);
+    
     gEngine.AudioClips.unloadAudio(this.kAudIntro);
     gEngine.AudioClips.unloadAudio(this.kAudHurt1);
     gEngine.AudioClips.unloadAudio(this.kAudHurt2);
@@ -191,7 +208,7 @@ Level2Scene.prototype.initialize = function () {
     gEngine.Physics.incRelaxationCount(15); //time to rest after a physics event
 
     // the last pipe, for warping to next level
-    this.mPipe = this.createPipe(325,5,10,10);
+    this.mPipe = this.createPipe(325,7.2,10,10);
     
     this.mCodeBox = new CodeMechanism(315,53,"0311",this.mKelvin,this.mCamera);
     
@@ -214,6 +231,12 @@ Level2Scene.prototype.initialize = function () {
     //UI button
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
+    
+    // Dimming background to cue the player that the game is paused
+    this.mPauseBackground = new Renderable();
+    this.mPauseBackground.getXform().setPosition(250, 50);
+    this.mPauseBackground.getXform().setSize(5000,2500);
+    this.mPauseBackground.setColor([0,0,0,0.175]);
     
     gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
 };
@@ -250,7 +273,7 @@ Level2Scene.prototype.checkWinLose = function(){
     }*/
     //lose conditions
     var hp = this.mKelvin.getHP();
-    if (hp <= 0 || this.mKelvin.getXform().getXPos() > 490) {
+    if (hp <= 0) {
         this.LevelSelect = "Lose";
         gEngine.GameLoop.stop();
     }

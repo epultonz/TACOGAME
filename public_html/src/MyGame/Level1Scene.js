@@ -31,6 +31,12 @@ function Level1Scene() {
     this.kAlert = "assets/Taco/alert.png";
     this.kGoomba = "assets/Taco/goomba.png";
     
+    // NewMobs
+    this.kPatrol = "assets/Taco/NewMobs/Patrol.png";
+    this.kCannon = "assets/Taco/NewMobs/Cannon.png";
+    this.kFlier = "assets/Taco/NewMobs/Flier.png";
+    this.kSmasher = "assets/Taco/NewMobs/Smasher.png";
+    
     var layersFolder = "lakeMountains";
     //background layers
     this.kBg1 = "assets/Taco/" + layersFolder + "/1_1.png";
@@ -76,6 +82,7 @@ function Level1Scene() {
     this.mSceneBG = null;
 
     this.mCodeBox = null;
+    this.mPauseBackground = null;
 
     this.backButton = null;
     this.MainMenuButton = null;
@@ -102,6 +109,11 @@ Level1Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBg5);
     gEngine.Textures.loadTexture(this.kAlert);
     gEngine.Textures.loadTexture(this.kGoomba);
+    gEngine.Textures.loadTexture(this.kPatrol);
+    gEngine.Textures.loadTexture(this.kCannon);
+    gEngine.Textures.loadTexture(this.kFlier);
+    gEngine.Textures.loadTexture(this.kSmasher);
+    
     gEngine.AudioClips.loadAudio(this.kAudIntro);
     gEngine.AudioClips.loadAudio(this.kAudHurt1);
     gEngine.AudioClips.loadAudio(this.kAudHurt2);
@@ -135,6 +147,10 @@ Level1Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBg5);
     gEngine.Textures.unloadTexture(this.kAlert);
     gEngine.Textures.unloadTexture(this.kGoomba);
+    gEngine.Textures.unloadTexture(this.kPatrol);
+    gEngine.Textures.unloadTexture(this.kCannon);
+    gEngine.Textures.unloadTexture(this.kFlier);
+    gEngine.Textures.unloadTexture(this.kSmasher);
     gEngine.AudioClips.unloadAudio(this.kAudIntro);
     gEngine.AudioClips.unloadAudio(this.kAudHurt1);
     gEngine.AudioClips.unloadAudio(this.kAudHurt2);
@@ -195,7 +211,7 @@ Level1Scene.prototype.initialize = function () {
     this.mMsg.setTextHeight(2);
     
     this.mPauseMsg = new FontRenderable("Game Paused");
-    this.mPauseMsg.setColor([0, 0, 0, 1]);
+    this.mPauseMsg.setColor([.8, .8, .8, 1]);
     this.mPauseMsg.getXform().setPosition(20, 36);
     this.mPauseMsg.setTextHeight(10);
     
@@ -208,7 +224,13 @@ Level1Scene.prototype.initialize = function () {
     this.backButton = new UIButton(this.kUIButton,this.backSelect,this,[80,576],[160,40],"Go Back",4,[1,1,1,1],[1,1,1,1]);
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,576],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
     
-    //gEngine.AudioClips.playACue(this.mAudIntro);
+    // Dimming background to cue the player that the game is paused
+    this.mPauseBackground = new Renderable();
+    this.mPauseBackground.getXform().setPosition(250, 50);
+    this.mPauseBackground.getXform().setSize(5000,2500);
+    this.mPauseBackground.setColor([0,0,0,0.175]);
+    
+    //gEngine.AudioClips.playACue(this.kAudIntro);
     gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
 };
 

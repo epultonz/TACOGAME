@@ -59,7 +59,7 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     //this.toggleDrawRigidShape(); // Less noticable that hero is tilting if this is off
 
     this.kHealthBar = "assets/UI/lives.png";
-    this.UIHealth = new UIHealthBar(this.kHealthBar,[13,50]);
+    this.UIHealth = new UIHealthBar(this.kHealthBar,[39,70]);
     
     //Light settings
     this.mLight = new Light();
@@ -355,11 +355,15 @@ Hero.prototype.changeAnimation = function () {
 
 Hero.prototype.draw = function (aCamera) {
     //this.mPet.draw(aCamera);
-    this.UIHealth.draw(aCamera);
+    //this.UIHealth.draw(aCamera);
     if (this.mParticles !== null) {
         this.mParticles.draw(aCamera);
     }
     this.mKelvin.draw(aCamera);
+};
+
+Hero.prototype.drawHP = function (aCamera) {
+    this.UIHealth.draw(aCamera); 
 };
 
 Hero.prototype.drawMini = function (aCamera) {
