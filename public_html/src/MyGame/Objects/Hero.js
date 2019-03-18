@@ -359,8 +359,7 @@ Hero.prototype.draw = function (aCamera) {
     if(this.mIsSuper){
         this.mSuper.draw(aCamera);
     }
-        this.mRbox.draw(aCamera);
-
+    this.mKelvin.draw(aCamera);
     //this.mRbox.draw(aCamera);
 };
 
