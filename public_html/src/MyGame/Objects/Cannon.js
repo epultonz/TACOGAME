@@ -23,13 +23,14 @@
  * @param {Hero} heroRef A reference to the Hero obj
  * @param {GameObjectSet} setRef A reference to the set for Projectiles to become a part of
  * @param {boolean} facingLeft Boolean to show if the cannon is facing left (true) or right (false)
+ * @param {int} health How many hits it should take to kill the cannon
  * @param {int} shootTimer The amount of update ticks between projectile shots. Normally updates 60 times a second
  * @param {int} projectileTimer The amount of update ticks for projectiles to stay on screen
  * @param {float} projectileDelta The delta to give projectiles (how fast they move)
  *      should ALWAYS be positive!
  * @returns {Cannon}
  */
-function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, shootTimer = 210,
+function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, health = 3, shootTimer = 210,
         projectileTimer = 180, projectileDelta = 0.525) {
     this.kWidth = 7;
     this.kHeight = 7;
@@ -42,6 +43,7 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     this.mProjectileDelta = projectileDelta;
     this.mFacingLeft = facingLeft;
     this.mHitByDeflect = false;
+    this.mHealth = health;
     
     // sprite renderable 
     this.mCannon = new SpriteRenderable(spriteTexture);
@@ -76,8 +78,15 @@ gEngine.Core.inheritPrototype(Cannon, GameObject);
 Cannon.prototype.update = function () {
     if(this.mHitByDeflect) // Cannon should vanish after being hit
     {
-        gScore += 35;
-        return false;
+        this.mHitByDeflect = false;
+        this.mHealth--;
+        var oldColor = this.mCannon.getColor();
+        this.mCannon.setColor([1, .5, .5, oldColor[3]+.1]);
+        if(this.mHealth <= 0)
+        {
+            gScore += 35;
+            return false;
+        }
     }
         
     GameObject.prototype.update.call(this);
@@ -95,7 +104,7 @@ Cannon.prototype.update = function () {
             delta = 0 - delta;
         
         var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, this, delta, this.mProjectileTimer);
-        bullet.setDeflectionKills(false);
+        //bullet.setDeflectionKills(false);
         this.mSetRef.addToSet(bullet);
     }
 };
