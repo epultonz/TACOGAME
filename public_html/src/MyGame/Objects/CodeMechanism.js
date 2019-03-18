@@ -82,10 +82,10 @@ CodeMechanism.prototype.drawMini = function(aCam)
 CodeMechanism.prototype.UICodeText = function(){
     var val = this.mUICodeBox.getEnteredValue();
     if(this.mCode === val){
-        this.mStub.setColor([0,1,0,1]);
+        this.mStub.setColor([.2,1,.2,.4]);
         this.mSolved = true;
     } else if(this.mCode !== val){
-        this.mStub.setColor([1,0,0,1]);
+        this.mStub.setColor([1,.2,.2,.2]);
     }
 };
 
