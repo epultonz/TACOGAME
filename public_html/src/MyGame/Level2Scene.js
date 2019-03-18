@@ -31,7 +31,7 @@ function Level2Scene() {
     this.kAlert = "assets/Taco/alert.png";
     this.kSafe = "assets/Taco/safe.png";
     this.kGoomba = "assets/Taco/goomba.png";
-    
+    this.kSuper = "assets/Taco/super.png";
     // NewMobs
     this.kPatrol = "assets/Taco/NewMobs/Patrol.png";
     this.kCannon = "assets/Taco/NewMobs/Cannon.png";
@@ -117,7 +117,7 @@ Level2Scene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kCannon);
     gEngine.Textures.loadTexture(this.kFlier);
     gEngine.Textures.loadTexture(this.kSmasher);
-    
+    gEngine.Textures.loadTexture(this.kSuper);
     gEngine.AudioClips.loadAudio(this.kAudIntro);
     gEngine.AudioClips.loadAudio(this.kAudHurt1);
     gEngine.AudioClips.loadAudio(this.kAudHurt2);
@@ -156,7 +156,7 @@ Level2Scene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kCannon);
     gEngine.Textures.unloadTexture(this.kFlier);
     gEngine.Textures.unloadTexture(this.kSmasher);
-    
+    gEngine.Textures.unloadTexture(this.kSuper);
     gEngine.AudioClips.unloadAudio(this.kAudIntro);
     gEngine.AudioClips.unloadAudio(this.kAudHurt1);
     gEngine.AudioClips.unloadAudio(this.kAudHurt2);

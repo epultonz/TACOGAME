@@ -35,10 +35,6 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     this.mKelvin.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
     this.mKelvin.setAnimationSpeed(8);         // show each element for mAnimSpeed updates
 
-    //this.mKelvin.addLight(lgtSet.getLightAt(2)); //jeb fix
-    //this.mKelvin.addLight(lgtSet.getLightAt(3));
-    //this.mKelvin.addLight(lgtSet.getLightAt(2);
-    
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.2, 1, .2, 1]);
     this.mMinimapObj.getXform().setPosition(atX, atY);
@@ -46,7 +42,7 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
 
     GameObject.call(this, this.mKelvin);
 
-    var r = new RigidRectangle(this.getXform(), this.kWidth/1.2 , this.kHeight/1.1 );
+    var r = new RigidRectangle(this.getXform(), this.kWidth/1.8 , this.kHeight/1.1 );
     this.setRigidBody(r);
     r.setMass(40);     // high mass so wont get affected by other object much
     r.setRestitution(-0.1); // higher means more bouncy
@@ -66,6 +62,15 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     this.mKelvin.addLight(this.mLight);
     this.mLight.set2DPosition(this.mKelvin.getXform().getPosition());
     this.mLight.setLightTo(false);
+    
+    //super texture
+    this.kSuper = "assets/Taco/super.png";
+    this.mSuper = new LightRenderable(this.kSuper);
+    this.mSuper.getXform().setPosition(this.mKelvin.getXform().getPosition());
+    this.mSuper.getXform().setSize(20,20);
+    this.mSuper.setColor([1,1,1,0]);
+    
+    this.mSuper.addLight(this.mLight);
     
     // powerup settings
     this.mIsSuper = false;
@@ -133,6 +138,8 @@ Hero.prototype.addEmitterToPet = function() {
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
+    this.mSuper.getXform().setPosition(this.mKelvin.getXform().getPosition());
+    
     if (this.mParticles.size() < 190) {
         this.addEmitterToPet();
     }
@@ -218,17 +225,6 @@ Hero.prototype.update = function () {
         
     }
     
-    /*
-    // toggle super saiyan mode!!!!!! UWOOOOHHHHHHHHHHHHH
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
-        if(!this.mIsSuper){
-            this.mLight.setLightTo(true);
-            this.mIsSuper = true;
-        }else{
-            this.mLight.setLightTo(false);
-            this.mIsSuper = false;
-        }
-    */
     if(this.mIsSuper){this.goSuper();} 
 
     if(this.mShakeStarted) {
@@ -265,15 +261,13 @@ Hero.prototype.update = function () {
     //lots of dupliacted and messy code will create methods soon
     
     //if currently has deflect power and deflect currently on cooldown
-    
-    
-    
-    
+
     this._updatePetAndReflect();
     
     this.mLight.set2DPosition(xform.getPosition());
     this.changeAnimation();
     this.UIHealth.update();
+    
 
     //stop kevin from rotating
     //this.getRbox().setAngularVelocity(0);
@@ -354,11 +348,10 @@ Hero.prototype.changeAnimation = function () {
 
 
 Hero.prototype.draw = function (aCamera) {
-    //this.mPet.draw(aCamera);
-    //this.UIHealth.draw(aCamera);
     if (this.mParticles !== null) {
         this.mParticles.draw(aCamera);
     }
+    this.mSuper.draw(aCamera);
     this.mKelvin.draw(aCamera);
 };
 

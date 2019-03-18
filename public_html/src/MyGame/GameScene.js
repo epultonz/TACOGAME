@@ -187,7 +187,7 @@ GameScene.prototype.update = function () {
     // UI Buttons should still work even with ESC pause
     this.MainMenuButton.update();
     this.backButton.update();
-    
+
     // Pause if we hit the Esc key, then unpause if we hit it again
     if(this.mPause)
     {
@@ -328,4 +328,4 @@ GameScene.prototype._getObjectsNearKelvin = function() {
         }
     }
     return objNearKelvin;
-}
+};
