@@ -361,7 +361,6 @@ Hero.prototype.draw = function (aCamera) {
     }
         this.mRbox.draw(aCamera);
 
-    this.mKelvin.draw(aCamera);
     //this.mRbox.draw(aCamera);
 };
 
