@@ -20,9 +20,11 @@ function CodeMechanism(stubX,stubY,code,hero,aCam1){
     this.mText.getXform().setPosition(38,30);
     this.mText.setTextHeight(2);
     
+    this.kSafe = "assets/Taco/safe.png";
+    
     //stub in game
-    this.mStub = new Renderable();
-    this.mStub.setColor([1,0,0,1]);
+    this.mStub = new TextureRenderable(this.kSafe);
+    this.mStub.setColor([1,1,1,0]);
     this.mStub.getXform().setPosition(stubX,stubY);
     this.mStub.getXform().setSize(4,4);
     
