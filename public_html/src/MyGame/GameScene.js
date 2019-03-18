@@ -265,7 +265,7 @@ GameScene.prototype.update = function () {
 
         // nice for debugging
         msg += " Health: " + Math.ceil(this.mKelvin.getHP()) + " |" + " CanJump " + (collided);
-
+        this.mMsg.setText(msg);
         sc += "Score :" + gScore;
         this.mScore.setText(sc);
     }
