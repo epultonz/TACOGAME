@@ -260,37 +260,37 @@
             "stubX": 25,
             "stubY": 5,
             "text": [
-                "You arrive at a dark cavern...",
-                "Enemies seem to swarm this place", 
-                "You see a new power bubble ahead",
-                "it screams 'SUPER SAIYANNNN!!!'"]
+                "You arrive in a dark forest...",
+                "There's a powerup behind the pipe", 
+                "and one in the distance. That one",
+                "seems to be radiating energy..."]
         },
         {
             "stubX": 227,
             "stubY": 31,
             "text": [
-                "You sweat as you finally found a",
-                "safe place. You survey around you...", 
-                "There's something eerie about it...",
-                "Like a monster approaching..."]
+                "The monsters with pipes seem to shoot",
+                "'normal' projectiles constantly. But,", 
+                "it looks pretty weak. Two hits from",
+                "its projectiles will likely kill it."]
         },
         {
             "stubX": 295,
             "stubY": 53,
             "text": [
-                "You see a BIG safe tech infront",
-                "It seems to need passcode to activate", 
-                "Better explore ahead.",
-                "There's a life bubble down there."]
+                "There's a BIG safe in front of you",
+                "and the exit pipe is flashing red.",
+                "It seems you need a passcode to", 
+                "leave here. Better explore ahead."]
         },
         {
             "stubX": 475,
             "stubY": 41,
             "text": [
-                "You reach the end.. Theres void ahead..",
-                "You noticed a small scribble...", 
-                "First 4 digits of pi - p*ssc*d*",
-                "Then dive down on the pipe below..."]
+                "You reach the end; only void ahead of",
+                "you. You notice a small scribble...", 
+                "'First 4 digits of pi - p*ssc*d*",
+                "Then dive down on the pipe below...'"]
         }
     ],
     
