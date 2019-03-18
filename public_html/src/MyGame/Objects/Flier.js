@@ -19,6 +19,7 @@
  * @param {float} spawnY The Y coord to start the object at
  * @param {Hero} heroRef A reference to the Hero obj
  * @param {GameObjectSet} setRef A reference to the set for Projectiles to become a part of
+ * @param {int} health How many hits it should take to kill the cannon
  * @param {int} shootTimer The amount of update ticks between projectile shots. Normally updates 60 times a second
  * @param {int} projectileTimer The amount of update ticks for projectiles to stay on screen
  * @param {float} projectileDelta The delta to give projectiles (how fast they move)
@@ -28,7 +29,7 @@
  * @param {int} patrolTimer the amount of time between switching patrol target locations
  * @returns {Flier}
  */
-function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, shootTimer = 480,
+function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, health = 2, shootTimer = 480,
         projectileTimer = 145, projectileDelta = 0.4, patrolDelta = 0.025,
         patrolDist = 15, patrolTimer = 400) {
     // Renderable Vars
@@ -57,6 +58,7 @@ function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, shoo
     
     // Deflected projectile vars
     this.mHitByDeflect = false;
+    this.mHealth = health;
     
     // sprite renderable 
     this.mFlier = new SpriteRenderable(spriteTexture);
@@ -89,8 +91,15 @@ gEngine.Core.inheritPrototype(Flier, GameObject);
 Flier.prototype.update = function () {
     if(this.mHitByDeflect) // Flier should vanish after being hit
     {
-        gScore += 50;
-        return false;
+        this.mHitByDeflect = false;
+        this.mHealth--;
+        var oldColor = this.mFlier.getColor();
+        this.mFlier.setColor([1, .5, .5, oldColor[3]+.25]);
+        if(this.mHealth <= 0)
+        {
+            gScore += 50;
+            return false;
+        }
     }
     GameObject.prototype.update.call(this);
     
