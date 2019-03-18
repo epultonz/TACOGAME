@@ -360,7 +360,7 @@ Hero.prototype.draw = function (aCamera) {
         this.mParticles.draw(aCamera);
     }
     this.mKelvin.draw(aCamera);
-    this.mRbox.draw(aCamera);
+    //this.mRbox.draw(aCamera);
 };
 
 Hero.prototype.drawHP = function (aCamera) {
