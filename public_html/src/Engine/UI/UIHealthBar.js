@@ -10,12 +10,12 @@
 function UIHealthBar(sprite, pos, difficulty) {
     this.mHearts = new SpriteRenderable(sprite);
     //3 for easy, 2 for medium, 1 for hard
-    var numberOfHearts = [270.0, 180.0, 90.0];
+    var numberOfHearts = [270.0, 170.0, 90.0];
     this.mNumHearts = numberOfHearts[difficulty]; //1:90 2:180 3:270
     this.mHearts.setElementPixelPositions(0,this.mNumHearts, 0, 64);
     this.mHearts.setColor([1, 1, 1, 0]);
     this.mHearts.getXform().setPosition(pos[0], pos[1]);
-    this.mWidth = 15;
+    this.mWidth = 15 / (difficulty+1);
     this.mPos = [pos[0] - 50, pos[1]];
     this.mHearts.getXform().setSize(this.mWidth, 5);
     var health = [100,60,1]; //easy medium hard

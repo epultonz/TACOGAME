@@ -31,6 +31,7 @@ function MyGame() {
     this.tacoDifMed = null;
     this.tacoDifHard = null;
     this.tacoDifSelectLine = null;
+    this.tacoDifSelectVertex = [[30,7,40,7], [45,7,55,7], [60,7,70,7]];
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -81,10 +82,11 @@ MyGame.prototype.initialize = function () {
     this.tacoLevel2Button = new UIButton(this.kUIButton,this.tacoLevel2Select,this,[400,300],[350,100],"Level 2",8,[1,1,1,1],[0,0,0,1]);
     this.tacoHelpButton = new UIButton(this.kUIButton,this.tacoHelpSelect,this,[400,200],[350,100],"Help",8,[1,1,1,1],[0,0,0,1]);
     
+    this.tacoDifSelectLine = new LineRenderable(30,7,40,7);
     this.tacoDifEasy = new UIButton(this.kUIButton,this.difEasySelect,this,[280,100],[100,100],"Easy",4,[1,1,1,1],[0,0,0,1]);
     this.tacoDifMed = new UIButton(this.kUIButton,this.difMedSelect,this,[400,100],[100,100],"Medium",3,[1,1,1,1],[0,0,0,1]);
     this.tacoDifHard = new UIButton(this.kUIButton,this.difHardSelect,this,[520,100],[100,100],"Hard",3.9,[1,1,1,1],[0,0,0,1]);
-    this.tacoDifSelectLine = new LineRenderable(30,7,40,7);
+    
     //this.tacoDifSelectLine.setColor([1,1,1,0]);
 };  
 
@@ -115,6 +117,7 @@ MyGame.prototype.update = function () {
     this.tacoLevel1Button.update();
     this.tacoLevel2Button.update();
     this.tacoHelpButton.update();
+    this.getVertices();
     this.tacoDifEasy.update();
     this.tacoDifMed.update();
     this.tacoDifHard.update();
@@ -138,16 +141,26 @@ MyGame.prototype.tacoHelpSelect= function(){
 };
 
 MyGame.prototype.difEasySelect= function(){
-    this.tacoDifSelectLine.setVertices(30,7,40,7);
     gDifficulty = 0;
+    this.getVertices();
 };
 
 MyGame.prototype.difMedSelect =function(){
-    this.tacoDifSelectLine.setVertices(45,7,55,7);
     gDifficulty = 1;
+    this.getVertices();
 };
 
 MyGame.prototype.difHardSelect= function(){
-    this.tacoDifSelectLine.setVertices(60,7,70,7);
     gDifficulty = 2;
+    this.getVertices();
+};
+
+MyGame.prototype.getVertices = function() {
+    var vertices = this.tacoDifSelectVertex[gDifficulty];
+    var x1 = vertices[0];
+    var y1 = vertices[1];
+    var x2 = vertices[2];
+    var y2 = vertices[3];
+    
+    this.tacoDifSelectLine.setVertices(x1,y1,x2,y2);
 };
