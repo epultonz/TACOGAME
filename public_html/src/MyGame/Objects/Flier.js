@@ -29,7 +29,7 @@
  * @param {int} patrolTimer the amount of time between switching patrol target locations
  * @returns {Flier}
  */
-function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, health = 2, shootTimer = 480,
+function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, health = 1, shootTimer = 480,
         projectileTimer = 145, projectileDelta = 0.4, patrolDelta = 0.025,
         patrolDist = 15, patrolTimer = 400) {
     // Renderable Vars
@@ -95,7 +95,7 @@ Flier.prototype.update = function () {
         this.mHitByDeflect = false;
         this.mHealth--;
         var oldColor = this.mFlier.getColor();
-        this.mFlier.setColor([1, .5, .5, oldColor[3]+.25]);
+        this.mFlier.setColor([1, .5, .5, oldColor[3]+.33]);
         if(this.mHealth <= 0)
         {
             gScore += 50;

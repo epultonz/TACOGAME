@@ -188,6 +188,10 @@ Projectile.prototype.checkDeflect = function() {
 };
 
 Projectile.prototype.deflected = function() {
+    // Give a minimum duration to deflected projectiles
+    if(this.mTimer < 60)
+        this.mTimer = 60;
+    
     this.mDelta = -this.mDelta;
     if(this.mDeflectKill)
         this.mHeroRef = this.mSpawningRef;

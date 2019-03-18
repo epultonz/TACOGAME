@@ -37,8 +37,8 @@ function CodeMechanism(stubX,stubY,code,hero,aCam1){
     
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([.3, .9, .9, 1]);
-    this.mMinimapObj.getXform().setPosition(stubX, stubY+.2);
-    this.mMinimapObj.getXform().setSize(6, 6);
+    this.mMinimapObj.getXform().setPosition(stubX, stubY+.3);
+    this.mMinimapObj.getXform().setSize(5.5, 5.5);
     
     this.mActive = false;
     this.mSolved = false;

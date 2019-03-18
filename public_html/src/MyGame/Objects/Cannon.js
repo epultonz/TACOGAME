@@ -31,7 +31,7 @@
  *      should ALWAYS be positive!
  * @returns {Cannon}
  */
-function Cannon(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, health = 3, shootTimer = 210,
+function Cannon(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, health = 2, shootTimer = 210,
         projectileTimer = 180, projectileDelta = 0.525) {
     this.kWidth = 7;
     this.kHeight = 6;
@@ -91,7 +91,7 @@ Cannon.prototype.update = function () {
         this.mHitByDeflect = false;
         this.mHealth--;
         var oldColor = this.mCannon.getColor();
-        this.mCannon.setColor([1, .5, .5, oldColor[3]+.1]);
+        this.mCannon.setColor([1, .5, .5, oldColor[3]+.4]);
         if(this.mHealth <= 0)
         {
             gScore += 35;
