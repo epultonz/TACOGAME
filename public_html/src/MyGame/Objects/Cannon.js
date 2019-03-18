@@ -16,6 +16,7 @@
  * The Cannon is a stationary object that the Hero can jump on without taking damage that
  * periodically shoots projectiles in its facing direction.
  *
+ * @param {TextureInfo} projTexture The texturesheet for the flier's projectiles.
  * @param {TextureInfo} spriteTexture The texturesheet for the cannon's sprite. Should be extended to have
  *     a "mirrored" sprite version as well so the patrol can flip between left/right facing.
  * @param {float} spawnX The X coord to start the object at
@@ -30,15 +31,16 @@
  *      should ALWAYS be positive!
  * @returns {Cannon}
  */
-function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, health = 3, shootTimer = 210,
+function Cannon(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = true, health = 3, shootTimer = 210,
         projectileTimer = 180, projectileDelta = 0.525) {
     this.kWidth = 7;
-    this.kHeight = 7;
+    this.kHeight = 6;
     this.mHeroRef = heroRef;
     this.mSetRef = setRef;
     this.mShootTimerMax = shootTimer;
     this.mShootTimerCurr = shootTimer;
     this.mSpriteText = spriteTexture;
+    this.mProjText = projTexture;
     this.mProjectileTimer = projectileTimer;
     this.mProjectileDelta = projectileDelta;
     this.mFacingLeft = facingLeft;
@@ -51,11 +53,19 @@ function Cannon(spriteTexture, spawnX, spawnY, heroRef, setRef, facingLeft = tru
     this.mCannon.getXform().setPosition(spawnX, spawnY);
     this.mCannon.getXform().setSize(this.kWidth, this.kHeight);
     if(facingLeft){
+        this.mCannon.setElementPixelPositions(130,259,0,99);
+    } else
+    {   //left, right, bot, top
+        this.mCannon.setElementPixelPositions(0,129,0,99);
+    }
+    /*
+    if(facingLeft){
         this.mCannon.setElementPixelPositions(0,64,256-64,256);
     } else
     {   //left, right, bot, top
         this.mCannon.setElementPixelPositions(64,128,256-64,256); 
     }
+    */
     
     
     // simplified minimap renderable
@@ -103,7 +113,7 @@ Cannon.prototype.update = function () {
         if(this.mFacingLeft)
             delta = 0 - delta;
         
-        var bullet = new Projectile(this.mSpriteText,currPos[0], currPos[1], this.mHeroRef, this, delta, this.mProjectileTimer);
+        var bullet = new Projectile(this.mProjText,currPos[0], currPos[1], this.mHeroRef, this, delta, this.mProjectileTimer);
         //bullet.setDeflectionKills(false);
         this.mSetRef.addToSet(bullet);
     }

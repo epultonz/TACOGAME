@@ -55,7 +55,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             pos = cannons[i].Pos;    
             facing = cannons[i].Facing;
             // init cannon
-            cannon = new Cannon(this.kSprites2, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
+            //cannon = new Cannon(this.kSprites2, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
+            cannon = new Cannon(this.kSprites2, this.kCannon, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj, facing);
             this.mAllPlatform.addToSet(cannon);
             //this.mAllObjs.addToSet(cannon);
         }
@@ -67,7 +68,8 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
         var i, pos, flier;
         for (i = 0; i < fliers.length; i++) {
             pos = fliers[i].Pos;    
-            flier = new Flier(this.kSprites2,this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
+            //flier = new Flier(this.kSprites2,this.kSprites, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
+            flier = new Flier(this.kSprites2,this.kFlier, pos[0], pos[1], this.mKelvin, this.mAllNonPhysObj);
             this.mAllPlatform.addToSet(flier);
             //this.mAllObjs.addToSet(flier);
         }
@@ -86,7 +88,9 @@ GameScene.prototype.parseObjects = function (sceneInfo) {
             dVelocity = smashers[i].velocityDown;
 
             // init smashers
-            smasher = new Smasher(this.kSprites2, pos[0], pos[1], this.mKelvin, 
+            //smasher = new Smasher(this.kSprites2, pos[0], pos[1], this.mKelvin, 
+            //    tBound, bBound, uVelocity, dVelocity);
+            smasher = new Smasher(this.kSmasher, pos[0], pos[1], this.mKelvin, 
                 tBound, bBound, uVelocity, dVelocity);
             //this.mAllObjs.addToSet(smasher);
             this.mAllPlatform.addToSet(smasher);

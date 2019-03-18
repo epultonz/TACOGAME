@@ -34,8 +34,8 @@ function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, heal
         patrolDist = 15, patrolTimer = 400) {
     // Renderable Vars
     this.mSpriteText = spriteTexture;
-    this.kWidth = 3;
-    this.kHeight = 5.25;
+    this.kWidth = 6;
+    this.kHeight = 4;
     
     //projectile texture
     this.mProjText = projTexture;
@@ -65,7 +65,8 @@ function Flier(projTexture, spriteTexture, spawnX, spawnY, heroRef, setRef, heal
     this.mFlier.setColor([1, 1, 1, 0]);
     this.mFlier.getXform().setPosition(spawnX, spawnY);
     this.mFlier.getXform().setSize(this.kWidth, this.kHeight);
-    this.mFlier.setElementPixelPositions(598,598+104,2,2+180);
+    //this.mFlier.setElementPixelPositions(598,598+104,2,2+180);
+    this.mFlier.setElementPixelPositions(0,157,0,121);
     
     // Interpolation vars for patrolling
     this.mInterpolatePos = new InterpolateVec2(

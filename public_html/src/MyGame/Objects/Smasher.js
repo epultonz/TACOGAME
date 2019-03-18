@@ -44,7 +44,8 @@ function Smasher(spriteTexture, spawnX, spawnY, heroRef, topBound = (spawnY + 7.
     this.mSmasher.setColor([1, 1, 1, 0]);
     this.mSmasher.getXform().setPosition(spawnX, spawnY);
     this.mSmasher.getXform().setSize(this.kWidth, this.kHeight);
-    this.mSmasher.setElementPixelPositions(0,64,64,128);
+    //this.mSmasher.setElementPixelPositions(0,64,64,128);
+    this.mSmasher.setElementPixelPositions(0,97,0,61);
     
     this.mMinimapObj = new Renderable();
     this.mMinimapObj.setColor([1, .2, .2, 1]);
