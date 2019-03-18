@@ -240,7 +240,7 @@ GameScene.prototype.update = function () {
     this.mMinimapCam.update();
     
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
-    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
+    this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0]-2, 71);
     
     // Update the flashing on the exit pipe
     if(this.mPipe !== null)
@@ -300,7 +300,7 @@ GameScene.prototype.update = function () {
         // nice for debugging
         msg += " Health: " + Math.ceil(this.mKelvin.getHP()) + " |" + " CanJump " + (collided);
         this.mMsg.setText(msg);
-        sc += "Score :" + gScore;
+        sc += "Score: " + gScore;
         this.mScore.setText(sc);
     }
 

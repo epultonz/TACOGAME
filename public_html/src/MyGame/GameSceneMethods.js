@@ -334,8 +334,9 @@ GameScene.prototype.drawMain = function() {
 
     //this.mCodeBox.draw(this.mCamera);
     
-    this.mMsg.draw(this.mCamera);
-    this.mScore.draw(this.mCamera);
+    this.mKelvin.drawHP(this.mCamera);
+    //this.mMsg.draw(this.mCamera);
+    this.mScore.draw(this.mCamera);    
 };
 
 
