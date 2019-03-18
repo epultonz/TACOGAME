@@ -47,12 +47,12 @@ function Level2Scene() {
     this.mBg5 = null;
     
     // Audio 
-    this.kAudIntro = "Assets/Taco/Audio/WhatIsThisPlace.wav";
-    this.kAudHurt1 = "Assets/Taco/Audio/Ouch.wav";
-    this.kAudHurt2 = "Assets/Taco/Audio/ThatHurt.wav";
-    this.kAudPow0 = "Assets/Taco/Audio/AhMuchBetter.wav";
-    this.kAudPow1 = "Assets/Taco/Audio/IFeelPowerful.wav";
-    this.kAudPow2 = "Assets/Taco/Audio/WhereIsMyPointerThinging.wav";
+    this.kAudIntro = "assets/Taco/Audio/WhatIsThisPlace.wav";
+    this.kAudHurt1 = "assets/Taco/Audio/Ouch.wav";
+    this.kAudHurt2 = "assets/Taco/Audio/ThatHurt.wav";
+    this.kAudPow0 = "assets/Taco/Audio/AhMuchBetter.wav";
+    this.kAudPow1 = "assets/Taco/Audio/IFeelPowerful.wav";
+    this.kAudPow2 = "assets/Taco/Audio/WhereIsMyPointerThinging.wav";
     
     // The camera to view the scene
     this.mCamera = null;
