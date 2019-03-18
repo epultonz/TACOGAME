@@ -17,7 +17,7 @@ var gScore = gScore || 0;
 function Level1Scene() {
     // remember that assets size must be in power of 2
     this.kPlatformTexture = "assets/Taco/platform.png";
-    this.kKelvin = "assets/Taco/kelvinSpriteRun.png";
+    this.kKelvin = "assets/Taco/newKelvinSprite.png";
     this.kBG = "assets/Taco/scene_example.png";
     this.kUIButton = "assets/UI/button.png";
     this.kSprites = "assets/Taco/SpriteSheet.png";
