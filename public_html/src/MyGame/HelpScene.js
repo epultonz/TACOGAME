@@ -14,13 +14,14 @@
 
 function HelpScene() {
     this.kUIButton = "assets/UI/button.png";
+    this.kBG = "assets/Taco/lakeMountains/1_1.png";
     
     // The camera to view the scene
     this.mCamera = null;
     
     this.UIText = null;
     this.LevelSelect = null;
-    
+    this.mBG = null;
     this.mline = null;
     
     //Our game test scene
@@ -32,10 +33,12 @@ gEngine.Core.inheritPrototype(HelpScene, Scene);
 
 HelpScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kUIButton);
+    gEngine.Textures.loadTexture(this.kBG);
 };
 
 HelpScene.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kUIButton);
+    gEngine.Textures.unloadTexture(this.kBG);
     if(this.LevelSelect==="Back"){
         gEngine.Core.startScene(new MyGame());
     }
@@ -56,6 +59,10 @@ HelpScene.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
     
     this.mline = new LineRenderable(5,40,95,40);
+    
+    this.mBG = new TextureRenderable(this.kBG);
+    this.mBG.getXform().setPosition(50,40);
+    this.mBG.getXform().setSize(120,80);
     
     //this.ParticleButton = new UIButton(this.kUIButton,this.particleSelect,this,[400,400],[600,100],"Particle Demos",8,[1,1,1,1],[0,0,0,1]);
     //this.PhysicsButton = new UIButton(this.kUIButton,this.physicsSelect,this,[400,300],[500,100],"Physics Demo",8,[1,1,1,1],[0,0,0,1]);
@@ -93,9 +100,8 @@ HelpScene.prototype.draw = function () {
     
     
     this.mCamera.setupViewProjection();
-    //this.ParticleButton.draw(this.mCamera);
-    //this.PhysicsButton.draw(this.mCamera);
-    //this.UIButton.draw(this.mCamera);
+    
+    this.mBG.draw(this.mCamera);
     this.UIText.draw(this.mCamera);
     
     this.mline.draw(this.mCamera);
