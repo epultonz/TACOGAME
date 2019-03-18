@@ -149,7 +149,7 @@ Hero.prototype.update = function () {
         this.mHeroState = Hero.eHeroState.eRunLeft;
         this.mIsMoving = true;
         v[0] = -20;
-        this.mKelvin.updateAnimation();
+        
     }
     else if ((gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) || 
             (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right))){
@@ -157,7 +157,7 @@ Hero.prototype.update = function () {
         this.mHeroState = Hero.eHeroState.eRunRight;
         this.mIsMoving = true;
         v[0] = 20;
-        this.mKelvin.updateAnimation();
+        
     } else {
         v[0] = 0;
         
@@ -188,9 +188,9 @@ Hero.prototype.update = function () {
     if (this.mCanJump === true) {
         if (this.mIsMoving === false) {
             this.mPreviousHeroState = this.mHeroState;
-            if (this.mHeroState === Hero.eHeroState.eRunRight || this.mHeroState === Hero.eHeroState.eJumpRight)
+            if (this.mPreviousHeroState === Hero.eHeroState.eRunRight || this.mPreviousHeroState === Hero.eHeroState.eJumpRight)
                 this.mHeroState = Hero.eHeroState.eFaceRight;
-            if (this.mHeroState === Hero.eHeroState.eRunLeft || this.mHeroState === Hero.eHeroState.eJumpLeft)
+            if (this.mPreviousHeroState === Hero.eHeroState.eRunLeft || this.mPreviousHeroState === Hero.eHeroState.eJumpLeft)
                 this.mHeroState = Hero.eHeroState.eFaceLeft;   
         }
         if ((gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) || 
@@ -199,11 +199,11 @@ Hero.prototype.update = function () {
             v[1] = 60; // Jump velocity
             
             this.mPreviousHeroState = this.mHeroState;
-            if (this.mHeroState === Hero.eHeroState.eRunRight
-                    || this.mHeroState === Hero.eHeroState.eFaceRight)
+            if (this.mPreviousHeroState === Hero.eHeroState.eRunRight
+                    || this.mPreviousHeroState === Hero.eHeroState.eFaceRight)
                 this.mHeroState = Hero.eHeroState.eJumpRight;
-            if (this.mHeroState === Hero.eHeroState.eRunLeft
-                    || this.mHeroState === Hero.eHeroState.eFaceLeft)
+            if (this.mPreviousHeroState === Hero.eHeroState.eRunLeft
+                    || this.mPreviousHeroState === Hero.eHeroState.eFaceLeft)
                 this.mHeroState = Hero.eHeroState.eJumpLeft;
             
             this.mIsMoving = true;
@@ -284,7 +284,7 @@ Hero.prototype.update = function () {
     
     this.mMinimapObj.getXform().setPosition(kelvPos[0], kelvPos[1]);
     
-    
+    this.mKelvin.updateAnimation();
     this.mPet.update();
 };
 
@@ -311,39 +311,39 @@ Hero.prototype.setCanDeflect = function(bool) {
 
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {
-        var wi = 1024/6;
+        var wi = 170.67;
         switch (this.mHeroState) {
             // top, left, width, height, num, pad
             case Hero.eHeroState.eFaceLeft:
-                this.mKelvin.setSpriteSequence(256, wi*2 , wi, 128, 4, 8);
+                this.mKelvin.setSpriteSequence(256, wi*2 , wi, 128, 4, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(10);
                 //this.mKelvin.setAnimationType(this);
                 break;
             case Hero.eHeroState.eFaceRight:
-                this.mKelvin.setSpriteSequence(512, 0 , wi, 128, 4, 8);
+                this.mKelvin.setSpriteSequence(512, 0 , wi, 128, 4, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(10);
                 break;
             
             case Hero.eHeroState.eRunLeft:
-                this.mKelvin.setSpriteSequence(128, 0 , wi, 128, 6, 8);
+                this.mKelvin.setSpriteSequence(128, 0 , wi, 128, 6, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(5);
                 break;
             case Hero.eHeroState.eRunRight:
-                this.mKelvin.setSpriteSequence(384, 0 , wi, 128, 6, 8);
+                this.mKelvin.setSpriteSequence(384, 0 , wi, 128, 6, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(5);
                 break;
             
             case Hero.eHeroState.eJumpLeft:
-                this.mKelvin.setSpriteSequence(256, 0, wi, 128, 2, 8);
+                this.mKelvin.setSpriteSequence(256, 0, wi, 128, 2, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(30);
                 break;
             case Hero.eHeroState.eJumpRight:
-                this.mKelvin.setSpriteSequence(512, wi*4, wi, 128, 2, 8);
+                this.mKelvin.setSpriteSequence(512, wi*4, wi, 128, 2, 0);
                 this.mKelvin.getXform().setSize(this.kWidth, this.kHeight);
                 this.mKelvin.setAnimationSpeed(30);
                 break;
