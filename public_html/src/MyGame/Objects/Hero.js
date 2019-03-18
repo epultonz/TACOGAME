@@ -67,6 +67,7 @@ function Hero(spriteTexture, atX, atY, camRef = null) {
     this.kSuper = "assets/Taco/super.png";
     this.mSuper = new LightRenderable(this.kSuper);
     this.mSuper.getXform().setPosition(this.mKelvin.getXform().getPosition());
+    this.mSuper.setElementPixelPositions(0, 64, 0, 64);
     this.mSuper.getXform().setSize(20,20);
     this.mSuper.setColor([1,1,1,0]);
     
@@ -138,7 +139,8 @@ Hero.prototype.addEmitterToPet = function() {
 
 Hero.prototype.update = function () {
     GameObject.prototype.update.call(this);
-    this.mSuper.getXform().setPosition(this.mKelvin.getXform().getPosition());
+    var heroPos = this.mKelvin.getXform().getPosition();
+    this.mSuper.getXform().setPosition(heroPos[0], heroPos[1]);
     
     if (this.mParticles.size() < 190) {
         this.addEmitterToPet();
@@ -351,6 +353,7 @@ Hero.prototype.draw = function (aCamera) {
     if (this.mParticles !== null) {
         this.mParticles.draw(aCamera);
     }
+    
     this.mSuper.draw(aCamera);
     this.mKelvin.draw(aCamera);
     //this.mRbox.draw(aCamera);
