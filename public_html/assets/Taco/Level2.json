@@ -278,7 +278,7 @@
             "stubX": 295,
             "stubY": 53,
             "text": [
-                "You see a BIG red tech infront",
+                "You see a BIG safe tech infront",
                 "It seems to need passcode to activate", 
                 "Better explore ahead.",
                 "There's a life bubble down there."]
@@ -289,7 +289,7 @@
             "text": [
                 "You reach the end.. Theres void ahead..",
                 "You noticed a small scribble...", 
-                "'0311' - p*ssc*d*",
+                "First 4 digits of pi - p*ssc*d*",
                 "Then dive down on the pipe below..."]
         }
     ],
