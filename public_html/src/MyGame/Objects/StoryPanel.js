@@ -20,8 +20,8 @@ function StoryPanel(texture, spawnX, spawnY, width, camRef, heroRef, lineAry, mi
     this.mDoneRead = false;
     
     this.mAlert = new SpriteAnimateRenderable(this.kAlert);
-    this.mAlert.getXform().setPosition(spawnX,spawnY+7);
-    this.mAlert.getXform().setSize(4,8);
+    this.mAlert.getXform().setPosition(spawnX,spawnY+5);
+    this.mAlert.getXform().setSize(4.5,5.5);
     this.mAlert.setColor([1,1,1,0]);
     this.mAlert.setSpriteSequence(32,0,32,32,2,0);
     this.mAlert.setAnimationSpeed(20);

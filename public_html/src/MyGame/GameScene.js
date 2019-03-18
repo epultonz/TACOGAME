@@ -231,6 +231,29 @@ GameScene.prototype.update = function () {
     this.mMsg.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 66);
     this.mScore.getXform().setPosition(this.mCamera.getWCCenter()[0] - 45, 63);
     
+    // Update the flashing on the exit pipe
+    if(this.mPipe !== null)
+    {
+        // Check if the pipe has an exit codeblock, if so flash red on lock
+        if((this.mCodeBox !== null) && (!this.mCodeBox.getSolve()))
+        {
+            var pipeRend = this.mPipe.getRenderable();
+            var oldColor = pipeRend.getColor();
+            if(oldColor[3] > .45)
+                oldColor[3] = -0.004;
+            pipeRend.setColor([1, .2, .5, oldColor[3] +0.004]);
+        }
+        // Otherwise, flash white (or green, but it IS green)
+        else
+        {
+            var pipeRend = this.mPipe.getRenderable();
+            var oldColor = pipeRend.getColor();
+            if(oldColor[3] > .3)
+                oldColor[3] = -0.003;
+            pipeRend.setColor([1, 1, 1, oldColor[3] +0.003]);
+        }
+    }
+    
     //check if a story panel or codeblock is being touched, if so, we are paused
     var i;
     var pause = false;
