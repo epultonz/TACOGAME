@@ -13,12 +13,12 @@
 
 function LoseScene() {
     this.kUIButton = "assets/UI/button.png";
-    
+    this.kBG = "assets/Taco/cave/1_1.png";
     // The camera to view the scene
     this.mCamera = null;
     this.mMsg = null;
     this.LevelSelect = null;
-    
+    this.mBG = null;
     this.retryButton = null;
     this.MainMenuButton = null;
 }
@@ -26,10 +26,12 @@ gEngine.Core.inheritPrototype(LoseScene, Scene);
 
 LoseScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kUIButton);
+    gEngine.Textures.loadTexture(this.kBG);
 };
 
 LoseScene.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.kUIButton);
+    gEngine.Textures.unloadTexture(this.kBG);
     gScore = 0;
     // next level to be loaded
     if(this.LevelSelect==="Retry")
@@ -53,6 +55,10 @@ LoseScene.prototype.initialize = function () {
     this.mMsg.getXform().setPosition(10, 50);
     this.mMsg.setTextHeight(5);
     
+    this.mBG = new TextureRenderable(this.kBG);
+    this.mBG.getXform().setPosition(50,40);
+    this.mBG.getXform().setSize(120,80);
+    
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,580],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
     this.retryButton = new UIButton(this.kUIButton,this.retrySelect,this,[80,580],[160,40],"Try Again",4,[1,1,1,1],[1,1,1,1]);
 };
@@ -64,6 +70,8 @@ LoseScene.prototype.draw = function () {
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
     this.mCamera.setupViewProjection();
+    
+    this.mBG.draw(this.mCamera);
     this.mMsg.setText("You died. Try again?");
     this.mMsg.getXform().setPosition(10, 55);
     this.mMsg.draw(this.mCamera);

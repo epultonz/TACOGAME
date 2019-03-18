@@ -13,21 +13,23 @@
 
 function WinScene() {
     this.kUIButton = "assets/UI/button.png";
-    
+    this.kBG = "assets/Taco/cave/1_1.png";
     // The camera to view the scene
     this.mCamera = null;
     this.mMsg = null;
-    
+    this.mBG = null;
     this.MainMenuButton = null;
 }
 gEngine.Core.inheritPrototype(WinScene, Scene);
 
 WinScene.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kUIButton);
+    gEngine.Textures.loadTexture(this.kBG);
 };
 
 WinScene.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.kUIButton);
+    gEngine.Textures.unloadTexture(this.kBG);
     // next level to be loaded
     gScore = 0;
     gEngine.Core.startScene(new MyGame());
@@ -48,6 +50,10 @@ WinScene.prototype.initialize = function () {
     this.mMsg.getXform().setPosition(10, 50);
     this.mMsg.setTextHeight(5);
     
+    this.mBG = new TextureRenderable(this.kBG);
+    this.mBG.getXform().setPosition(50,40);
+    this.mBG.getXform().setSize(120,80);
+    
     this.MainMenuButton = new UIButton(this.kUIButton,this.mainSelect,this,[700,580],[200,40],"Main Menu",4,[1,1,1,1],[1,1,1,1]);
 };
 
@@ -57,7 +63,11 @@ WinScene.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
+    
+    
     this.mCamera.setupViewProjection();
+    this.mBG.draw(this.mCamera);
+    
     this.mMsg.setText("YOU WON! CONGRATS~");
     this.mMsg.getXform().setPosition(10, 55);
     this.mMsg.draw(this.mCamera);

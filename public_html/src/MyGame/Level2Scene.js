@@ -239,18 +239,12 @@ Level2Scene.prototype.initialize = function () {
     this.mPauseBackground.setColor([0,0,0,0.175]);
     
     gEngine.AudioClips.playBackgroundAudio(this.kAudBG);
-    
-    this.ms = new LightRenderable(this.kSuper);
-    this.ms.getXform().setPosition(15,30);
-    this.ms.setColor([1,1,1,1]);
-    this.ms.getXform().setSize(20,20);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
 Level2Scene.prototype.draw = function () {
     GameScene.prototype.draw.call(this);
-    this.ms.draw(this.mCamera);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
