@@ -11,5 +11,5 @@ alert - saiful
 safe - saiful
 Background musics - https://opengameart.org/content/platformer-game-music-pack
 Jump clip - https://opengameart.org/content/platformer-jumping-sounds
-VoiceAct - Prof Kelvin Sung
+Kelvin voice clips - Prof. Kelvin Sung
 Patrol, Flier, Cannon, and Smasher from Ækashics - http://www.akashics.moe/
